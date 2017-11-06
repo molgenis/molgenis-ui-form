@@ -1,4 +1,4 @@
-import evaluator from '../validators/evaluator'
+import evaluator from './evaluator'
 
 /**
  * Translate MOLGENIS attribute types to HTML field types
