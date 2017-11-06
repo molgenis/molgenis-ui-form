@@ -1,5 +1,5 @@
 <template>
-    <validate class="form-group row" :class="{'required-field': field.required}">
+    <validate class="form-group row" :class="{'required-field': required}">
         <label class=" col-sm-2 col-md-3 col-lg-3 col-form-label">
             {{ field.label }}
         </label>
