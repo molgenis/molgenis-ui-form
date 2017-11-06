@@ -1,16 +1,16 @@
 {
-  "name": "@molgenis/vue-forms",
+  "name": "@molgenis/molgenis-vue-forms",
   "description": "Library for generating web forms",
   "version": "0.0.7",
   "author": "Mark de Haan <markdehaan90@gmail.com>",
   "private": false,
-  "repository": "https://github.com/Mark-de-Haan/vue-forms",
+  "repository": "https://github.com/Mark-de-Haan/molgenis-vue-forms",
   "scripts": {
     "dev": "webpack-dev-server --config webpack/dev --open --inline --hot --port 3000",
     "build": "webpack --config webpack/prod --progress --hide-modules",
     "prepublish": "npm run build"
   },
-  "main": "dist/vue-forms.js",
+  "main": "dist/molgenis-vue-forms.js",
   "dependencies": {
     "vue-flatpickr-component": "^4.0.0",
     "vue-multiselect": "^2.0.6"

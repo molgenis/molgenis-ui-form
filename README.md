@@ -1,4 +1,4 @@
-# vue-forms
+# molgenis-vue-forms
 
 > Library for generating web forms
 
@@ -15,7 +15,7 @@
 ## API Specifications
 
 ### Form API
-When using the molgenis-form component, the following options are available to you
+When using the molgenis-vue-forms component, the following options are available to you
 
 | parameter | description | required | default | 
 |-----------|-------------|----------|---------|
