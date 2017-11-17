@@ -1,14 +1,13 @@
 <template>
-    <validate class="form-group row" :class="{'required-field': required}">
-        <label class=" col-sm-2 col-md-3 col-lg-3 col-form-label">
-            {{ field.label }}
-        </label>
+    <validate :state="state" :custom="{'custom-validators': field.validators}" :class="{'required-field': required }">
 
-        <div class="col-sm-10 col-md-9 col-lg-9">
+        <label :for="field.id">{{ field.label }}</label>
+
+        <div class="form-group">
             <label class="custom-file">
                 <input type="file"
                        @change="updateValue"
-                       :class="['form-control', 'custom-file-input', fieldClassName(formState[field.id])]"
+                       :class="['form-control', 'custom-file-input', { 'is-invalid' : state && (state.$touched || state.$submitted) && state.$invalid}]"
                        :id="field.id"
                        :name="field.id"
                        :required="required"
@@ -19,13 +18,14 @@
                 <span class="custom-file-control"></span>
             </label>
 
-            <!-- Field message shown when input is invalid -->
+            <small :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
+
             <field-messages :name="field.id" show="$touched || $submitted" class="form-control-feedback">
                 <div class="invalid-message" slot="required">{{ field.label }} is required</div>
+                <div class="invalid-message" slot="custom-validators">Your custom validator says no</div>
             </field-messages>
-
-            <small :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
         </div>
+
     </validate>
 </template>
 
@@ -40,7 +40,7 @@
    */
   export default {
     name: 'file-field',
-    props: ['field', 'value', 'formState', 'fieldClassName', 'required'],
+    props: ['value', 'field', 'required', 'state'],
     data () {
       return {
         localValue: this.value

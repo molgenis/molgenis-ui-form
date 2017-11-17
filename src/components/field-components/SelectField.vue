@@ -1,10 +1,8 @@
 <template>
-    <validate class="form-group row" :class="{'required-field': required}">
-        <label class=" col-sm-2 col-md-3 col-lg-3 col-form-label">
-            {{ field.label }}
-        </label>
+    <validate :custom="{'custom-validators': field.validators}" :class="{'required-field': required }">
+        <label :for="field.id">{{ field.label }}</label>
 
-        <div class="col-sm-10 col-md-9 col-lg-9">
+        <div class="form-group">
             <multiselect
                     v-model="localValue"
                     :id="field.id"
@@ -23,13 +21,15 @@
                     label="label"
             ></multiselect>
 
+            <small :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
+
             <!-- Field message shown when input is invalid -->
             <field-messages :name="field.id" show="$touched || $submitted" class="form-control-feedback">
                 <div class="invalid-message" slot="required">{{ field.label }} is required</div>
+                <div class="invalid-message" slot="custom-validators">Your custom validator says no</div>
             </field-messages>
-
-            <small :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
         </div>
+
     </validate>
 </template>
 
@@ -47,7 +47,7 @@
    */
   export default {
     name: 'select-field',
-    props: ['field', 'value', 'formState', 'fieldClassName', 'required'],
+    props: ['value', 'field', 'required'],
     data () {
       return {
         localValue: this.value,
