@@ -3,7 +3,7 @@
 > Library for generating web forms
 
 ## TODO
-- Validation / Visible / Nullable expressions
+- Validation expressions
 - Handle compounds
 - Option schema for providing options or to specify an asynch target to fetch data on search
 - Unit tests
