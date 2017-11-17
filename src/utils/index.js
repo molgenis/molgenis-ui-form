@@ -116,6 +116,11 @@ const isNillable = (attribute) => {
   return expression ? (data) => evaluator(expression, data) : !attribute.nillable
 }
 
+const isValid = (attribute) => {
+  const expression = attribute.validationExpression
+  return expression ? (data) => evaluator(expression, data) : true
+}
+
 /**
  * Generate a schema field object suitable for the forms
  *
@@ -124,12 +129,7 @@ const isNillable = (attribute) => {
  * @returns {{type: String, id, label, description, required: boolean, disabled, visible, options: ({uri, id, label, multiple}|{uri, id, label})}}
  */
 const generateFormSchemaField = (attribute) => {
-  const validators = []
-  if (attribute.validationExpression) {
-    validators.push((value) => {
-      return true
-    })
-  }
+  const validators = [isValid]
 
   return {
     type: getHtmlFieldType(attribute.fieldType),

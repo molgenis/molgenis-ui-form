@@ -7,71 +7,49 @@
             </button>
         </div>
 
-        <fieldset :disabled="readOnlyForm" v-for="field in fields">
-            <checkbox-field v-if="fieldType(field) === 'checkboxes'"
-                            v-show="show(field)"
+        <fieldset :disabled="readOnlyForm" v-for="field in fields" v-show="show(field)">
+            <checkbox-field v-if="field.type === 'checkboxes'"
+                            v-model="data[field.id]"
+                            :field="field"
                             :required="isRequired(field)"
-                            :field="formSchema[field]"
-                            v-model="formData[field]"
-                            :formState="formState"
-                            :fieldClassName="fieldClassName"></checkbox-field>
+                            :state="formState[field.id]"></checkbox-field>
 
-            <date-field v-else-if="fieldType(field) === 'date'"
-                        v-show="show(field)"
-                        :required="isRequired(field)"
-                        :field="formSchema[field]"
-                        v-model="formData[field]"
-                        :formState="formState"
-                        :fieldClassName="fieldClassName"></date-field>
-
-            <date-time-field v-else-if="fieldType(field) === 'date-time'"
-                             v-show="show(field)"
+            <date-time-field v-else-if="field.type === 'date' || field.type === 'date-time'"
+                             v-model="data[field.id]"
+                             :field="field"
                              :required="isRequired(field)"
-                             :field="formSchema[field]"
-                             v-model="formData[field]"
-                             :formState="formState"
-                             :fieldClassName="fieldClassName"></date-time-field>
+                             :state="formState[field.id]"></date-time-field>
 
-            <file-field v-else-if="fieldType(field) === 'file'"
-                        v-show="show(field)"
+            <file-field v-else-if="field.type === 'file'"
+                        v-model="data[field.id]"
+                        :field="field"
                         :required="isRequired(field)"
-                        :field="formSchema[field]"
-                        v-model="formData[field]"
-                        :formState="formState"
-                        :fieldClassName="fieldClassName"></file-field>
+                        :state="formState[field.id]"></file-field>
 
-            <radios-field v-else-if="fieldType(field) === 'radios'"
-                          v-show="show(field)"
+            <radios-field v-else-if="field.type === 'radios'"
+                          v-model="data[field.id]"
+                          :field="field"
                           :required="isRequired(field)"
-                          :field="formSchema[field]"
-                          v-model="formData[field]"
-                          :formState="formState"
-                          :fieldClassName="fieldClassName"></radios-field>
+                          :state="formState[field.id]"></radios-field>
 
-            <select-field v-else-if="fieldType(field) === 'select'"
-                          v-show="show(field)"
+            <select-field v-else-if="field.type === 'select'"
+                          v-model="data[field.id]"
+                          :field="field"
                           :required="isRequired(field)"
-                          :field="formSchema[field]"
-                          v-model="formData[field]"
-                          :formState="formState"
-                          :fieldClassName="fieldClassName"></select-field>
+                          :state="formState[field.id]"></select-field>
 
 
-            <text-area-field v-else-if="fieldType(field) === 'text-area'"
-                             v-show="show(field)"
+            <text-area-field v-else-if="field.type === 'text-area'"
+                             v-model="data[field.id]"
+                             :field="field"
                              :required="isRequired(field)"
-                             :field="formSchema[field]"
-                             v-model="formData[field]"
-                             :formState="formState"
-                             :fieldClassName="fieldClassName"></text-area-field>
+                             :state="formState[field.id]"></text-area-field>
 
             <input-field v-else
-                         v-show="show(field)"
+                         v-model="data[field.id]"
+                         :field="field"
                          :required="isRequired(field)"
-                         :field="formSchema[field]"
-                         v-model="formData[field]"
-                         :formState="formState"
-                         :fieldClassName="fieldClassName"></input-field>
+                         :state="formState[field.id]"></input-field>
         </fieldset>
 
         <div class="form-buttons text-right">
@@ -82,12 +60,12 @@
 </template>
 
 <style>
-    .hide-option-fields-btn-container {
-        margin-bottom: 1rem;
-    }
-
     .invalid-message {
         color: #dc3545;
+    }
+
+    .hide-option-fields-btn-container {
+        margin-bottom: 1rem;
     }
 
     .required-field > label::after {
@@ -111,31 +89,26 @@
       }
     },
     methods: {
-      fieldClassName (field) {
-        /* Return is-invalid as a class when the field is invalid */
-        return field && (field.$touched || field.$submitted) && field.$invalid ? 'is-invalid' : ''
-      },
-      fieldType (field) {
-        return this.formSchema[field].type
-      },
-      show (field) {
-        let visible = this.formSchema[field].visible
-        if (typeof visible === 'function') {
-          visible = visible(this.formData)
-        }
-        return (!this.hideOptionalFields || this.isRequired(field)) && visible
-      },
       isRequired (field) {
-        let required = this.formSchema[field].required
+        let required = field.required
         if (typeof required === 'function') {
-          required = required(this.formData)
+          required = required(this.data)
         }
         return required
+      },
+      show (field) {
+        let visible = field.visible
+        if (typeof visible === 'function') {
+          visible = visible(this.data)
+        }
+        return (!this.hideOptionalFields || this.isRequired(field)) && visible
       }
     },
     computed: {
       fields () {
-        return Object.keys(this.formSchema)
+        return Object.keys(this.formSchema).map(fieldId => {
+          return this.formSchema[fieldId]
+        })
       }
     },
     mounted () {
@@ -147,7 +120,6 @@
     },
     components: {
       'checkbox-field': fields.CheckboxField,
-      'date-field': fields.DateField,
       'date-time-field': fields.DateTimeField,
       'file-field': fields.FileField,
       'input-field': fields.InputField,

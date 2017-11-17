@@ -1,12 +1,11 @@
 <template>
-    <validate class="form-group row" :class="{'required-field': required}">
-        <label class=" col-sm-2 col-md-3 col-lg-3 col-form-label">
-            {{ field.label }}
-        </label>
+    <validate :state="state" :custom="{'custom-validators': field.validators}" :class="{'required-field': required }">
 
-        <div class="col-sm-10 col-md-9 col-lg-9">
+        <label :for="field.id">{{ field.label }}</label>
+
+        <div class="form-group">
             <flat-pickr v-model="localValue"
-                        :class="['form-control', fieldClassName(formState[field.id])]"
+                        :class="['form-control', { 'is-invalid' : state && (state.$touched || state.$submitted) && state.$invalid}]"
                         :config="config"
                         :id="field.id"
                         :name="field.id"
@@ -15,19 +14,19 @@
                         :readonly="field.readOnly"
                         :aria-describedby="field.id + '-description'"></flat-pickr>
 
-            <!-- Field message shown when input is invalid -->
+            <small :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
+
             <field-messages :name="field.id" show="$touched || $submitted" class="form-control-feedback">
                 <div class="invalid-message" slot="required">{{ field.label }} is required</div>
+                <div class="invalid-message" slot="custom-validators">Your custom validator says no</div>
             </field-messages>
-
-            <small :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
         </div>
     </validate>
 </template>
 
 <script>
-  import flatPickr from 'vue-flatpickr-component';
-  import 'flatpickr/dist/flatpickr.css';
+  import flatPickr from 'vue-flatpickr-component'
+  import 'flatpickr/dist/flatpickr.css'
 
   /**
    * Generates a form field for date-time inputs with flatPickr (https://github.com/ankurk91/vue-flatpickr-component)
@@ -39,13 +38,13 @@
    */
   export default {
     name: 'date-time-field',
-    props: ['field', 'value', 'formState', 'fieldClassName', 'required'],
+    props: ['value', 'field', 'required', 'state'],
     data () {
       return {
         localValue: this.value,
         config: {
           allowInput: true,
-          enableTime: true
+          enableTime: this.field.type === 'date-time'
         }
       }
     },

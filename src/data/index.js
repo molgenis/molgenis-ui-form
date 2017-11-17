@@ -20,7 +20,8 @@ const schema = {
       'lookupAttribute': true,
       'isAggregatable': false,
       'description': 'STRING description',
-      'nullableExpression': '$("text").value() !== "test"'
+      'nullableExpression': '$("text").value() !== "test"',
+      'validationExpression': '$("string").value() === "valid"'
     },
     {
       'href': '/api/v2/it_emx_datatypes_TypeTest/meta/text',
