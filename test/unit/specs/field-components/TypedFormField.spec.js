@@ -1,11 +1,9 @@
-import VueForm from 'vue-form'
 import { createLocalVue, mount } from 'vue-test-utils'
-
 import TypedFormField from '../../../../src/components/field-components/TypedFormField.vue'
 
 describe('TypedFormField tests', () => {
   describe('TypedFormField Component smoke tests', () => {
-    it('should have a name equal to "typed-form-field"', () => {
+    it('should have a name equal to typed-form-field', () => {
       expect(TypedFormField.name).to.equal('typed-form-field')
     })
 
@@ -29,14 +27,7 @@ describe('TypedFormField tests', () => {
 
   describe('TypedFormField Component render', () => {
     it('should render the input field correctly', () => {
-      const localVue = createLocalVue()
-      localVue.use(VueForm)
-
-      const wrapper = mount(TypedFormField, {
-        localVue
-      })
-
-      wrapper.setProps({
+      const props = {
         value: 'test',
         field: {
           type: 'text',
@@ -52,52 +43,14 @@ describe('TypedFormField tests', () => {
         },
         required: true,
         state: {}
+      }
+
+      const localVue = createLocalVue()
+      const wrapper = mount(TypedFormField, {
+        propsData: props,
+        localVue
       })
-      console.log(wrapper)
+      console.log(wrapper.vm.$props)
     })
   })
 })
-
-// describe('Form generated with InputField', () => {
-//   it('should generate a form with one text field', done => {
-//     //   props: ['id', 'type', 'schema', 'data', 'readOnlyForm', 'onSubmit', 'onCancel'],
-//     const props = {
-//       id: 'form-with-text-only',
-//       type: 'custom',
-//       schema: {
-//         'text': {
-//           type: 'text',
-//           id: 'text-field',
-//           label: 'Text field',
-//           description: 'This is a text field',
-//           required: true,
-//           disabled: false,
-//           readOnly: false,
-//           visible: true,
-//           options: [],
-//           validators: []
-//         }
-//       },
-//       data: {'text-field': 'test value'},
-//       readOnlyForm: false,
-//       onSubmit: () => true,
-//       onCancel: () => true
-//     }
-//
-//     const Constructor = Vue.extend(MolgenisForm)
-//     const vm = new Constructor({propsData: props}).$mount()
-//
-//     // https://stackoverflow.com/questions/3429218/unit-tests-for-html-output
-//     Vue.nextTick(() => {
-//       const inputElement = vm.$el.querySelector('input')
-//
-//       expect(inputElement.type).to.equal('text')
-//       expect(inputElement.id).to.equal('text-field')
-//       // const actualInput = vm.$el.querySelector('input')
-//       // const expectedInput = '<input type="text" id="text-field" name="text-field" required="required" aria-describedby="text-field-description" vue-form-validator="" class="form-control vf-pristine vf-valid vf-untouched vf-pending">'
-//       //
-//       // expect(actualInput).to.equal(expectedInput)
-//       done()
-//     })
-//   })
-// })
