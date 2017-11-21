@@ -12,7 +12,7 @@ module.exports = function (config) {
         ],
         frameworks: ['mocha', 'chai'],
         reporters: ['spec'],
-        files: ['./index.js'],
+        files: ['./index.js', '../../node_modules/es6-promise/dist/es6-promise.auto.js'],
         preprocessors: {'./index.js': ['webpack', 'sourcemap']},
         webpack: require('../../webpack/dev.js'),
         webpackMiddleware: {
