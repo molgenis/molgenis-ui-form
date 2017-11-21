@@ -1,4 +1,4 @@
-import { createLocalVue, mount } from 'vue-test-utils'
+import { mount } from 'vue-test-utils'
 import TypedFormField from '../../../../src/components/field-components/TypedFormField.vue'
 
 describe('TypedFormField tests', () => {
@@ -26,7 +26,7 @@ describe('TypedFormField tests', () => {
   })
 
   describe('TypedFormField Component render', () => {
-    it('should render the input field correctly', () => {
+    it('should render the Component correctly', () => {
       const props = {
         value: 'test',
         field: {
@@ -42,15 +42,21 @@ describe('TypedFormField tests', () => {
           validators: []
         },
         required: true,
-        state: {}
+        state: {
+          $touched: true,
+          $submitted: false,
+          $invalid: false
+        }
       }
 
-      const localVue = createLocalVue()
       const wrapper = mount(TypedFormField, {
-        propsData: props,
-        localVue
+        propsData: props
       })
-      console.log(wrapper.vm.$props)
+
+      // Test input
+      expect(wrapper.contains('input')).to.equal(true)
+      expect(wrapper.contains('label')).to.equal(true)
+      expect(wrapper.contains('field-messages')).to.equal(true)
     })
   })
 })
