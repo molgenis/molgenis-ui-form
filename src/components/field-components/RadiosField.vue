@@ -20,7 +20,9 @@
                 </label>
             </div>
 
-            <small v-if="field.description" :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
+            <small v-if="field.description" :id="field.id + '-description'" class="form-text text-muted">
+                {{ field.description }}
+            </small>
 
             <!-- Field message shown when input is invalid -->
             <field-messages :name="field.id" show="$touched || $submitted" class="form-control-feedback">
@@ -49,17 +51,15 @@
     },
     computed: {
       options () {
-        if (this.field.options.constructor === Array) {
-          return this.field.options
-        } else {
-          // We have an object retrieved from the server by using field.options.uri
-          // api.get
+        if (this.field.options.uri) {
           return [
             {id: '1', value: '1', label: 'Option 1'},
             {id: '2', value: '2', label: 'Option 2'},
             {id: '3', value: '3', label: 'Option 3'},
-            {id: '4', value: '4', label: 'Option 4'},
+            {id: '4', value: '4', label: 'Option 4'}
           ]
+        } else {
+          return this.field.options.options
         }
       }
     }

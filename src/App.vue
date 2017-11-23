@@ -6,7 +6,7 @@
                 <hr>
 
                 <blockquote class="blockquote text-center">
-                    <h1 class="display-3">Vue Data Forms</h1>
+                    <h1 class="display-3">MOLGENIS Vue Forms</h1>
                     <footer class="blockquote-footer">Powered by<cite title="Source Title">Vue.js</cite></footer>
                 </blockquote>
 
@@ -18,6 +18,7 @@
                     </div>
 
                     <div class="card-body text-centre">
+                        <!-- The magic call to render the form -->
                         <molgenis-vue-form id="example-form"
                                        :fields="fields"
                                        :data="data"

@@ -82,7 +82,9 @@ The molgenis-vue-form component accepts the following properties
 | validators | A list of functions which determine whether a field is valid on submit. |
 | options | An object containing options for select, radios, and checkboxes typed fields. See [examples](#multiple-option-fields-example)|
 
-Functions in any of the parameters mentioned above should accept a data object containing the data from the form.  
+Functions in any of the parameters mentioned above should accept a data object containing the data from the form. 
+
+Functions should **always** return true or false. 
 
 See the [field object examples](#example-field-object) for code examples.
 

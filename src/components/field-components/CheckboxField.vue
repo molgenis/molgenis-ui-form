@@ -19,7 +19,9 @@
                 </label>
             </div>
 
-            <small v-if="field.description" :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
+            <small v-if="field.description" :id="field.id + '-description'" class="form-text text-muted">
+                {{ field.description }}
+            </small>
         </div>
 
     </validate>
@@ -41,13 +43,16 @@
     },
     computed: {
       options () {
-        // use this.field.options.uri to call server
-        return [
-          {id: '1', value: '1', label: 'Option 1'},
-          {id: '2', value: '2', label: 'Option 2'},
-          {id: '3', value: '3', label: 'Option 3'},
-          {id: '4', value: '4', label: 'Option 4'},
-        ]
+        if (this.field.options.uri) {
+          return [
+            {id: '1', value: '1', label: 'Option 1'},
+            {id: '2', value: '2', label: 'Option 2'},
+            {id: '3', value: '3', label: 'Option 3'},
+            {id: '4', value: '4', label: 'Option 4'}
+          ]
+        } else {
+          return this.field.options.options
+        }
       }
     }
   }
