@@ -51,16 +51,16 @@ yarn install @molgenis/molgenis-vue-forms
 </script>
 ```
 
-## MOLGENIS Vue Form specifications
+## Specifications
 
-When using the molgenis-vue-form component, the following options are available to you
+The molgenis-vue-form component accepts the following properties:
 
 | parameter | description | required | default | 
 |-----------|-------------|----------|---------|
 | id        | An ID used for the <form> HTML element | Yes | N/A 
-| fields    | An Array of field objects. See [field Specifications](#field-specifications). | Yes | N/A
-| data      | A key value map for preselected data in form fields. See [data specifications](#data-specifications). | No | {}
-| options   | An option object. See [option specifications](#option-specifications). | Yes | N/A
+| fields    | An Array of field objects. See the [specifications](#field-specifications) and the [example](#example-field-object). | Yes | N/A
+| data      | A key value map for preselected data in form fields. See the [example](#example-data-object). | No | {}
+| options   | An option object. See the [specifications](#option-specifications) and the [example](#example-options-object). | Yes | N/A
 
 ### Option specifications
 
@@ -69,16 +69,6 @@ When using the molgenis-vue-form component, the following options are available 
 | readonly  | Set form to readonly | No | FALSE |
 | onSubmit  | Function for what to do on submit | Yes | N/A |
 | onCancel  | Function for what to do on cancel | Yes | N/A |
-
-#### Example options object
-
-```js
-const options = {
-  readonly: true,
-  onSubmit: (formdata) => console.log("Nice data: " + formdata),
-  onCancel: () => console.log("Why did you close my form :'(")
-}
-```
 
 ### Field specifications
 
@@ -117,7 +107,9 @@ The following types are supported:
 | password | A HTML5 password input |
 | file | A HTML5 file input |
 
-#### Example field object
+## Examples
+
+### Example field object
 
 ```js
 /**
@@ -159,7 +151,7 @@ const fields = [
 ]
 ```
 
-### Data specifications
+### Example data object
 
 ```js
 /**
@@ -174,6 +166,16 @@ const data = {
   country: 'Netherlands',
   organisation: 'Github repositories',
   bio: 'A software developer who loves Vue'
+}
+```
+
+### Example options object
+
+```js
+const options = {
+  readonly: true,
+  onSubmit: (formdata) => console.log("Nice data: " + formdata),
+  onCancel: () => console.log("Why did you close my form :'(")
 }
 ```
 
