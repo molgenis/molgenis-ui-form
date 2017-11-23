@@ -1,6 +1,6 @@
-# molgenis-vue-forms
+# MOLGENIS Vue forms
 
-> Library for generating web forms in bootstrap styling
+> Vue library for generating web forms
 
 ## TODO
 - Handle compounds
@@ -51,13 +51,9 @@ yarn install @molgenis/molgenis-vue-forms
 </script>
 ```
 
-## API Specifications
+## MOLGENIS Vue Form specifications
 
-> Following paragraphs contain API specs for the molgenis-vue-form component 
-
-### MOLGENIS Vue Form specifications
-
-> When using the molgenis-vue-form component, the following options are available to you
+When using the molgenis-vue-form component, the following options are available to you
 
 | parameter | description | required | default | 
 |-----------|-------------|----------|---------|
@@ -66,7 +62,7 @@ yarn install @molgenis/molgenis-vue-forms
 | data      | A key value map for preselected data in form fields. See [data specifications](#data-specifications). | No | {}
 | options   | An option object. See [option specifications](#option-specifications). | Yes | N/A
 
-#### Option specifications
+### Option specifications
 
 | parameter | description | required | default |
 |-----------|-------------|----------|---------|
@@ -74,7 +70,7 @@ yarn install @molgenis/molgenis-vue-forms
 | onSubmit  | Function for what to do on submit | Yes | N/A |
 | onCancel  | Function for what to do on cancel | Yes | N/A |
 
-##### Example options object
+#### Example options object
 
 ```js
 const options = {
@@ -84,7 +80,7 @@ const options = {
 }
 ```
 
-#### Field specifications
+### Field specifications
 
 | parameter | description |
 |-----------|-------------|
@@ -98,12 +94,12 @@ const options = {
 | validators | A list of functions which determine whether a field is valid on submit. |
 | options | An object containing options for select, radios, and checkboxes typed fields. |
 
-> Functions used for for determining required, disabled, readonly, visible, or valid should accept a data object containing the data from the form.
-> See the [field object examples](#example-field-object) for code examples.
+Functions used for for determining required, disabled, readonly, visible, or valid should accept a data object containing the data from the form.
+See the [field object examples](#example-field-object) for code examples.
 
-##### Field input types
+#### Field input types
 
-> The following types are supported
+The following types are supported:
 
 | type | renders |
 |------|-------------|
@@ -120,11 +116,11 @@ const options = {
 | password | A HTML5 password input |
 | file | A HTML5 file input |
 
-##### Example field object
+#### Example field object
 
-> An example of a username field, a password field, and a confirm password field. 
-> Because our user is a funny guy, the username should be funny_guy_101. If not, the form will not be valid
-> The second password field should match the first password field, else the form will not be valid
+An example of a username field, a password field, and a confirm password field.
+Because our user is a funny guy, the username should be funny_guy_101. If not, the form will not be valid.  
+The second password field should match the first password field, else the form will not be valid
 
 ```js
 const fields = [
@@ -161,11 +157,11 @@ const fields = [
 ]
 ```
 
-#### Data specifications
+### Data specifications
 
 > The data object contains key value pairs of field ID <-> input value
 
-##### Data example
+#### Data example
 
 > The following data object contains data for user form which was already filled in once.
 
