@@ -19,7 +19,7 @@
                 </label>
             </div>
 
-            <small :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
+            <small v-if="field.description" :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
         </div>
 
     </validate>

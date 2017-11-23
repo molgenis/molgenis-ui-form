@@ -14,7 +14,7 @@
                         :readonly="field.readOnly"
                         :aria-describedby="field.id + '-description'"></flat-pickr>
 
-            <small :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
+            <small v-if="field.description" :id="field.id + '-description'" class="form-text text-muted">{{ field.description }}</small>
 
             <field-messages :name="field.id" show="$touched || $submitted" class="form-control-feedback">
                 <div class="invalid-message" slot="required">{{ field.label }} is required</div>

@@ -2,26 +2,27 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+
                 <hr>
+
                 <blockquote class="blockquote text-center">
-                    <h1 class="display-3">MOLGENIS Forms</h1>
+                    <h1 class="display-3">Vue Data Forms</h1>
                     <footer class="blockquote-footer">Powered by<cite title="Source Title">Vue.js</cite></footer>
                 </blockquote>
+
                 <hr>
+
                 <div class="card">
                     <div class="card-header">
-                        <h5>{{ schema.label }} Form</h5>
+                        <h5>Example Form</h5>
                     </div>
+
                     <div class="card-body text-centre">
-                        <molgenis-form
-                                id="form"
-                                type="molgenis-entity"
-                                :schema="schema"
-                                :data="data"
-                                :readOnlyForm="false"
-                                :onSubmit="onSubmit"
-                                :onCancel="onCancel">
-                        </molgenis-form>
+                        <molgenis-vue-form id="example-form"
+                                       :fields="fields"
+                                       :data="data"
+                                       :options="options">
+                        </molgenis-vue-form>
                     </div>
                 </div>
             </div>
@@ -30,27 +31,30 @@
 </template>
 
 <script>
-  import MolgenisForm from './components/MolgenisForm.vue'
-  import data from './data'
+  import MolgenisVueForm from './components/MolgenisVueForm.vue'
+  import utils from './utils'
+  import restResponse from './data'
 
+  // Example data + schema is generated from a MOLGENIS Rest API V2 response
   export default {
     name: 'app',
     data () {
       return {
-        schema: data.schema,
-        data: data.data
+        fields: utils.generateFormFields(restResponse.schema),
+        options: {
+          readonly: false,
+          onSubmit: (formdata) => console.log('This is the form content ', formdata),
+          onCancel: () => console.log('You canceled my form :(')
+        }
       }
     },
-    methods: {
-      onSubmit (content) {
-        console.log('This is the form content ', content)
-      },
-      onCancel () {
-        console.log('You canceled my form :(')
+    computed: {
+      data () {
+        return utils.generateFormData(this.fields, restResponse.data)
       }
     },
     components: {
-      MolgenisForm
+      MolgenisVueForm
     }
   }
 </script>
