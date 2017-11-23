@@ -94,7 +94,8 @@ const options = {
 | validators | A list of functions which determine whether a field is valid on submit. |
 | options | An object containing options for select, radios, and checkboxes typed fields. |
 
-Functions used for for determining required, disabled, readonly, visible, or valid should accept a data object containing the data from the form.
+Functions in any of the parameters mentioned above should accept a data object containing the data from the form.  
+
 See the [field object examples](#example-field-object) for code examples.
 
 #### Field input types
@@ -118,11 +119,12 @@ The following types are supported:
 
 #### Example field object
 
-An example of a username field, a password field, and a confirm password field.
-Because our user is a funny guy, the username should be funny_guy_101. If not, the form will not be valid.  
-The second password field should match the first password field, else the form will not be valid
-
 ```js
+/**
+ * An example of a username field, a password field, and a confirm password field.
+ * Because our user is a funny guy, the username should be funny_guy_101. If not, the form will not be valid.
+ * The second password field should match the first password field, else the form will not be valid
+ */
 const fields = [
   {
     type: 'text',
@@ -159,13 +161,14 @@ const fields = [
 
 ### Data specifications
 
-> The data object contains key value pairs of field ID <-> input value
-
-#### Data example
-
-> The following data object contains data for user form which was already filled in once.
-
 ```js
+/**
+* The following data object contains data for user form which contains an input field for:
+* - username
+* - country
+* - organisation
+* - bio
+*/
 const data = {
   username: 'User',
   country: 'Netherlands',
