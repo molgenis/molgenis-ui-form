@@ -37,14 +37,6 @@
   import Multiselect from 'vue-multiselect'
   // import api from '@molgenis/molgenis-api-client'
 
-  /**
-   * Generates a form field for select inputs with Vue Multiselect (https://github.com/monterail/vue-multiselect)
-   *
-   * @param field A Field object containing all information to generate a HTML input e.g. disabled
-   * @param value The value of the field. Can be set if molgenis-form was called with a data instance.
-   * @param formState The formState used by vue-form to register form changes and the validity of the form
-   * @param fieldClassName A function used to compute whether a the class on an input should be changed to is-invalid
-   */
   export default {
     name: 'select-field',
     props: ['value', 'field', 'required'],
