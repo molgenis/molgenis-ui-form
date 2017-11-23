@@ -56,45 +56,45 @@ const getOptions = (attribute) => {
     case 'XREF':
     case 'ONETOMANY':
       return {
+        options: [],
         uri: attribute.refEntity.hrefCollection,
-        id: attribute.refEntity.idAttribute,
-        label: attribute.refEntity.labelAttribute,
         multiple: false
       }
     case 'MREF':
       return {
+        options: [],
         uri: attribute.refEntity.hrefCollection,
-        id: attribute.refEntity.idAttribute,
-        label: attribute.refEntity.labelAttribute,
         multiple: true
       }
     case 'CATEGORICAL':
     case 'CATEGORICAL_MREF':
-      // use api.get(attribute.refEntity.hrefCollection to immediately retrieve the categorical options
       return {
-        uri: attribute.refEntity.hrefCollection,
-        id: attribute.refEntity.idAttribute,
-        label: attribute.refEntity.labelAttribute
+        options: [],
+        uri: attribute.refEntity.hrefCollection
       }
     case 'ENUM':
-      return attribute.enumOptions.map(option => {
-        return {
-          id: option,
-          value: option,
-          label: option
-        }
-      })
+      return {
+        options: attribute.enumOptions.map(option => {
+          return {
+            id: option,
+            value: option,
+            label: option
+          }
+        })
+      }
     case 'BOOL':
-      return attribute.nillable ? [
-        {id: 'true', value: true, label: 'True'},
-        {id: 'false', value: false, label: 'False'},
-        {id: 'null', value: 'null', label: 'N/A'}
-      ] : [
-        {id: 'true', value: true, label: 'True'},
-        {id: 'false', value: false, label: 'False'}
-      ]
+      return {
+        options: attribute.nillable ? [
+          {id: 'true', value: true, label: 'True'},
+          {id: 'false', value: false, label: 'False'},
+          {id: 'null', value: 'null', label: 'N/A'}
+        ] : [
+          {id: 'true', value: true, label: 'True'},
+          {id: 'false', value: false, label: 'False'}
+        ]
+      }
     default:
-      return []
+      return {}
   }
 }
 

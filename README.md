@@ -1,18 +1,16 @@
-# molgenis-vue-forms
+# MOLGENIS Vue forms
 
-> Library for generating web forms in bootstrap styling
+> Vue library for generating web forms
 
 ## TODO
+
 - Handle compounds
 - Option schema for providing options or to specify an asynch target to fetch data on search
 - Unit tests
 - Validation expressions
 - Validators pointing to data from other fields
 
-## Import and usage
-```bash
-yarn install @molgenis/molgenis-vue-forms
-```
+## Usage
 
 ```vue
 <template>
@@ -51,22 +49,18 @@ yarn install @molgenis/molgenis-vue-forms
 </script>
 ```
 
-## API Specifications
+## Specifications
 
-> Following paragraphs contain API specs for the molgenis-vue-form component 
-
-### MOLGENIS Vue Form specifications
-
-> When using the molgenis-vue-form component, the following options are available to you
+The molgenis-vue-form component accepts the following properties
 
 | parameter | description | required | default | 
 |-----------|-------------|----------|---------|
 | id        | An ID used for the <form> HTML element | Yes | N/A 
-| fields    | An Array of field objects. See [field Specifications](#field-specifications). | Yes | N/A
-| data      | A key value map for preselected data in form fields. See [data specifications](#data-specifications). | No | {}
-| options   | An option object. See [option specifications](#option-specifications). | Yes | N/A
+| fields    | An Array of field objects. See the [specifications](#field-specifications) and the [example](#example-field-object). | Yes | N/A
+| data      | A key value map for preselected data in form fields. See the [example](#example-data-object). | No | {}
+| options   | An option object. See the [specifications](#option-specifications) and the [example](#example-options-object). | Yes | N/A
 
-#### Option specifications
+### Option specifications
 
 | parameter | description | required | default |
 |-----------|-------------|----------|---------|
@@ -74,21 +68,11 @@ yarn install @molgenis/molgenis-vue-forms
 | onSubmit  | Function for what to do on submit | Yes | N/A |
 | onCancel  | Function for what to do on cancel | Yes | N/A |
 
-##### Example options object
-
-```js
-const options = {
-  readonly: true,
-  onSubmit: (formdata) => console.log("Nice data: " + formdata),
-  onCancel: () => console.log("Why did you close my form :'(")
-}
-```
-
-#### Field specifications
+### Field specifications
 
 | parameter | description |
 |-----------|-------------|
-| type      | HTML input type. Used to render the correct input. See [Field input types](#field-input-types) 
+| type      | HTML input type. Used to render the correct input. See [supported types](#supported-types) 
 | label     | Label used as a label for the input field. |
 | description | Description placed below the input field. Hidden if description is empty. |
 | required  | A boolean or a function determining whether a field is required. |
@@ -96,14 +80,17 @@ const options = {
 | readonly  | A boolean or a function determining whether a field is readonly (similar to disabled). |
 | visible   | A boolean or a function determining whether a field is visible. |
 | validators | A list of functions which determine whether a field is valid on submit. |
-| options | An object containing options for select, radios, and checkboxes typed fields. |
+| options | An object containing options for select, radios, and checkboxes typed fields. See [examples](#multiple-option-fields-example)|
 
-> Functions used for for determining required, disabled, readonly, visible, or valid should accept a data object containing the data from the form.
-> See the [field object examples](#example-field-object) for code examples.
+Functions in any of the parameters mentioned above should accept a data object containing the data from the form. 
 
-##### Field input types
+Functions should **always** return true or false. 
 
-> The following types are supported
+See the [field object examples](#example-field-object) for code examples.
+
+#### Supported types
+
+The following types are supported
 
 | type | renders |
 |------|-------------|
@@ -120,13 +107,16 @@ const options = {
 | password | A HTML5 password input |
 | file | A HTML5 file input |
 
-##### Example field object
+## Examples
 
-> An example of a username field, a password field, and a confirm password field. 
-> Because our user is a funny guy, the username should be funny_guy_101. If not, the form will not be valid
-> The second password field should match the first password field, else the form will not be valid
+### Example field object
 
 ```js
+/**
+ * An example of a username field, a password field, and a confirm password field.
+ * Because our user is a funny guy, the username should be funny_guy_101. If not, the form will not be valid.
+ * The second password field should match the first password field, else the form will not be valid
+ */
 const fields = [
   {
     type: 'text',
@@ -161,15 +151,16 @@ const fields = [
 ]
 ```
 
-#### Data specifications
-
-> The data object contains key value pairs of field ID <-> input value
-
-##### Data example
-
-> The following data object contains data for user form which was already filled in once.
+### Example data object
 
 ```js
+/**
+* The following data object contains data for user form which contains an input field for:
+* - username
+* - country
+* - organisation
+* - bio
+*/
 const data = {
   username: 'User',
   country: 'Netherlands',
@@ -178,9 +169,66 @@ const data = {
 }
 ```
 
+### Example options object
+
+```js
+const options = {
+  readonly: true,
+  onSubmit: (formdata) => console.log("Nice data: " + formdata),
+  onCancel: () => console.log("Why did you close my form :'(")
+}
+```
+
+### Multiple option fields example
+
+```js
+const fields = [
+  {
+    type: 'select',
+    id: 'select-field',
+    label: 'Who is it?',
+    required: true,
+    options: {
+      uri: '/api/for/fetching/data',
+      options: [],
+      multiple: false,
+    }
+  },
+  {
+    type: 'radios',
+    id: 'radios-field',
+    label: 'Who did it',
+    description: 'there can be only one',
+    required: true,
+    options: {
+      options: [
+        {id: 'captain-yellow', value: 'captain-yellow', label: 'Captain Yellow'},
+        {id: 'admiral-blue', value: 'admiral-blue', label: 'Admiral Blue'},
+        {id: 'general-red', value: 'general-red', label: 'General Red'}
+      ]
+    }
+  },
+  {
+    type: 'checkboxes',
+    id: 'checkboxes-field',
+    label: 'Who are awesome',
+    description: 'Everyone can be awesome',
+    required: true,
+    options: {
+      options: [
+        {id: 'captain-yellow', value: 'captain-yellow', label: 'Captain Yellow'},
+        {id: 'admiral-blue', value: 'admiral-blue', label: 'Admiral Blue'},
+        {id: 'general-red', value: 'general-red', label: 'General Red'},
+      ]
+    }
+  }
+]
+```
+
 ## Build setup
 
-### [yarn](https://yarnpkg.com) - recommend
+### [yarn](https://yarnpkg.com) - recommended
+
 ```bash
 
 # Install dependencies
@@ -194,6 +242,22 @@ yarn run build
   
 # Run tests
 yarn run test
+```
+
+### [npm](https://www.npmjs.com)
+
+```bash
+# Install dependencies
+npm install
+  
+# Server with hot reload at localhost:3000
+npm run dev
+  
+# Build for production with minification
+npm run build
+  
+# Run tests
+npm run test
 ```
 
 ## License
