@@ -1,70 +1,111 @@
 # molgenis-vue-forms
 
-> Library for generating web forms
+> Library for generating web forms in bootstrap styling
 
 ## TODO
-- Validation expressions
 - Handle compounds
 - Option schema for providing options or to specify an asynch target to fetch data on search
 - Unit tests
+- Validation expressions
 - Validators pointing to data from other fields
 
-## Usage
-// TODO Write down example usages on how to import etc...
+## Import and usage
+```bash
+yarn install @molgenis/molgenis-vue-forms
+```
+
+```vue
+<template>
+    <molgenis-vue-form 
+        id="example-form"
+        :fields="fields"
+        :data="data"
+        :options="options">
+    </molgenis-vue-form>
+</template>
+  
+<script>
+    import MolgenisVueForm from '@molgenis/molgenis-vue-form'
+    
+    export default {
+      name: 'molgenis-vue-form-example',
+      data () {
+        return {
+          fields: [
+            {...}
+          ],
+          data: {
+            ...
+          },
+          options: {
+            required: false,
+            onSubmit: (formdata) => ...,
+            onCancel: () => ...
+          }
+        }
+      },
+      components: {
+        MolgenisVueForm
+      }
+    } 
+</script>
+```
 
 ## API Specifications
 
-### Form API
-When using the molgenis-vue-forms component, the following options are available to you
+> Following paragraphs contain API specs for the molgenis-vue-form component 
+
+### MOLGENIS Vue Form specifications
+
+> When using the molgenis-vue-form component, the following options are available to you
 
 | parameter | description | required | default | 
 |-----------|-------------|----------|---------|
 | id        | An ID used for the <form> HTML element | Yes | N/A 
-| type      | The type of schema that is supplied. Use molgenis-entity to specify that EntityType metadata was supplied | false | 'custom'
-| schema    | A JSON schema representing the structure of the form. Understands MOLGENIS EntityType metadata. See Schema API | true | N/A
-| data      | A map of { field.id: value }. For a MOLGENIS EntityType, field.id is attribute.name. See Data API | false | An Empty Javascript Object
-| readOnlyForm | A boolean that sets the entire form to read only | false | false
-| onSubmit  | A function what to do on submit | true | N/A 
-| onCancel  | A function what to do on cancel | true | N/A
+| fields    | An Array of field objects. See [field Specifications](#field-specifications). | Yes | N/A
+| data      | A key value map for preselected data in form fields. See [data specifications](#data-specifications). | No | {}
+| options   | An option object. See [option specifications](#option-specifications). | Yes | N/A
 
-### Schema API
-// TODO Write down specs for SCHEMA object in forms
+#### Option specifications
 
-#### Example schema
-Say we want a form consisting of a username and password, you can use the following schema
-```
-schema
-{
-    username: {
-        type: 'text',
-        id: 'username',
-        label: 'Username',
-        description: 'The name of the user',
-        required: true,
-        disabled: false,
-        visible: true,
-        options: [],
-        validators: []
-    },
-    password: {
-        type: 'password',
-        id: 'password',
-        label: 'Password',
-        description: 'Password to MOLGENIS',
-        required: true,
-        disabled: false,
-        visible: true,
-        options: [],
-        validators: []
-    }
+| parameter | description | required | default |
+|-----------|-------------|----------|---------|
+| readonly  | Set form to readonly | No | FALSE |
+| onSubmit  | Function for what to do on submit | Yes | N/A |
+| onCancel  | Function for what to do on cancel | Yes | N/A |
+
+##### Example options object
+
+```js
+const options = {
+  readonly: true,
+  onSubmit: (formdata) => console.log("Nice data: " + formdata),
+  onCancel: () => console.log("Why did you close my form :'(")
 }
 ```
-// TODO more examples
 
-#### Input types
-For each field in a custom schema, you can use the following types
+#### Field specifications
 
-| type | description |
+| parameter | description |
+|-----------|-------------|
+| type      | HTML input type. Used to render the correct input. See [Field input types](#field-input-types) 
+| label     | Label used as a label for the input field. |
+| description | Description placed below the input field. Hidden if description is empty. |
+| required  | A boolean or a function determining whether a field is required. |
+| disabled  | A boolean or a function determining whether a field is disabled. |
+| readonly  | A boolean or a function determining whether a field is readonly (similar to disabled). |
+| visible   | A boolean or a function determining whether a field is visible. |
+| validators | A list of functions which determine whether a field is valid on submit. |
+| options | An object containing options for select, radios, and checkboxes typed fields. |
+
+> Functions used for for determining required, disabled, readonly, visible, or valid should accept a data object containing the data from the form.
+> See the [field object examples](#example-field-object) for code examples.
+
+##### Field input types
+
+> The following types are supported
+
+| type | renders |
 |------|-------------|
 | radios | A list of radio buttons |
 | select | A Vue Multiselect dropdown which supports asynchronous and synchronous option lists
@@ -79,26 +120,80 @@ For each field in a custom schema, you can use the following types
 | password | A HTML5 password input |
 | file | A HTML5 file input |
 
-#### Custom validators
-// TODO Write down example of a custom validator
+##### Example field object
 
-### Data API
-// TODO Write down specs for DATA object in forms
+> An example of a username field, a password field, and a confirm password field. 
+> Because our user is a funny guy, the username should be funny_guy_101. If not, the form will not be valid
+> The second password field should match the first password field, else the form will not be valid
 
-#### Example Data
+```js
+const fields = [
+  {
+    type: 'text',
+    id: 'username',
+    label: 'Username',
+    required: true,
+    disabled: false,
+    visible: true,
+    validators: [
+      (formdata) => formdata['username'] === 'funny_guy_101' 
+    ]
+  },
+  {
+    type: 'password',
+    id: 'password',
+    label: 'Password',
+    required: true,
+    disabled: false,
+    visible: true
+  },
+  {
+    type: 'password',
+    id: 'password-confirm',
+    label: 'Confirm password',
+    required: true,
+    disabled: false,
+    visible: true,
+    validators: [
+      (formdata) => formdata['password'] === formdata['password-confirm']
+    ]
+  }
+]
+```
+
+#### Data specifications
+
+> The data object contains key value pairs of field ID <-> input value
+
+##### Data example
+
+> The following data object contains data for user form which was already filled in once.
+
+```js
+const data = {
+  username: 'User',
+  country: 'Netherlands',
+  organisation: 'Github repositories',
+  bio: 'A software developer who loves Vue'
+}
+```
 
 ## Build setup
 
 ### [yarn](https://yarnpkg.com) - recommend
-``` bash
+```bash
+
 # Install dependencies
 yarn install
-
-# Server with hot reload at localhost:8080
+  
+# Server with hot reload at localhost:3000
 yarn run dev
-
+  
 # Build for production with minification
 yarn run build
+  
+# Run tests
+yarn run test
 ```
 
 ## License

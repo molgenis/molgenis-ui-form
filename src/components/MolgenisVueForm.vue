@@ -1,5 +1,6 @@
 <template>
-    <vue-form :state="formState" @submit.prevent="onSubmit(formData)">
+    <vue-form :state="state" @submit.prevent="options.onSubmit(data)">
+
         <div class="text-right hide-option-fields-btn-container">
             <button type="button" class="btn btn-sm btn-outline-secondary"
                     @click="hideOptionalFields = !hideOptionalFields">
@@ -7,54 +8,54 @@
             </button>
         </div>
 
-        <fieldset :disabled="readOnlyForm" v-for="field in fields" v-show="show(field)">
+        <fieldset :disabled="options.readonly" v-for="field in fields" :key="field.id" v-show="show(field)">
             <checkbox-field v-if="field.type === 'checkboxes'"
                             v-model="data[field.id]"
                             :field="field"
                             :required="isRequired(field)"
-                            :state="formState[field.id]"></checkbox-field>
+                            :state="state[field.id]"></checkbox-field>
 
             <date-time-field v-else-if="field.type === 'date' || field.type === 'date-time'"
                              v-model="data[field.id]"
                              :field="field"
                              :required="isRequired(field)"
-                             :state="formState[field.id]"></date-time-field>
+                             :state="state[field.id]"></date-time-field>
 
             <file-field v-else-if="field.type === 'file'"
                         v-model="data[field.id]"
                         :field="field"
                         :required="isRequired(field)"
-                        :state="formState[field.id]"></file-field>
+                        :state="state[field.id]"></file-field>
 
             <radios-field v-else-if="field.type === 'radios'"
                           v-model="data[field.id]"
                           :field="field"
                           :required="isRequired(field)"
-                          :state="formState[field.id]"></radios-field>
+                          :state="state[field.id]"></radios-field>
 
             <select-field v-else-if="field.type === 'select'"
                           v-model="data[field.id]"
                           :field="field"
                           :required="isRequired(field)"
-                          :state="formState[field.id]"></select-field>
+                          :state="state[field.id]"></select-field>
 
 
             <text-area-field v-else-if="field.type === 'text-area'"
                              v-model="data[field.id]"
                              :field="field"
                              :required="isRequired(field)"
-                             :state="formState[field.id]"></text-area-field>
+                             :state="state[field.id]"></text-area-field>
 
             <typed-form-field v-else
                          v-model="data[field.id]"
                          :field="field"
                          :required="isRequired(field)"
-                         :state="formState[field.id]"></typed-form-field>
+                         :state="state[field.id]"></typed-form-field>
         </fieldset>
 
         <div class="form-buttons text-right">
             <button type="submit" class="btn btn-primary">Save</button>
-            <button type="button" @click="onCancel" class="btn btn-light">Cancel</button>
+            <button type="button" @click="options.onCancel" class="btn btn-light">Cancel</button>
         </div>
     </vue-form>
 </template>
@@ -75,16 +76,13 @@
 
 <script>
   import fields from './field-components'
-  import utils from '../utils'
 
   export default {
-    name: 'molgenis-form',
-    props: ['id', 'type', 'schema', 'data', 'readOnlyForm', 'onSubmit', 'onCancel'],
+    name: 'vue-data-form',
+    props: ['id', 'fields', 'data', 'options'],
     data () {
       return {
-        formState: {},
-        formSchema: {},
-        formData: {},
+        state: {},
         hideOptionalFields: false
       }
     },
@@ -103,20 +101,6 @@
         }
         return (!this.hideOptionalFields || this.isRequired(field)) && visible
       }
-    },
-    computed: {
-      fields () {
-        return Object.keys(this.formSchema).map(fieldId => {
-          return this.formSchema[fieldId]
-        })
-      }
-    },
-    mounted () {
-      /* If the type is a molgenis-entity, generate a formSchema object, else just use the supplied schema */
-      this.formSchema = this.type === 'molgenis-entity' ? utils.generateFormSchema(this.schema) : this.schema
-
-      /* If the type is a molgenis-entity, generate a formData object, else just use the supplied data */
-      this.formData = this.type === 'molgenis-entity' ? utils.generateFormData(Object.keys(this.formSchema), this.data) : this.data
     },
     components: {
       'checkbox-field': fields.CheckboxField,

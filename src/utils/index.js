@@ -70,7 +70,7 @@ const getOptions = (attribute) => {
       }
     case 'CATEGORICAL':
     case 'CATEGORICAL_MREF':
-      // use api.get(attribute.refEntity.hrefCollection to imediately retrieve the categorical options
+      // use api.get(attribute.refEntity.hrefCollection to immediately retrieve the categorical options
       return {
         uri: attribute.refEntity.hrefCollection,
         id: attribute.refEntity.idAttribute,
@@ -116,6 +116,10 @@ const isNillable = (attribute) => {
   return expression ? (data) => evaluator(expression, data) : !attribute.nillable
 }
 
+/**
+ * If there is a validation expression present, return a function which evaluates said expression.
+ * Else return true
+ */
 const isValid = (attribute) => {
   const expression = attribute.validationExpression
   return expression ? (data) => evaluator(expression, data) : true
@@ -148,27 +152,27 @@ const generateFormSchemaField = (attribute) => {
 /**
  * Generates a data object suitable for the forms
  *
- * @param fields an array of field identifiers
+ * @param fields an array of field objects
  * @param data a data object containing everything a EntityType V2 response has in its item list
  * @returns a {fieldId: value} object
  */
 const generateFormData = (fields, data) => fields.reduce((accumulator, field) => {
-  accumulator[field] = data[field]
+  accumulator[field.id] = data[field.id]
   return accumulator
 }, {})
 
 /**
- * Generates a schema object suitable for the forms
+ * Generates an array for form fields
  *
  * @param schema an object containing the metadata from an EntityType V2 response
- * @returns a {fieldId: {Field}} object
+ * @returns a an array of Field objects
  */
-const generateFormSchema = (schema) => schema.attributes.reduce((accumulator, attribute) => {
-  accumulator[attribute.name] = generateFormSchemaField(attribute)
+const generateFormFields = (schema) => schema.attributes.reduce((accumulator, attribute) => {
+  accumulator.push(generateFormSchemaField(attribute))
   return accumulator
-}, {})
+}, [])
 
 export default {
-  generateFormSchema,
+  generateFormFields,
   generateFormData
 }
