@@ -3,16 +3,14 @@
 > Vue library for generating web forms
 
 ## TODO
+
 - Handle compounds
 - Option schema for providing options or to specify an asynch target to fetch data on search
 - Unit tests
 - Validation expressions
 - Validators pointing to data from other fields
 
-## Import and usage
-```bash
-yarn install @molgenis/molgenis-vue-forms
-```
+## Usage
 
 ```vue
 <template>
@@ -227,7 +225,8 @@ const fields = [
 
 ## Build setup
 
-### [yarn](https://yarnpkg.com) - recommend
+### [yarn](https://yarnpkg.com) - recommended
+
 ```bash
 
 # Install dependencies
@@ -241,6 +240,22 @@ yarn run build
   
 # Run tests
 yarn run test
+```
+
+### [npm](https://www.npmjs.com)
+
+```bash
+# Install dependencies
+npm install
+  
+# Server with hot reload at localhost:3000
+npm run dev
+  
+# Build for production with minification
+npm run build
+  
+# Run tests
+npm run test
 ```
 
 ## License
