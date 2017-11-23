@@ -45,11 +45,11 @@
                              :required="isRequired(field)"
                              :state="formState[field.id]"></text-area-field>
 
-            <input-field v-else
+            <typed-form-field v-else
                          v-model="data[field.id]"
                          :field="field"
                          :required="isRequired(field)"
-                         :state="formState[field.id]"></input-field>
+                         :state="formState[field.id]"></typed-form-field>
         </fieldset>
 
         <div class="form-buttons text-right">
@@ -122,10 +122,10 @@
       'checkbox-field': fields.CheckboxField,
       'date-time-field': fields.DateTimeField,
       'file-field': fields.FileField,
-      'input-field': fields.InputField,
       'radios-field': fields.RadiosField,
       'select-field': fields.SelectField,
-      'text-area-field': fields.TextAreaField
+      'text-area-field': fields.TextAreaField,
+      'typed-form-field': fields.TypedFormField
     }
   }
 </script>
