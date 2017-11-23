@@ -53,7 +53,7 @@ yarn install @molgenis/molgenis-vue-forms
 
 ## Specifications
 
-The molgenis-vue-form component accepts the following properties:
+The molgenis-vue-form component accepts the following properties
 
 | parameter | description | required | default | 
 |-----------|-------------|----------|---------|
@@ -74,7 +74,7 @@ The molgenis-vue-form component accepts the following properties:
 
 | parameter | description |
 |-----------|-------------|
-| type      | HTML input type. Used to render the correct input. See [Field input types](#field-input-types) 
+| type      | HTML input type. Used to render the correct input. See [supported types](#supported-types) 
 | label     | Label used as a label for the input field. |
 | description | Description placed below the input field. Hidden if description is empty. |
 | required  | A boolean or a function determining whether a field is required. |
@@ -82,15 +82,15 @@ The molgenis-vue-form component accepts the following properties:
 | readonly  | A boolean or a function determining whether a field is readonly (similar to disabled). |
 | visible   | A boolean or a function determining whether a field is visible. |
 | validators | A list of functions which determine whether a field is valid on submit. |
-| options | An object containing options for select, radios, and checkboxes typed fields. |
+| options | An object containing options for select, radios, and checkboxes typed fields. See [examples](#multiple-option-fields-example)|
 
 Functions in any of the parameters mentioned above should accept a data object containing the data from the form.  
 
 See the [field object examples](#example-field-object) for code examples.
 
-#### Field input types
+#### Supported types
 
-The following types are supported:
+The following types are supported
 
 | type | renders |
 |------|-------------|
@@ -177,6 +177,52 @@ const options = {
   onSubmit: (formdata) => console.log("Nice data: " + formdata),
   onCancel: () => console.log("Why did you close my form :'(")
 }
+```
+
+### Multiple option fields example
+
+```js
+const fields = [
+  {
+    type: 'select',
+    id: 'select-field',
+    label: 'Who is it?',
+    required: true,
+    options: {
+      uri: '/api/for/fetching/data',
+      options: [],
+      multiple: false,
+    }
+  },
+  {
+    type: 'radios',
+    id: 'radios-field',
+    label: 'Who did it',
+    description: 'there can be only one',
+    required: true,
+    options: {
+      options: [
+        {id: 'captain-yellow', value: 'captain-yellow', label: 'Captain Yellow'},
+        {id: 'admiral-blue', value: 'admiral-blue', label: 'Admiral Blue'},
+        {id: 'general-red', value: 'general-red', label: 'General Red'}
+      ]
+    }
+  },
+  {
+    type: 'checkboxes',
+    id: 'checkboxes-field',
+    label: 'Who are awesome',
+    description: 'Everyone can be awesome',
+    required: true,
+    options: {
+      options: [
+        {id: 'captain-yellow', value: 'captain-yellow', label: 'Captain Yellow'},
+        {id: 'admiral-blue', value: 'admiral-blue', label: 'Admiral Blue'},
+        {id: 'general-red', value: 'general-red', label: 'General Red'},
+      ]
+    }
+  }
+]
 ```
 
 ## Build setup
