@@ -8,7 +8,7 @@ Object.assign(config, {
     vue: 'vue'
   },
   entry: {
-    'molgenis-vue-forms': './src/components/MolgenisForm.vue'
+    'molgenis-vue-forms': './src/components/MolgenisVueForms.vue'
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
