@@ -1,9 +1,5 @@
 pipeline {
   agent any
-  triggers {
-    // github
-    cron ''
-  }
   stages {
     stage('Preparation') {
       steps {
@@ -12,7 +8,7 @@ pipeline {
         // Clean workspace
         step([$class: 'WsCleanup', cleanWhenFailure: false])
         // Get code from github.com
-        checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-git', url: 'http://jenkins@github.com/haakma-org/haakma-org.git']]]
+        checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: , doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-git', url: 'http://jenkins@github.com/molgenis/molgenis-vue-forms.git']]]
       }
     }
     stage('Test VUE-forms') {
@@ -37,7 +33,7 @@ pipeline {
     stage('Update VUE-forms documentation') {
       steps {
         echo "Publish VUE-forms"
-        // Login with molgenis Jenkins
+        // Login with molgenis Jenkins credentials
         npm publish --scope=@molgenis --access=public
       }
     }
@@ -53,11 +49,11 @@ pipeline {
 }
 
 def notifyStarted() {
-  slackSend (channel: '#haakma-org', color: '#FFFF00', message: "STARTED: Job - <${env.BUILD_URL}|${env.JOB_NAME}> | #${env.BUILD_NUMBER}")
+  slackSend (channel: '#releases', color: '#FFFF00', message: "STARTED: Job - <${env.BUILD_URL}|${env.JOB_NAME}> | #${env.BUILD_NUMBER}")
 }
 def notifySuccess() {
-  slackSend (channel: '#haakma-org', color: '#00FF00', message: "SUCCESSFUL: Job - <${env.BUILD_URL}|${env.JOB_NAME}> | #${env.BUILD_NUMBER}")
+  slackSend (channel: '#releases', color: '#00FF00', message: "SUCCESSFUL: Job - <${env.BUILD_URL}|${env.JOB_NAME}> | #${env.BUILD_NUMBER}")
 }
 def notifyFailed() {
-  slackSend (channel: '#haakma-org', color: '#FF0000', message: "FAILED: Job - <${env.BUILD_URL}|${env.JOB_NAME}> | #${env.BUILD_NUMBER}")
+  slackSend (channel: '#releases', color: '#FF0000', message: "FAILED: Job - <${env.BUILD_URL}|${env.JOB_NAME}> | #${env.BUILD_NUMBER}")
 }
