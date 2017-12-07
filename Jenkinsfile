@@ -38,14 +38,14 @@ pipeline {
       }
     }
   }
-  post {
-    success {
-      notifySuccess()
-    }
-    failure {
-      notifyFailed()
-    }
-  }
+  // post {
+  //  success {
+  //    notifySuccess()
+  //  }
+  //  failure {
+  //    notifyFailed()
+  //  }
+  // }
 }
 
 def notifyStarted() {
