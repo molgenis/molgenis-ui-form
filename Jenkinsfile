@@ -4,7 +4,7 @@ pipeline {
     stage('Preparation') {
       steps {
         // Backup has started
-        notifyStarted()
+        // notifyStarted()
         // Clean workspace
         step([$class: 'WsCleanup', cleanWhenFailure: false])
         // Get code from github.com
