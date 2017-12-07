@@ -3,8 +3,6 @@ pipeline {
   stages {
     stage('Preparation') {
       steps {
-        // Backup has started
-        // notifyStarted()
         // Clean workspace
         step([$class: 'WsCleanup', cleanWhenFailure: false])
         // Get code from github.com
@@ -49,9 +47,6 @@ pipeline {
   // }
 }
 
-def notifyStarted() {
-  slackSend (channel: '#releases', color: '#FFFF00', message: "STARTED: Job - <${env.BUILD_URL}|${env.JOB_NAME}> | #${env.BUILD_NUMBER}")
-}
 def notifySuccess() {
   slackSend (channel: '#releases', color: '#00FF00', message: "SUCCESSFUL: Job - <${env.BUILD_URL}|${env.JOB_NAME}> | #${env.BUILD_NUMBER}")
 }
