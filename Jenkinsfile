@@ -17,7 +17,7 @@ pipeline {
         yarn run test
       }
     }
-    stage('Test VUE-forms') {
+    stage('Build VUE-forms') {
       steps {
         echo "Build VUE-forms"
         yarn run build
