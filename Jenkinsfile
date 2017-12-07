@@ -8,7 +8,7 @@ pipeline {
         // Clean workspace
         step([$class: 'WsCleanup', cleanWhenFailure: false])
         // Get code from github.com
-        checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: , doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-git', url: 'http://jenkins@github.com/molgenis/molgenis-vue-forms.git']]]
+        checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: feature/jenkins, doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-git', url: 'http://jenkins@github.com/molgenis/molgenis-vue-forms.git']]]
       }
     }
     stage('Test VUE-forms') {
@@ -27,7 +27,7 @@ pipeline {
       steps {
         echo "Publish VUE-forms"
         // Login with molgenis Jenkins
-        npm publish --scope=@molgenis --access=public
+        // npm publish --scope=@molgenis --access=public
       }
     }
     stage('Update VUE-forms documentation') {
