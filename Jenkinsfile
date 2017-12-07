@@ -34,7 +34,7 @@ pipeline {
       steps {
         echo "Publish VUE-forms"
         // Login with molgenis Jenkins credentials
-        npm publish --scope=@molgenis --access=public
+
       }
     }
   }
