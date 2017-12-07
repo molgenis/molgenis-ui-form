@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import MolgenisVueForm from './components/MolgenisVueForm.vue'
+  import MolgenisVueForm from './components/MolgenisVueForms.vue'
   import utils from './utils'
   import restResponse from './data'
 
