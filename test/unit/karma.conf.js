@@ -17,7 +17,6 @@ module.exports = function (config) {
         webpack: require('../../webpack/dev.js'),
         webpackMiddleware: {
             noInfo: true
-        },
-        transports: ['xhr-polling', 'jsonp-polling']
+        }
     })
 }
