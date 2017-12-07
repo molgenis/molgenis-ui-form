@@ -14,6 +14,7 @@ pipeline {
     stage('Test VUE-forms') {
       steps {
         echo "Build the MOLGENIS Vue forms"
+        sh "yarn install"
         sh "yarn run test"
       }
     }
