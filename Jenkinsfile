@@ -27,7 +27,7 @@ pipeline {
       steps {
         echo "Publish VUE-forms"
         // Login with molgenis Jenkins
-        // npm publish --scope=@molgenis --access=public
+        // Publish to NPM
       }
     }
     stage('Update VUE-forms documentation') {
