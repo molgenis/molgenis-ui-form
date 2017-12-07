@@ -14,13 +14,13 @@ pipeline {
     stage('Test VUE-forms') {
       steps {
         echo "Build the MOLGENIS Vue forms"
-        yarn run test
+        sh "yarn run test"
       }
     }
     stage('Build VUE-forms') {
       steps {
         echo "Build VUE-forms"
-        yarn run build
+        sh "yarn run build"
       }
     }
     stage('Publish VUE-forms') {
