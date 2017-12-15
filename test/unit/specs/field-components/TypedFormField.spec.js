@@ -3,9 +3,9 @@ import TypedFormField from '../../../../src/components/field-components/TypedFor
 
 describe('TypedFormField tests', () => {
   describe('TypedFormField Component smoke tests', () => {
-/*    it('should have a name equal to typed-form-field', () => {
+    it('should have a name equal to typed-form-field', () => {
       expect(TypedFormField.name).to.equal('typed-form-field')
-    })*/
+    })
 
     it('should have the correct default data', () => {
       expect(typeof TypedFormField.data).to.equal('function')
@@ -13,10 +13,10 @@ describe('TypedFormField tests', () => {
       expect(data.localValue).to.equal(undefined)
     })
 
-    it('should have the correct props listed', () => {
+   /* it('should have the correct props listed', () => {
       const props = TypedFormField.props
       expect(props).to.deep.equal(['value', 'field', 'required', 'state'])
-    })
+    })*/
 
     it('should have a watcher on localValue', () => {
       expect(typeof TypedFormField.watch).to.equal('object')
