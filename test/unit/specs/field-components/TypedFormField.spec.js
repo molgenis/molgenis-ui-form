@@ -13,10 +13,12 @@ describe('TypedFormField tests', () => {
       expect(data.localValue).to.equal(undefined)
     })
 
-   /* it('should have the correct props listed', () => {
-      const props = TypedFormField.props
-      expect(props).to.deep.equal(['value', 'field', 'required', 'state'])
-    })*/
+   /*
+    * it('should have the correct props listed', () => {
+    *  const props = TypedFormField.props
+    *  expect(props).to.deep.equal(['value', 'field', 'required', 'state'])
+    * })
+    */
 
     it('should have a watcher on localValue', () => {
       expect(typeof TypedFormField.watch).to.equal('object')
