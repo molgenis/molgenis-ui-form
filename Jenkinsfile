@@ -6,7 +6,7 @@ pipeline {
         // Clean workspace
         step([$class: 'WsCleanup', cleanWhenFailure: false])
         // Get code from github.com
-        checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-git', url: 'http://jenkins@github.com/molgenis/molgenis-vue-forms.git']]]
+        checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-git', url: 'http://jenkins@github.com/sidohaakma/molgenis-vue-form.git']]]
       }
     }
     stage('Test VUE-forms') {
