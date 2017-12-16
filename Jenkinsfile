@@ -25,8 +25,10 @@ pipeline {
     stage('Publish VUE-forms') {
       steps {
         echo "Publish VUE-forms"
-        // Login with molgenis Jenkins
+        // Get token from environment vriable NPM_TOKEN in
+        // Jenkins organization
         // Publish to NPM
+        sh "npm run ci-publish || true"
       }
     }
     stage('Update VUE-forms documentation') {
