@@ -26,7 +26,7 @@ pipeline {
       steps {
         echo "Publish VUE-forms"
         // Get token from environment vriable NPM_TOKEN in
-        // Jenkins organization
+        // Jenkins organization`
         // Publish to NPM
         sh "npm run ci-publish || true"
       }
