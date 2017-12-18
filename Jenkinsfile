@@ -1,7 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Preparation') {
+    componentName: 'molgenis-ui-form'
+    componentVersion: ${gitTag}
+    stage('Preparationn') {
       steps {
         // Clean workspace
         step([$class: 'WsCleanup', cleanWhenFailure: false])
@@ -9,33 +11,33 @@ pipeline {
         checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-molgenis', url: 'http://github.com/sidohaakma/molgenis-vue-form.git']]]
       }
     }
-    stage('Test VUE-forms') {
+    stage('Build UI-component') {
       steps {
         echo "Build the MOLGENIS Vue forms"
         sh "yarn install"
-        sh "yarn run test"
+        sh "yarn build"
       }
     }
-    stage('Build VUE-forms') {
+    stage('Test UI-component') {
       steps {
         echo "Build VUE-forms"
-        sh "yarn run build"
+        sh "yarn test"
       }
     }
     stage('Publish VUE-forms') {
       steps {
-        echo "Publish VUE-forms"
+        echo "Publish UI-component"
         // Get token from environment vriable NPM_TOKEN in
         // Jenkins organization`
         // Publish to NPM
-        sh "npm run ci-publish || true"
+        sh "yarn ci-publish --access public"
       }
     }
     stage('Update VUE-forms documentation') {
       steps {
-        echo "Publish VUE-forms"
-        // Login with molgenis Jenkins credentials
-
+        echo "Publish UI-component documentation"
+        sh "tar -cvzf src/ ${componentName}.tar"
+        sh "cp molgenis-ui-form.tar /srv/www/molgenis-kitchensink/${componentName}/${componentVersion}/"
       }
     }
   }
