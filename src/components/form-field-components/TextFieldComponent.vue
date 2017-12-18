@@ -24,12 +24,9 @@
 </template>
 
 <script>
-  import VueForm from 'vue-form'
-
   export default {
     name: 'text-field-component',
     props: ['value', 'state'],
-    mixins: [VueForm],
     data () {
       return {
         // Store a local value to prevent changing the parent state

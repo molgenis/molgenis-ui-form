@@ -5,7 +5,6 @@
 </template>
 
 <script>
-  import VueForm from 'vue-form'
   import TextFieldComponent from './form-field-components/TextFieldComponent'
 
   export default {
@@ -16,7 +15,6 @@
         text: ''
       }
     },
-    mixins: [VueForm],
     components: {
       TextFieldComponent
     }
