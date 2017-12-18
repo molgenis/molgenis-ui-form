@@ -1,8 +1,8 @@
 pipeline {
   agent any
+  componentName: 'molgenis-ui-form'
+  componentVersion: ${gitTag}
   stages {
-    componentName: 'molgenis-ui-form'
-    componentVersion: ${gitTag}
     stage('Preparationn') {
       steps {
         // Clean workspace
