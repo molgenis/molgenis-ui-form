@@ -1,8 +1,8 @@
 pipeline {
   agent any
   environment {
-    componentName: 'molgenis-ui-form'
-    componentVersion: ${gitTag}
+    componentName=molgenis-ui-form
+    componentVersion=${gitTag}
   }
   stages {
     stage('Preparationn') {
