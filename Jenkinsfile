@@ -1,7 +1,9 @@
 pipeline {
   agent any
-  componentName: 'molgenis-ui-form'
-  componentVersion: ${gitTag}
+  environment {
+    componentName: 'molgenis-ui-form'
+    componentVersion: ${gitTag}
+  }
   stages {
     stage('Preparationn') {
       steps {
@@ -37,7 +39,7 @@ pipeline {
       steps {
         echo "Publish UI-component documentation"
         sh "tar -cvzf src/ ${componentName}.tar"
-        sh "cp molgenis-ui-form.tar /srv/www/molgenis-kitchensink/${componentName}/${componentVersion}/"
+        sh "cp molgenis-ui-form.tar /srv/www/molgenis-kitchensink/components/${componentName}/${componentVersion}/"
       }
     }
   }
