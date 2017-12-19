@@ -10,7 +10,7 @@
     "build": "webpack --config webpack/prod --progress --hide-modules",
     "preversion": "npm run build",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md && git commit CHANGELOG.md -m 'Chore updated changelog'",
-    "postversion": "git push --all",
+    "postversion": "git push --tags",
     "test": "karma start test/unit/karma.conf.js --single-run --require test/setup.js test/**/*.spec.js",
     "test:watch": "karma start test/unit/karma.conf.js --watch --require test/setup.js test/**/*.spec.js"
   },
