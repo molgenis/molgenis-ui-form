@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     COMPONENT_NAME = "molgenis-ui-form"
-    COMPONENT_VERSION = "${gitTag}"
+    COMPONENT_VERSION = "${GWBT_TAG}"
   }
   stages {
     stage('Preparationn') {
