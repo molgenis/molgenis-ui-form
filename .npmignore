@@ -1,0 +1,16 @@
+/build
+/config
+/src
+.idea
+yarn.lock
+index.html
+.babelrc
+.postcssrc.js
+.gitignore
+.editorconfig
+.eslintignore
+.eslintrc.js
+/node_modules
+selenium-debug.log
+/test
+/static
