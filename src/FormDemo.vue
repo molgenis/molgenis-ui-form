@@ -16,7 +16,7 @@
           </div>
 
           <div class="card-body">
-            <form-component></form-component>
+            <form-component id="example-form" :schema="schema"></form-component>
           </div>
         </div>
       </div>
@@ -30,6 +30,24 @@
 
   export default {
     name: 'form-demo',
+    data () {
+      return {
+        schema: {
+          fields: [
+            {
+              type: 'text',
+              id: 'text-field',
+              label: 'Text field',
+              description: 'This is a cool text field',
+              visible: true,
+              required: true,
+              disabled: false,
+              validators: []
+            }
+          ]
+        }
+      }
+    },
     components: {
       FormComponent
     }
