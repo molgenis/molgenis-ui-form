@@ -32,7 +32,7 @@ pipeline {
         // Get token from environment vriable NPM_TOKEN in
         // Jenkins organization`
         // Publish to NPM
-        sh "echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc"
+        sh "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc"
         sh "npm publish --access public --scope haakma-org"
       }
     }
