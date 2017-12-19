@@ -40,7 +40,7 @@
       validators () {
         let valid = true
         this.field.validators.forEach(validator => {
-          const result = validator()
+          const result = validator(this.localValue)
           this.validationMessage = result.message
           valid = result.valid
         })

@@ -42,7 +42,16 @@
               visible: true,
               required: true,
               disabled: false,
-              validators: []
+              validators: [
+                (value) => {
+                  const valid = value.indexOf('test') !== -1
+                  const message = valid ? '' : 'not valid value. Please include the word test'
+                  return {
+                    valid: valid,
+                    message: message
+                  }
+                }
+              ]
             }
           ]
         }

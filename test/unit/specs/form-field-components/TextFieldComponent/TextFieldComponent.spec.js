@@ -1,7 +1,7 @@
 import TextFieldComponent from '@/components/form-field-components/TextFieldComponent'
 
 describe('TextFieldComponent unit tests', () => {
-  it('should load the TextFieldComponent with the proper name', () => {
+  it('should load the component with "text-field-component" as a name', () => {
     expect(TextFieldComponent.name).to.equal('text-field-component')
   })
 
@@ -13,7 +13,13 @@ describe('TextFieldComponent unit tests', () => {
 
   it('should have the correct props listed', () => {
     const props = TextFieldComponent.props
-    expect(props).to.deep.equal(['value', 'state'])
+    expect(props).to.deep.equal(['value', 'field', 'state'])
+  })
+
+  it('should have a validate method', () => {
+    expect(typeof TextFieldComponent.methods).to.equal('object')
+    const methods = TextFieldComponent.methods
+    expect(typeof methods.validators).to.equal('function')
   })
 
   it('should have a watcher on localValue', () => {
