@@ -263,3 +263,7 @@ npm run test
 ## License
 
 GNU GPLv3 © Mark-de-Haan <markdehaan90@gmail.com>
+
+## Release molgenis-forms
+
+Just type npm version patch/minor/major
