@@ -1,7 +1,7 @@
 {
   "name": "@haakma-org/molgenis-vue-forms",
   "description": "Library for generating web forms",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "author": "Mark de Haan <markdehaan90@gmail.com>",
   "private": false,
   "repository": "https://github.com/sidohaakma/molgenis-vue-form",
