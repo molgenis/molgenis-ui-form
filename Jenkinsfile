@@ -39,7 +39,7 @@ pipeline {
     stage('Update UI-component documentation') {
       steps {
         echo "Publish UI-component documentation"
-        sh "tar -cvzf ${COMPONENT_NAME}-{COMPONENT_VERSION}.tar src/"
+        sh "tar -cvzf ${COMPONENT_NAME}-${COMPONENT_VERSION}.tar src/"
         sh "cp molgenis-ui-form.tar /srv/www/molgenis-kitchensink/components/${COMPONENT_NAME}/${COMPONENT_VERSION}/"
       }
     }
