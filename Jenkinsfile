@@ -32,7 +32,8 @@ pipeline {
         // Get token from environment vriable NPM_TOKEN in
         // Jenkins organization`
         // Publish to NPM
-        sh "yarn ci-publish --access public"
+        sh "echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc"
+        sh "yarn publish --access public"
       }
     }
     stage('Update VUE-forms documentation') {
