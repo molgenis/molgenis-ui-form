@@ -38,8 +38,8 @@ pipeline {
     stage('Update VUE-forms documentation') {
       steps {
         echo "Publish UI-component documentation"
-        sh "tar -cvzf src/ ${componentName}.tar"
-        sh "cp molgenis-ui-form.tar /srv/www/molgenis-kitchensink/components/${componentName}/${componentVersion}/"
+        sh "tar -cvzf src/ ${COMPONENT_NAME}.tar"
+        sh "cp molgenis-ui-form.tar /srv/www/molgenis-kitchensink/components/${COMPONENT_NAME}/${COMPONENT_VERSION}/"
       }
     }
   }
