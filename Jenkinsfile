@@ -26,17 +26,17 @@ pipeline {
         sh "yarn test"
       }
     }
-    stage('Publish VUE-forms') {
+    stage('Publish UI-component') {
       steps {
         echo "Publish UI-component"
         // Get token from environment vriable NPM_TOKEN in
         // Jenkins organization`
         // Publish to NPM
         sh "echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc"
-        sh "yarn publish --access public"
+        sh "npm publish --access public --scope haakma-org"
       }
     }
-    stage('Update VUE-forms documentation') {
+    stage('Update UI-component documentation') {
       steps {
         echo "Publish UI-component documentation"
         sh "tar -cvzf src/ ${COMPONENT_NAME}.tar"
