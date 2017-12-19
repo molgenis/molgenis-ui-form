@@ -1,9 +1,7 @@
 pipeline {
   agent any
-  environment {
-    componentName=molgenis-ui-form
-    componentVersion=${gitTag}
-  }
+  def componentName = 'molgenis-ui-form'
+  def componentVersion = "${gitTag}"
   stages {
     stage('Preparationn') {
       steps {
