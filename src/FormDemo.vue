@@ -68,6 +68,16 @@
               ]
             },
             {
+              type: 'email',
+              id: 'email-field',
+              label: 'Email field',
+              description: 'This is a cool email field',
+              visible: true,
+              required: true,
+              disabled: false,
+              validators: []
+            },
+            {
               type: 'radio',
               id: 'radio-field',
               label: 'Radio field',

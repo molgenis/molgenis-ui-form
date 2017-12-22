@@ -12,6 +12,16 @@
         </checkbox-field-component>
       </template>
 
+      <!-- Render email field -->
+      <template v-if="field.type === 'email'">
+        <email-field-component
+          v-model="data[field.id]"
+          :field="field"
+          :state="state[field.id]"
+          :validate="validate">
+        </email-field-component>
+      </template>
+
       <!-- Render number field -->
       <template v-if="field.type === 'number'">
         <number-field-component
@@ -51,6 +61,7 @@
   import VueForm from 'vue-form'
 
   import CheckboxFieldComponent from './field-types/CheckboxFieldComponent'
+  import EmailFieldComponent from './field-types/EmailFieldComponent'
   import NumberFieldComponent from './field-types/NumberFieldComponent'
   import RadioFieldComponent from './field-types/RadioFieldComponent'
   import TextFieldComponent from './field-types/TextFieldComponent'
@@ -93,6 +104,7 @@
     },
     components: {
       CheckboxFieldComponent,
+      EmailFieldComponent,
       NumberFieldComponent,
       RadioFieldComponent,
       TextFieldComponent
