@@ -57,10 +57,13 @@
     methods: {
       validate (field) {
         let valid = true
-        field.validators.forEach(validator => {
-          // validate with all the data in the form
-          valid = validator(this.data)
-        })
+
+        if (field.validators) {
+          field.validators.forEach(validator => {
+            // validate with all the data in the form
+            valid = validator(this.data)
+          })
+        }
         return valid
       }
     },

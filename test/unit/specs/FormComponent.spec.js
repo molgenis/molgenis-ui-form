@@ -23,7 +23,7 @@ describe('FormComponent unit tests', () => {
   it('renders correctly with minimal props', () => {
     const Constructor = Vue.extend(FormComponent)
     const propsData = {id: 'test-form', schema: {}}
-    const vm = new Constructor({ propsData: propsData, mixins: [VueForm] }).$mount()
+    const vm = new Constructor({propsData: propsData, mixins: [VueForm]}).$mount()
     expect(vm.$el.id).to.equal('test-form')
   })
 
@@ -40,23 +40,53 @@ describe('FormComponent unit tests', () => {
           required: true,
           disabled: false,
           validators: [
-            (value) => {
-              const valid = value.indexOf('test') !== -1
-              const message = valid ? '' : 'not valid value. Please include the word test'
-              return {
-                valid: valid,
-                message: message
-              }
+            (data) => {
+              const value = data['text-field']
+              return value ? value.indexOf('test') !== -1 : true
             }
           ]
+        },
+        {
+          type: 'radio',
+          id: 'radio-field',
+          label: 'Radio field',
+          description: 'This is a nice radio button selection',
+          visible: true,
+          required: true,
+          disabled: false,
+          options: () => {
+            return [
+              {
+                id: '1',
+                label: 'Option 1',
+                value: '1'
+              },
+              {
+                id: '2',
+                label: 'Option 2',
+                value: '2'
+              },
+              {
+                id: '3',
+                label: 'Option 3',
+                value: '3'
+              }
+            ]
+          }
         }
       ]
     }
+
     const propsData = {id: 'test-form', schema}
-    const vm = new Constructor({ propsData: propsData, mixins: [VueForm] }).$mount()
-    const expextedHtml = `<form novalidate="novalidate" class="vf-form-pristine vf-form-valid vf-form-untouched" id="test-form"><fieldset><div class="vf-field-pristine vf-field-valid vf-field-untouched"><div class="form-group"><label for="text-field">Text field</label> <input id="text-field" name="text-field" aria-describedby="text-field-description" required="required" type="text" vue-form-validator="" class="form-control form-control-lg vf-pristine vf-invalid vf-untouched vf-invalid-required"> <small id="text-field-description" class="form-text text-muted">
-      This is a cool text field
-    </small> <div class="form-control-feedback"></div></div></div></fieldset></form>`
-    expect(vm.$el.outerHTML).to.equal(expextedHtml)
+    const vm = new Constructor({propsData: propsData, mixins: [VueForm]}).$mount()
+
+    const fieldsets = vm.$el.getElementsByTagName('fieldset')
+    expect(fieldsets.length).to.equal(2)
+
+    const textFieldset = fieldsets[0]
+    expect(textFieldset.getElementsByTagName('input').length).to.equal(1)
+
+    const radioFieldset = fieldsets[1]
+    expect(radioFieldset.getElementsByTagName('input').length).to.equal(3)
   })
 })
