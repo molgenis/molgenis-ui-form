@@ -38,11 +38,13 @@ describe('RadioFieldComponent unit tests', () => {
     $invalid: false
   }
 
+  const validate = () => {}
+
   const propsData = {
     value: '',
     field: field,
     state: state,
-    validate: (data) => console.log('hello')
+    validate: validate
   }
 
   const wrapper = mount(RadioFieldComponent,
