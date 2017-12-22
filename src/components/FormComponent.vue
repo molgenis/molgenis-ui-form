@@ -4,12 +4,12 @@
 
       <!-- Render radios field -->
       <template v-if="field.type === 'radio'">
-        <radios-field-component
+        <radio-field-component
           v-model="data[field.id]"
           :field="field"
           :state="state[field.id]"
           :validate="validate">
-        </radios-field-component>
+        </radio-field-component>
       </template>
 
       <!-- Render text field -->
@@ -27,7 +27,9 @@
 </template>
 
 <script>
-  import FormComponentRadioField from './field-types/FormComponentRadioField'
+  import VueForm from 'vue-form'
+
+  import RadioFieldComponent from './field-types/RadioFieldComponent'
   import TextFieldComponent from './field-types/TextFieldComponent'
 
   export default {
@@ -62,8 +64,9 @@
         return valid
       }
     },
+    mixins: [VueForm],
     components: {
-      FormComponentRadioField,
+      RadioFieldComponent,
       TextFieldComponent
     }
   }

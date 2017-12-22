@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import FormDemo from './FormDemo'
-import VueForm from 'vue-form'
-
-Vue.use(VueForm)
 
 Vue.config.productionTip = false
 
