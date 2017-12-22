@@ -44,6 +44,7 @@
 
   export default {
     name: 'FormComponent',
+    mixins: [VueForm],
     props: {
       id: {
         type: String,
@@ -77,7 +78,6 @@
         return valid
       }
     },
-    mixins: [VueForm],
     components: {
       CheckboxFieldComponent,
       RadioFieldComponent,

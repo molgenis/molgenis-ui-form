@@ -37,6 +37,7 @@
 
   export default {
     name: 'RadioFieldComponent',
+    mixins: [VueForm],
     props: ['value', 'field', 'state', 'validate'],
     data () {
       return {
@@ -49,7 +50,6 @@
         // Emit value changes to the parent (form)
         this.$emit('input', value)
       }
-    },
-    mixins: [VueForm]
+    }
   }
 </script>

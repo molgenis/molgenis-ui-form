@@ -37,6 +37,7 @@
 
   export default {
     name: 'CheckboxFieldComponent',
+    mixins: [VueForm],
     props: ['value', 'field', 'state', 'validate'],
     data () {
       return {
@@ -50,7 +51,6 @@
         // Emit value changes to the parent (form)
         this.$emit('input', value)
       }
-    },
-    mixins: [VueForm]
+    }
   }
 </script>
