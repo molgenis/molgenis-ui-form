@@ -80,6 +80,35 @@
                   }
                 ]
               }
+            },
+            {
+              type: 'checkbox',
+              id: 'checkbox-field',
+              label: 'Checkbox field',
+              description: 'This is a nice Checkbox selection',
+              visible: true,
+              required: true,
+              disabled: false,
+              validators: [],
+              options: () => {
+                return [
+                  {
+                    id: '1',
+                    label: 'Option 1',
+                    value: '1'
+                  },
+                  {
+                    id: '2',
+                    label: 'Option 2',
+                    value: '2'
+                  },
+                  {
+                    id: '3',
+                    label: 'Option 3',
+                    value: '3'
+                  }
+                ]
+              }
             }
           ]
         }
