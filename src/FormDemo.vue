@@ -26,39 +26,118 @@
 </template>
 
 <script>
-import FormComponent from './components/FormComponent'
+  import FormComponent from './components/FormComponent'
 
-export default {
-  name: 'form-demo',
-  components: {
-    FormComponent
-  },
-  data () {
-    return {
-      schema: {
-        fields: [
-          {
-            type: 'text',
-            id: 'text-field',
-            label: 'Text field',
-            description: 'This is a cool text field',
-            visible: true,
-            required: true,
-            disabled: false,
-            validators: [
-              (value) => {
-                const valid = value.indexOf('test') !== -1
-                const message = valid ? '' : 'not valid value. Please include the word test'
-                return {
-                  valid: valid,
-                  message: message
+  export default {
+    name: 'form-demo',
+    components: {
+      FormComponent
+    },
+    data () {
+      return {
+        schema: {
+          fields: [
+            {
+              type: 'text',
+              id: 'text-field',
+              label: 'Text field',
+              description: 'This is a cool text field',
+              visible: true,
+              required: true,
+              disabled: false,
+              validators: [
+                (data) => {
+                  const value = data['text-field']
+                  return value ? value.indexOf('test') !== -1 : true
                 }
+              ]
+            },
+            {
+              type: 'number',
+              id: 'number-field',
+              label: 'number',
+              description: 'This is a cool number field',
+              visible: true,
+              required: true,
+              disabled: false,
+              validators: [
+                (data) => {
+                  const value = data['number-field']
+                  return value ? value > 5 : true
+                }
+              ]
+            },
+            {
+              type: 'email',
+              id: 'email-field',
+              label: 'Email field',
+              description: 'This is a cool email field',
+              visible: true,
+              required: true,
+              disabled: false,
+              validators: []
+            },
+            {
+              type: 'radio',
+              id: 'radio-field',
+              label: 'Radio field',
+              description: 'This is a nice radio button selection',
+              visible: true,
+              required: true,
+              disabled: false,
+              validators: [],
+              options: () => {
+                return [
+                  {
+                    id: '1',
+                    label: 'Option 1',
+                    value: '1'
+                  },
+                  {
+                    id: '2',
+                    label: 'Option 2',
+                    value: '2'
+                  },
+                  {
+                    id: '3',
+                    label: 'Option 3',
+                    value: '3'
+                  }
+                ]
               }
-            ]
-          }
-        ]
+            },
+            {
+              type: 'checkbox',
+              id: 'checkbox-field',
+              label: 'Checkbox field',
+              description: 'This is a nice Checkbox selection',
+              visible: true,
+              required: true,
+              disabled: false,
+              validators: [],
+              options: () => {
+                return [
+                  {
+                    id: '1',
+                    label: 'Option 1',
+                    value: '1'
+                  },
+                  {
+                    id: '2',
+                    label: 'Option 2',
+                    value: '2'
+                  },
+                  {
+                    id: '3',
+                    label: 'Option 3',
+                    value: '3'
+                  }
+                ]
+              }
+            }
+          ]
+        }
       }
     }
   }
-}
 </script>

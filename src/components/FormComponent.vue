@@ -1,21 +1,51 @@
 <template>
   <vue-form :id="id" :state="state">
     <fieldset v-for="field in schema.fields">
-      <text-field-component v-model="data[field.id]" :field="field" :state="state"></text-field-component>
+
+      <!-- Render checkbox field -->
+      <template v-if="field.type === 'checkbox'">
+        <checkbox-field-component
+          v-model="data[field.id]"
+          :field="field"
+          :state="state[field.id]"
+          :validate="validate">
+        </checkbox-field-component>
+      </template>
+
+      <!-- Render radio field -->
+      <template v-else-if="field.type === 'radio'">
+        <radio-field-component
+          v-model="data[field.id]"
+          :field="field"
+          :state="state[field.id]"
+          :validate="validate">
+        </radio-field-component>
+      </template>
+
+      <!-- Render email, url, password, number, and text fields -->
+      <template v-else>
+        <typed-field-component
+          v-model="data[field.id]"
+          :field="field"
+          :state="state[field.id]"
+          :validate="validate">
+        </typed-field-component>
+      </template>
+
     </fieldset>
   </vue-form>
 </template>
 
 <script>
   import VueForm from 'vue-form'
-  import TextFieldComponent from './field-types/TextFieldComponent'
+
+  import CheckboxFieldComponent from './field-types/CheckboxFieldComponent'
+  import RadioFieldComponent from './field-types/RadioFieldComponent'
+  import TypedFieldComponent from './field-types/TypedFieldComponent.vue'
 
   export default {
     name: 'FormComponent',
     mixins: [VueForm],
-    components: {
-      TextFieldComponent
-    },
     props: {
       id: {
         type: String,
@@ -35,6 +65,24 @@
       return {
         state: {}
       }
+    },
+    methods: {
+      validate (field) {
+        let valid = true
+
+        if (field.validators) {
+          field.validators.forEach(validator => {
+            // validate with all the data in the form
+            valid = validator(this.data)
+          })
+        }
+        return valid
+      }
+    },
+    components: {
+      CheckboxFieldComponent,
+      RadioFieldComponent,
+      TypedFieldComponent
     }
   }
 </script>
