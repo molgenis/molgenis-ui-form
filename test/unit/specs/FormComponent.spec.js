@@ -73,6 +73,35 @@ describe('FormComponent unit tests', () => {
               }
             ]
           }
+        },
+        {
+          type: 'checkbox',
+          id: 'checkbox-field',
+          label: 'Checkbox field',
+          description: 'This is a nice Checkbox selection',
+          visible: true,
+          required: true,
+          disabled: false,
+          validators: [],
+          options: () => {
+            return [
+              {
+                id: '1',
+                label: 'Option 1',
+                value: '1'
+              },
+              {
+                id: '2',
+                label: 'Option 2',
+                value: '2'
+              },
+              {
+                id: '3',
+                label: 'Option 3',
+                value: '3'
+              }
+            ]
+          }
         }
       ]
     }
@@ -81,12 +110,15 @@ describe('FormComponent unit tests', () => {
     const vm = new Constructor({propsData: propsData, mixins: [VueForm]}).$mount()
 
     const fieldsets = vm.$el.getElementsByTagName('fieldset')
-    expect(fieldsets.length).to.equal(2)
+    expect(fieldsets.length).to.equal(3)
 
     const textFieldset = fieldsets[0]
     expect(textFieldset.getElementsByTagName('input').length).to.equal(1)
 
     const radioFieldset = fieldsets[1]
     expect(radioFieldset.getElementsByTagName('input').length).to.equal(3)
+
+    const checkboxFieldset = fieldsets[2]
+    expect(checkboxFieldset.getElementsByTagName('input').length).to.equal(3)
   })
 })
