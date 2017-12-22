@@ -33,7 +33,7 @@
   import VueForm from 'vue-form'
 
   export default {
-    name: 'TypedFormField',
+    name: 'TypedFieldComponent',
     mixins: [VueForm],
     props: ['value', 'field', 'state', 'validate'],
     data () {
