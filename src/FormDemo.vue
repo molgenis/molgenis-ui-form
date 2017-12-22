@@ -53,6 +53,21 @@
               ]
             },
             {
+              type: 'number',
+              id: 'number-field',
+              label: 'number',
+              description: 'This is a cool number field',
+              visible: true,
+              required: true,
+              disabled: false,
+              validators: [
+                (data) => {
+                  const value = data['text-field']
+                  return value ? value > 5 : true
+                }
+              ]
+            },
+            {
               type: 'radio',
               id: 'radio-field',
               label: 'Radio field',
