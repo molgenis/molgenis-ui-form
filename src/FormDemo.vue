@@ -62,7 +62,7 @@
               disabled: false,
               validators: [
                 (data) => {
-                  const value = data['text-field']
+                  const value = data['number-field']
                   return value ? value > 5 : true
                 }
               ]

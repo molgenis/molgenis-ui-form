@@ -12,29 +12,8 @@
         </checkbox-field-component>
       </template>
 
-      <!-- Render email field -->
-      <template v-if="field.type === 'email'">
-        <email-field-component
-          v-model="data[field.id]"
-          :field="field"
-          :state="state[field.id]"
-          :validate="validate">
-        </email-field-component>
-      </template>
-
-      <!-- Render number field -->
-      <template v-if="field.type === 'number'">
-        <number-field-component
-          v-model="data[field.id]"
-          :field="field"
-          :state="state[field.id]"
-          :validate="validate">
-        </number-field-component>
-      </template>
-
-
       <!-- Render radio field -->
-      <template v-if="field.type === 'radio'">
+      <template v-else-if="field.type === 'radio'">
         <radio-field-component
           v-model="data[field.id]"
           :field="field"
@@ -43,14 +22,14 @@
         </radio-field-component>
       </template>
 
-      <!-- Render text field -->
-      <template v-else-if="field.type === 'text'">
-        <text-field-component
+      <!-- Render email, url, password, number, and text fields -->
+      <template v-else>
+        <typed-field-component
           v-model="data[field.id]"
           :field="field"
           :state="state[field.id]"
           :validate="validate">
-        </text-field-component>
+        </typed-field-component>
       </template>
 
     </fieldset>
@@ -61,10 +40,8 @@
   import VueForm from 'vue-form'
 
   import CheckboxFieldComponent from './field-types/CheckboxFieldComponent'
-  import EmailFieldComponent from './field-types/EmailFieldComponent'
-  import NumberFieldComponent from './field-types/NumberFieldComponent'
   import RadioFieldComponent from './field-types/RadioFieldComponent'
-  import TextFieldComponent from './field-types/TextFieldComponent'
+  import TypedFieldComponent from './field-types/TypedFieldComponent.vue'
 
   export default {
     name: 'FormComponent',
@@ -104,10 +81,8 @@
     },
     components: {
       CheckboxFieldComponent,
-      EmailFieldComponent,
-      NumberFieldComponent,
       RadioFieldComponent,
-      TextFieldComponent
+      TypedFieldComponent
     }
   }
 </script>
