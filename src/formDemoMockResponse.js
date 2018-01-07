@@ -20,8 +20,7 @@ const metadata = {
       'lookupAttribute': true,
       'isAggregatable': false,
       'description': 'STRING description',
-      'nullableExpression': '$("text").value() !== "test"',
-      'validationExpression': '$("string").value() === "valid"'
+      'validationExpression': '$("text").value() === "valid"'
     },
     {
       'href': '/api/v2/it_emx_datatypes_TypeTest/meta/text',
@@ -30,7 +29,7 @@ const metadata = {
       'label': 'Text Field',
       'attributes': [],
       'auto': false,
-      'nillable': true,
+      'nillable': false,
       'readOnly': false,
       'labelAttribute': true,
       'unique': true,
