@@ -1,54 +1,60 @@
 import TextAreaFieldComponent from '@/components/field-types/TextAreaFieldComponent'
 import { mount } from 'vue-test-utils'
 
-describe('CheckboxFieldComponent unit tests', () => {
-  const field = {
-    id: 'text-area-field',
-    label: 'Text Area Field',
-    description: 'This is a text area field',
-    type: 'text-area',
-    visible: true,
-    required: true,
-    disabled: false,
-    validators: []
+const validator = {
+  fields: {
+    find: () => ({
+      update: () => ({})
+    })
   }
+}
 
-  const mockParentFunction = () => {
-    return null
-  }
+const errors = {
+  has: (id) => false,
+  first: (id) => ''
+}
 
-  const state = {
-    $touched: false,
-    $submitted: false,
-    $invalid: false,
-    _addControl: mockParentFunction
-  }
+describe('TextAreaFieldComponent unit tests', () => {
+  describe('rendering a basic TextAreaFieldComponent correctly', () => {
+    const propsData = {
+      value: 'hello world',
+      field: {
+        type: 'text-area',
+        id: 'simple-field',
+        label: 'Simple field',
+        description: 'This is a simple field',
+        required: true
+      }
+    }
 
-  const mockValidateFunction = () => {}
+    const wrapper = mount(TextAreaFieldComponent, {
+      propsData,
+      mocks: {
+        errors
+      },
+      provide: {
+        '$validator': validator
+      }
+    })
 
-  const propsData = {
-    value: 'This is data',
-    field: field,
-    state: state,
-    validate: mockValidateFunction
-  }
+    it('should load the component with "TextAreaFieldComponent" as a name', () => {
+      expect(wrapper.name()).to.equal('TextAreaFieldComponent')
+    })
 
-  const wrapper = mount(TextAreaFieldComponent, {
-    propsData: propsData,
-    stubs: {'fieldMessages': '<div>This field is required</div>'}
-  })
+    it('should set localValue if value is defined', () => {
+      expect(wrapper.vm.localValue).to.deep.equal('hello world')
+    })
 
-  it('should set localValue if value is defined', () => {
-    expect(wrapper.vm.localValue).to.deep.equal('This is data')
-  })
+    it('renders correctly with minimal props', () => {
+      expect(wrapper.contains('textarea')).to.equal(true)
+      expect(wrapper.contains('label')).to.equal(true)
+      expect(wrapper.contains('small')).to.equal(true)
+    })
 
-  it('should render a textarea element', () => {
-    expect(wrapper.findAll('textarea').length).to.equal(1)
-  })
-
-  it('should emit an updated value on change', () => {
-    wrapper.setData({localValue: 'test text area MESSAGE!!'})
-    expect(wrapper.emitted().input[0]).to.deep.equal(['test text area MESSAGE!!'])
-    expect(wrapper.emitted().dataChange[0]).to.deep.equal([])
+    it('should emit an updated value on change', () => {
+      wrapper.setData({localValue: 'test text area MESSAGE!!'})
+      expect(wrapper.emitted().input[0]).to.deep.equal(['test text area MESSAGE!!'])
+      expect(wrapper.emitted().dataChange[0]).to.deep.equal([])
+    })
   })
 })

@@ -185,6 +185,11 @@ const isNillable = (attribute) => {
   return expression ? (data) => evaluator(expression, data) : !attribute.nillable
 }
 
+const isValid = (attribute) => {
+  const expression = attribute.validationExpression
+  return expression ? (data) => evaluator(expression, data) : () => true
+}
+
 /**
  * Generate a schema field object suitable for the forms
  *
@@ -192,13 +197,6 @@ const isNillable = (attribute) => {
  * @returns {{type: String, id, label, description, required: boolean, disabled, visible, options: ({uri, id, label, multiple}|{uri, id, label})}}
  */
 const generateFormSchemaField = (attribute) => {
-  const validators = [
-    (data) => {
-      const valid = data['string'] === 'valid'
-      return valid ? {valid: valid, message: null} : {valid: false, message: 'Invalid value!'}
-    }
-  ]
-
   // options is a function that always returns an array of option objects
   const options = getFieldOptions(attribute)
   const fieldProperties = {
@@ -210,7 +208,10 @@ const generateFormSchemaField = (attribute) => {
     disabled: attribute.readOnly,
     readOnly: attribute.readOnly,
     visible: isVisible(attribute),
-    validators: validators
+    fieldValidation: {
+      validate: isValid(attribute),
+      message: 'Field failed to validate'
+    }
   }
 
   return options ? {...fieldProperties, options} : fieldProperties

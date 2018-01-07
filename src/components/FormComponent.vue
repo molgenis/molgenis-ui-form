@@ -1,5 +1,5 @@
 <template>
-  <vue-form :id="id" :state="state" @submit.prevent="hooks.onSubmit(data)" @reset.prevent="hooks.onCancel">
+  <form :id="id" @submit.prevent="validateBeforeSubmit" @reset.prevent="hooks.onCancel">
     <fieldset v-for="field in schema.fields">
 
       <!-- Render checkbox field -->
@@ -7,8 +7,6 @@
         <checkbox-field-component
           v-model="data[field.id]"
           :field="field"
-          :state="state[field.id]"
-          :validate="validate"
           @dataChange="hooks.onValueChanged(data)">
         </checkbox-field-component>
       </template>
@@ -18,8 +16,6 @@
         <radio-field-component
           v-model="data[field.id]"
           :field="field"
-          :state="state[field.id]"
-          :validate="validate"
           @dataChange="hooks.onValueChanged(data)">
         </radio-field-component>
       </template>
@@ -29,8 +25,6 @@
         <text-area-field-component
           v-model="data[field.id]"
           :field="field"
-          :state="state[field.id]"
-          :validate="validate"
           @dataChange="hooks.onValueChanged(data)">
         </text-area-field-component>
       </template>
@@ -40,28 +34,30 @@
         <typed-field-component
           v-model="data[field.id]"
           :field="field"
-          :state="state[field.id]"
-          :validate="validate"
           @dataChange="hooks.onValueChanged(data)">
         </typed-field-component>
       </template>
 
     </fieldset>
-  </vue-form>
+  </form>
 </template>
 
 <script>
-  import VueForm from 'vue-form'
-
   import CheckboxFieldComponent from './field-types/CheckboxFieldComponent'
   import RadioFieldComponent from './field-types/RadioFieldComponent'
   import TextAreaFieldComponent from './field-types/TextAreaFieldComponent'
   import TypedFieldComponent from './field-types/TypedFieldComponent'
+
   import { FormHook } from '../flow.types'
+
+  import Vue from 'vue'
+  import VeeValidate from 'vee-validate'
+
+  // Register as a global plugin (mixin not available)
+  Vue.use(VeeValidate)
 
   export default {
     name: 'FormComponent',
-    mixins: [VueForm],
     props: {
       id: {
         type: String,
@@ -94,21 +90,32 @@
         required: true
       }
     },
-    data () {
-      return {
-        state: {}
+    methods: {
+      validateBeforeSubmit () {
+        // Run complete validation on form before submit
+        this.$validator.validateAll().then(valid => {
+          if (valid) {
+            // If form is valid, call onSubmit hook with form data
+            this.hooks.onSubmit(this.data)
+          } else {
+            // Do something with focus?? Or message...
+          }
+        })
       }
     },
-    methods: {
-      validate (field) {
-        let valid = true
-        const formData = this.data
-        field.validators.forEach(validator => {
-          // validate with all the data in the form
-          valid = validator(formData)
+    mounted () {
+      const formData = this.data
+      this.schema.fields.forEach(formField => {
+        // Create a custom validation rule for every field in the form
+        VeeValidate.Validator.extend('validate-' + formField.id, {
+          getMessage () {
+            return formField.fieldValidation.message
+          },
+          validate () {
+            return formField.fieldValidation.validate(formData)
+          }
         })
-        return valid
-      }
+      })
     },
     components: {
       CheckboxFieldComponent,

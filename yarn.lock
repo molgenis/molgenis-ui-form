@@ -2618,7 +2618,7 @@ express@^4.15.2, express@^4.16.2:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-extend@3, extend@3.0.1, extend@^3.0.0, extend@~3.0.0, extend@~3.0.1:
+extend@3, extend@^3.0.0, extend@~3.0.0, extend@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
 
@@ -5986,10 +5986,6 @@ schema-utils@^0.3.0:
   dependencies:
     ajv "^5.0.0"
 
-scope-eval@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/scope-eval/-/scope-eval-1.0.0.tgz#e182db1a1ef26f3e79d4bf48423b25e22839f0ff"
-
 select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
@@ -6846,6 +6842,10 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
 
+vee-validate@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.0.0.tgz#754ac35f33e7f2ea416c8060c395c3a6683503c3"
+
 vendors@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.1.tgz#37ad73c8ee417fb3d580e785312307d274847f22"
@@ -6867,13 +6867,6 @@ vm-browserify@0.0.4:
 void-elements@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
-
-vue-form@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/vue-form/-/vue-form-4.7.0.tgz#5a9fa790247ff797cb890d203b0bc63a75e13c26"
-  dependencies:
-    extend "3.0.1"
-    scope-eval "1.0.0"
 
 vue-hot-reload-api@^2.2.0:
   version "2.2.4"
