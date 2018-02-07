@@ -71,4 +71,33 @@ describe('Test isCompoundVisible', () => {
 
     expect(actual).to.equal(expected)
   })
+
+  it('should hide a field-group if a nested field-group is hidden', () => {
+    const field = {
+      type: 'field-group',
+      visible: () => true,
+      children: [
+        {
+          type: 'text',
+          visible: () => false
+        },
+        {
+          type: 'field-group',
+          visible: () => true,
+          children: [
+            {
+              type: 'text',
+              visible: () => false
+            }
+          ]
+        }
+      ]
+    }
+
+    const data = {}
+    const actual = isCompoundVisible(field, data)
+    const expected = false
+
+    expect(actual).to.equal(expected)
+  })
 })
