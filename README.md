@@ -47,11 +47,20 @@ Use in template
       :formState="formState"
       :formData="formData"
       :onValueChanged="onValueChanged"
+      :options="options"
       @addOptionRequest="handleAddOptionRequest"
       >
     </form-component>
 </template>
 ```
+
+### Options
+
+The FormComponent object can be configured via an options property
+
+| Option name   | Default | Description |
+|---------------|---------|-------------|
+| showEyeButton | True    | Toggle the visibility of the Eye button
 
 ### Properties
 #####handleAddOptionRequest (optional)
