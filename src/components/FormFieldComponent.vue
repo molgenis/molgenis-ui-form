@@ -154,7 +154,7 @@
   import TypedFieldComponent from './field-types/TypedFieldComponent'
 
   import { FormField } from '../flow.types'
-  import visibilityChecker from '../util/helpers/visibilityChecker'
+  import isCompoundVisible from '../util/helpers/isCompoundVisible'
 
   export default {
     name: 'FormFieldComponent',
@@ -199,7 +199,7 @@
       },
       isVisible: function () {
         if (this.field.type === 'field-group') {
-          return visibilityChecker.isCompoundVisible(this.field, this.formData)
+          return isCompoundVisible(this.field, this.formData)
         }
 
         return (this.showOptionalFields || this.isRequired) && this.field.visible(this.formData)

@@ -1,4 +1,4 @@
-import visibilityChecker from '../../../../../src/util/helpers/visibilityChecker'
+import isCompoundVisible from '../../../../../src/util/helpers/isCompoundVisible'
 
 describe('Test isCompoundVisible', () => {
   it('should hide a field-group if all children are hidden', () => {
@@ -14,7 +14,7 @@ describe('Test isCompoundVisible', () => {
     }
 
     const data = {}
-    const actual = visibilityChecker.isCompoundVisible(field, data)
+    const actual = isCompoundVisible(field, data)
     const expected = false
 
     expect(actual).to.equal(expected)
@@ -37,7 +37,7 @@ describe('Test isCompoundVisible', () => {
     }
 
     const data = {}
-    const actual = visibilityChecker.isCompoundVisible(field, data)
+    const actual = isCompoundVisible(field, data)
     const expected = true
 
     expect(actual).to.equal(expected)
@@ -66,7 +66,7 @@ describe('Test isCompoundVisible', () => {
     }
 
     const data = {}
-    const actual = visibilityChecker.isCompoundVisible(field, data)
+    const actual = isCompoundVisible(field, data)
     const expected = true
 
     expect(actual).to.equal(expected)
