@@ -52,7 +52,7 @@ data () {
 ```
 ### Options
 
-The FormComponent object can be configured via an options property. If no options are specified, a set of defaults are used.
+The FormComponent object can be configured via an options property. If no options object is supplied the defaults are used.
 
 | Option name   | Default | Description |
 |---------------|---------|-------------|
