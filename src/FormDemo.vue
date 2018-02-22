@@ -24,7 +24,7 @@
             <form-component
               id="example-form"
               :formFields="formFields"
-              :initialFormData="initialFormData"
+              :initialFormData="formData"
               :formState="formState"
               :options="options"
               @valueChange="onValueChanged"
@@ -33,8 +33,8 @@
           </div>
 
           <div class="card-footer">
-            <button id="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit(formData)">Save</button>
-            <button id="cancel-btn" class="btn btn-secondary" type="reset" @click.prevent="onCancel()">Cancel</button>
+            <button id="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit">Save</button>
+            <button id="cancel-btn" class="btn btn-secondary" type="reset" @click.prevent="onCancel">Cancel</button>
           </div>
         </div>
       </div>
@@ -77,21 +77,22 @@
         message: null,
         formFields: [],
         formState: {},
-        initialFormData: {},
+        formData: {},
         options: {
           showEyeButton: true
         }
       }
     },
     methods: {
-      onSubmit (formData) {
-        this.message = 'onSubmit: ' + JSON.stringify(formData)
+      onSubmit () {
+        this.message = 'onSubmit: ' + JSON.stringify(this.formData)
       },
       onCancel () {
         this.message = 'onCancel'
       },
       onValueChanged (formData) {
         this.message = 'onValueChanged: ' + JSON.stringify(formData)
+        this.formData = formData
       },
       handleAddOptionRequest (completedFunction, event, data) {
         const newMockOption = {
@@ -105,7 +106,7 @@
     created () {
       const form = EntityToFormMapper.generateForm(EntityTypeV2Response.metadata, EntityTypeV2Response.items)
       this.formFields = form.formFields
-      this.initialFormData = form.formData
+      this.formData = form.formData
     }
   }
 </script>
