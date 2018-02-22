@@ -43,6 +43,10 @@
         type: Object,
         required: true
       },
+      formState: {
+        required: false,
+        default: () => ({})
+      },
       options: {
         type: Object,
         required: false,
@@ -57,7 +61,6 @@
       return {
         eventBus: new Vue(),
         showOptionalFields: true,
-        formState: {},
 
         /**
          *  Create local copy for fields and data
@@ -73,7 +76,7 @@
         this.$emit('addOptionRequest', completedFunction, event, data)
       },
       handleValueChange (formData) {
-        this.$emit('valueChange', formData, this.formState.$valid)
+        this.$emit('valueChange', formData)
       }
     },
     components: {
