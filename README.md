@@ -21,17 +21,11 @@ yarn add @molgenis/molgenis-ui-form
     <form-component
       id="example-form"
       :formFields="formFields"
-<<<<<<< HEAD
-      :formState="formState"
-      :formData="formData"
-      :onValueChanged="onValueChanged"
-=======
       :initialFormData="formData"
       :formState="formState"
->>>>>>> 84d4eed... Update README
       :options="options"
-      @addOptionRequest="handleAddOptionRequest"
-      >
+      @valueChanged="onValueChanged"
+      @addOptionRequest="handleAddOptionRequest">
     </form-component>
 </template>
   
@@ -81,14 +75,11 @@ yarn add @molgenis/molgenis-ui-form
   }
 </script>
 ```
-<<<<<<< HEAD
-### Options
-=======
 
 __Note__: Whatever you pass to the FormComponent as formData object, 
 the FormComponent makes a local copy with `Object.assign({}, formData)`.
 
-If you want to react to data input, use the `valueChanged` event.
+If you want to react to data input, use the [@valueChanged](#valuechanged-event) event.
 
 ### valueChanged event
 When data in the form is changed, the form fires a `valueChanged` event.
@@ -117,7 +108,6 @@ To allow the use to add new options to a select list the `handleAddOptionRequest
  * `id` unique identifier
  * `label` the label shown to the user
  * `value` the form value
->>>>>>> 84d4eed... Update README
 
 ### Options
 The FormComponent object can be configured via an options property. 
