@@ -25,6 +25,7 @@
               id="example-form"
               :formFields="formFields"
               :initialFormData="initialFormData"
+              :formState="formState"
               :options="options"
               @valueChange="onValueChanged"
               @addOptionRequest="handleAddOptionRequest">
@@ -32,10 +33,7 @@
           </div>
 
           <div class="card-footer">
-            <span v-if="isFormValid" class="text-success">valid!</span>
-            <span v-else class="text-danger">not valid!</span>
-            <button id="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit(formData)">Save
-            </button>
+            <button id="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit(formData)">Save</button>
             <button id="cancel-btn" class="btn btn-secondary" type="reset" @click.prevent="onCancel()">Cancel</button>
           </div>
         </div>
@@ -77,8 +75,8 @@
     data () {
       return {
         message: null,
-        isFormValid: true,
         formFields: [],
+        formState: {},
         initialFormData: {},
         options: {
           showEyeButton: true
@@ -92,8 +90,7 @@
       onCancel () {
         this.message = 'onCancel'
       },
-      onValueChanged (formData, isFormValid) {
-        this.isFormValid = isFormValid
+      onValueChanged (formData) {
         this.message = 'onValueChanged: ' + JSON.stringify(formData)
       },
       handleAddOptionRequest (completedFunction, event, data) {

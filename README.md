@@ -58,9 +58,8 @@ An example handler is shown below
 
 ```js
 methods: {
-  onValueChanged (formData, isFormValid) {
+  onValueChanged (formData) {
     console.log(formData) // all the data currently in the form
-    console.log(isFormValid) // a boolean for form validity
   }
 }
 ```

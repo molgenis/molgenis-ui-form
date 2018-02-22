@@ -44,6 +44,7 @@
         required: true
       },
       formState: {
+        type: Object,
         required: false,
         default: () => ({})
       },
@@ -63,7 +64,7 @@
         showOptionalFields: true,
 
         /**
-         *  Create local copy for fields and data
+         *  Create local copy for data
          */
         formData: Object.assign({}, this.initialFormData)
       }
