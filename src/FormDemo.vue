@@ -14,23 +14,28 @@
           <div class="card-header">
             <h5>Example form</h5>
           </div>
+
           <div id="alert-message" v-if="message" class="alert alert-info" role="alert">
             <button @click="message=null" type="button" class="close"><span aria-hidden="true">&times;</span></button>
             <span id="message-span">{{message}}</span>
           </div>
+
           <div class="card-body">
             <form-component
               id="example-form"
               :formFields="formFields"
-              :formState="formState"
-              :formData="formData"
-              :onValueChanged="onValueChanged"
+              :initialFormData="initialFormData"
               :options="options"
+              @valueChange="onValueChanged"
               @addOptionRequest="handleAddOptionRequest">
             </form-component>
           </div>
+
           <div class="card-footer">
-            <button id="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit(formData)">Save</button>
+            <span v-if="isFormValid" class="text-success">valid!</span>
+            <span v-else class="text-danger">not valid!</span>
+            <button id="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit(formData)">Save
+            </button>
             <button id="cancel-btn" class="btn btn-secondary" type="reset" @click.prevent="onCancel()">Cancel</button>
           </div>
         </div>
@@ -72,9 +77,9 @@
     data () {
       return {
         message: null,
+        isFormValid: true,
         formFields: [],
-        formState: {},
-        formData: {},
+        initialFormData: {},
         options: {
           showEyeButton: true
         }
@@ -87,7 +92,8 @@
       onCancel () {
         this.message = 'onCancel'
       },
-      onValueChanged (formData) {
+      onValueChanged (formData, isFormValid) {
+        this.isFormValid = isFormValid
         this.message = 'onValueChanged: ' + JSON.stringify(formData)
       },
       handleAddOptionRequest (completedFunction, event, data) {
@@ -102,7 +108,7 @@
     created () {
       const form = EntityToFormMapper.generateForm(EntityTypeV2Response.metadata, EntityTypeV2Response.items)
       this.formFields = form.formFields
-      this.formData = form.formData
+      this.initialFormData = form.formData
     }
   }
 </script>

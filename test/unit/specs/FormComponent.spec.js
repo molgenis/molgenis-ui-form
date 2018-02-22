@@ -10,8 +10,7 @@ describe('FormComponent unit tests', () => {
     const props = FormComponent.props
     expect(typeof props.id).to.equal('object')
     expect(typeof props.formFields).to.equal('object')
-    expect(typeof props.formData).to.equal('object')
-    expect(typeof props.formState).to.equal('object')
+    expect(typeof props.initialFormData).to.equal('object')
     expect(typeof props.options).to.equal('object')
   })
 

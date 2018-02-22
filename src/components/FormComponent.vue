@@ -10,11 +10,11 @@
     <template v-for="field in formFields">
       <form-field-component
         :eventBus="eventBus"
-        :formData="ownFormData"
+        :formData="formData"
         :field="field"
         :formState="formState"
         :showOptionalFields="showOptionalFields"
-        @dataChange="onValueChanged(ownFormData)">
+        @dataChange="handleValueChange(formData)">
       </form-field-component>
     </template>
   </vue-form>
@@ -39,20 +39,9 @@
         required: true,
         validator: isValidSchema
       },
-      formState: {
+      initialFormData: {
         type: Object,
         required: true
-      },
-      formData: {
-        type: Object,
-        required: true
-      },
-      onValueChanged: {
-        type: Function,
-        required: false,
-        default (formData) {
-          this.$emit('valueChanged', formData)
-        }
       },
       options: {
         type: Object,
@@ -66,9 +55,14 @@
     },
     data () {
       return {
-        ownFormData: Object.assign({}, this.formData),
         eventBus: new Vue(),
-        showOptionalFields: true
+        showOptionalFields: true,
+        formState: {},
+
+        /**
+         *  Create local copy for fields and data
+         */
+        formData: Object.assign({}, this.initialFormData)
       }
     },
     methods: {
@@ -77,6 +71,9 @@
       },
       handleAddOptionEvent (completedFunction, event, data) {
         this.$emit('addOptionRequest', completedFunction, event, data)
+      },
+      handleValueChange (formData) {
+        this.$emit('valueChange', formData, this.formState.$valid)
       }
     },
     components: {
