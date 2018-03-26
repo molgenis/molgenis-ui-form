@@ -6,8 +6,8 @@ addons:
 script:
   - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash .travis/run_on_pull_requests.sh; fi'
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash .travis/run_on_non_pull_requests.sh; fi'
-  - yarn build
 before_deploy:
+  - yarn build
   - cd dist
 deploy:
   provider: npm
