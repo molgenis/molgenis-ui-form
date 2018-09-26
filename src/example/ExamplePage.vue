@@ -19,6 +19,9 @@
         <router-link to="/decimal" class="nav-link">Decimal</router-link>
       </li>
       <li class="nav-item">
+        <router-link to="/unique" class="nav-link">Unique</router-link>
+      </li>
+      <li class="nav-item">
         <router-link to="/file" class="nav-link">File</router-link>
       </li>
     </ul>

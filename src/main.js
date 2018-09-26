@@ -7,6 +7,7 @@ import FormDemo from './example/FormDemo'
 import IntegerExample from './example/number-field/IntegerExample'
 import LongExample from './example/number-field/LongExample'
 import DecimalExample from './example/number-field/DecimalExample'
+import UniqueExample from './example/unique/UniqueExample'
 import FileExample from './example/file/FileExample'
 import i18n from '@molgenis/molgenis-i18n-js'
 
@@ -33,6 +34,10 @@ const router = new Router({
     {
       path: '/decimal/',
       component: DecimalExample
+    },
+    {
+      path: '/unique/',
+      component: UniqueExample
     },
     {
       path: '/file/',
