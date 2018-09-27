@@ -10,7 +10,7 @@
     <div class="form-group">
       <label
         :for="field.id"
-        :class="{ 'is-invalid' : addInvalidClass}"
+        :class="{ 'is-invalid' : this.fieldState && this.fieldState.$invalid && (this.fieldState.$touched || this.fieldState.$submitted || this.fieldState.$dirty)}"
       >
         {{ field.label }}
       </label>
@@ -97,10 +97,6 @@
       label () {
         return typeof this.value === 'string' ? this.value
           : this.value instanceof Blob ? this.value.name : ''
-      },
-      addInvalidClass () {
-        return this.fieldState && this.fieldState.$invalid &&
-          (this.fieldState.$touched || this.fieldState.$submitted || this.fieldState.$dirty)
       }
     }
   }
