@@ -54,7 +54,9 @@
           }
         ],
         formState: {},
-        formData: {}
+        formData: {
+          'file-example': 'test-file-name.txt'
+        }
       }
     },
     methods: {
