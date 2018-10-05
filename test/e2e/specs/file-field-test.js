@@ -21,7 +21,7 @@ module.exports = {
     browser.options.desiredCapabilities.name = 'File field allow selecting a file'
     browser.expect.element('#alt-file-example').to.be.present
     // bootstrap uses label to fake file input value
-    browser.setValue('#alt-file-example', path.resolve(path.join(__dirname, 'file-field-test.js')))
+    browser.uploadFile(path.resolve(path.join(__dirname, 'file-field-test.js')), '#alt-file-example')
     // test form state as file-example itself is hidden
     browser.expect.element('#file-example').to.have.attribute('class').which.contains('vf-form-dirty vf-form-valid vf-form-touched')
     browser.end()
