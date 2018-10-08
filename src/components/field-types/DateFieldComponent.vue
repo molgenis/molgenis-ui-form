@@ -98,7 +98,7 @@
     data () {
       return {
         // Store a local value to prevent changing the parent state
-        localValue: this.value,
+        localValue: this.isTimeIncluded ? moment(this.value, moment.ISO_8601, true).toDate() : this.value,
         config: {
           wrap: true,
           allowInput: true,
