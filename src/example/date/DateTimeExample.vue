@@ -7,7 +7,7 @@
           <h5 class="card-header text-center bg-info">Datetime field demo</h5>
           <div class="card-body">
             <form-component
-              id="datetime-example"
+              id="datetime-example-form"
               :options="formOptions"
               :formFields="formFields"
               :initialFormData="formData"
@@ -44,7 +44,7 @@
         },
         formFields: [
           {
-            id: 'datetime-example',
+            id: 'datetime-example-field',
             label: 'Datetime Field',
             description: 'Datetime type',
             type: 'date-time',
@@ -55,7 +55,7 @@
         ],
         formState: {},
         formData: {
-          'datetime-example': '1985-08-12T11:12:13+0500'
+          'datetime-example-field': '1985-08-12T11:12:13+0500'
         }
       }
     },
