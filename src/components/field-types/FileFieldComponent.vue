@@ -20,8 +20,6 @@
         </label>
 
         <input
-          :id="'alt-' + field.id"
-          :name="'alt-' + field.id"
           :required="isRequired"
           class="custom-file-input"
           type="file"

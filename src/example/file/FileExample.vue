@@ -7,7 +7,7 @@
           <h5 class="card-header text-center bg-info">File field demo</h5>
           <div class="card-body">
             <form-component
-              id="file-example"
+              id="file-example-form"
               :options="formOptions"
               :formFields="formFields"
               :initialFormData="formData"
