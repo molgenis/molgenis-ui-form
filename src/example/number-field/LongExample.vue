@@ -7,7 +7,7 @@
           <h5 class="card-header text-center bg-info">Long field demo</h5>
           <div class="card-body">
             <form-component
-              id="long-example"
+              id="long-example-form"
               :options="formOptions"
               :formFields="formFields"
               :initialFormData="formData"
