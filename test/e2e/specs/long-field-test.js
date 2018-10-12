@@ -18,6 +18,14 @@ module.exports = {
     browser.end()
   },
 
+  afterEach: function (client, done) {
+    client.customSauceEnd()
+
+    setTimeout(function () {
+      done()
+    }, 1000)
+  },
+
   'Long field should be invalid with decimal value': function (browser) {
     browser.options.desiredCapabilities.name = 'Long field not valid for decimal value'
     browser.expect.element('#long-example input[type=number]').to.be.present

@@ -8,6 +8,14 @@ module.exports = {
     browser.url(browser.globals.devServerURL + '/decimal')
   },
 
+  afterEach: function (client, done) {
+    client.customSauceEnd()
+
+    setTimeout(function () {
+      done()
+    }, 1000)
+  },
+
   'Decimal field should be valid with valid decimal': function (browser) {
     browser.options.desiredCapabilities.name = 'Decimal field only valid for decimals'
     browser.expect.element('#decimal-example input[type=number]').to.be.present

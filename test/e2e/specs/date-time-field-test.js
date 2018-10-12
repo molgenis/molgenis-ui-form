@@ -9,6 +9,14 @@ module.exports = {
     browser.url(browser.globals.devServerURL + '/date-time')
   },
 
+  afterEach: function (client, done) {
+    client.customSauceEnd()
+
+    setTimeout(function () {
+      done()
+    }, 1000)
+  },
+
   'Datetime field should be valid with valid datetime string': function (browser) {
     browser.options.desiredCapabilities.name = 'Datetime field only valid for datetime string'
     browser.expect.element('#datetime-example-field').to.be.present
