@@ -19,18 +19,6 @@ module.exports = {
         var utcExpected = moment('1985-08-12T08:12:13+02:00', format, true).utc().toDate().getTime()
         this.assert.equal(utcResult, utcExpected)
       })
-    } else {
-      browser.getValue('#datetime-example-field ', function (result) {
-        var format = moment.ISO_8601
-        var utcResult = moment(result.value, format, true).utc()
-        var utcExpected = moment('1985-08-12T08:12:13+02:00', format, true).utc()
-        this.assert.equal(utcResult.year(), utcExpected.year())
-        this.assert.equal(utcResult.month(), utcExpected.month()) // month is zero indexed
-        this.assert.equal(utcResult.date(), utcExpected.date())
-        this.assert.equal(utcResult.hour(), utcExpected.hour())
-        this.assert.equal(utcResult.minute(), utcExpected.minute())
-        this.assert.equal(utcResult.second(), utcExpected.second())
-      })
     }
     browser.expect.element('#datetime-example-field').to.have.attribute('class').which.contains('vf-valid')
     browser.end()
