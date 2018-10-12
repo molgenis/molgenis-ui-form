@@ -14,9 +14,9 @@ module.exports = {
     browser.expect.element('#datetime-example-field').to.be.present
     browser.getValue('#datetime-example-field ', function (result) {
       var format = 'Y-MM-DD\\Thh:mm:ssZ'
-      var utcResult = moment(result.value, format, true).utc()
-      var utcExpected = moment('1985-08-12T08:12:13+02:00', format, true).utc()
-      this.assert.deepStrictEqual(utcResult, utcExpected)
+      var utcResult = moment(result.value, format, true).utc().toDate().getTime()
+      var utcExpected = moment('1985-08-12T08:12:13+02:00', format, true).utc().toDate().getTime()
+      this.assert.equal(utcResult, utcExpected)
     })
     browser.expect.element('#datetime-example-field').to.have.attribute('class').which.contains('vf-valid')
     browser.end()
