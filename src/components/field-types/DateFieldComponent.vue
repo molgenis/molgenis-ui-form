@@ -65,6 +65,8 @@
     de: German
   }
 
+  const DATA_TIME_DISPLAY = 'Y-MM-DD\\Thh:mm:ssZ'
+
   export default {
     name: 'DateFieldComponent',
     mixins: [VueForm],
@@ -98,12 +100,15 @@
     data () {
       return {
         // Store a local value to prevent changing the parent state
-        localValue: this.value,
+        localValue: this.isTimeIncluded ? moment(this.value, moment.ISO_8601, true).toDate() : this.value,
         config: {
           wrap: true,
           allowInput: true,
           enableTime: this.isTimeIncluded,
-          dateFormat: this.isTimeIncluded ? 'Z' : 'Y-m-d'
+          dateFormat: this.isTimeIncluded ? 'Z' : 'Y-m-d',
+          formatDate: this.isTimeIncluded ? (date) => {
+            return moment(date).format(DATA_TIME_DISPLAY)
+          } : undefined
         }
       }
     },
@@ -116,7 +121,7 @@
        * @returns {Moment} A date object created by moment
        */
       getDateFromValue (dateString) {
-        const format = this.isTimeIncluded ? moment.ISO_8601 : 'YYYY-MM-DD'
+        const format = this.isTimeIncluded ? DATA_TIME_DISPLAY : 'YYYY-MM-DD'
         return moment(dateString, format, true)
       },
 

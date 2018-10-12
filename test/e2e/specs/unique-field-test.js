@@ -21,6 +21,14 @@ module.exports = {
     browser.end()
   },
 
+  afterEach: function (client, done) {
+    client.customSauceEnd()
+
+    setTimeout(function () {
+      done()
+    }, 1000)
+  },
+
   'Unique field should be invalid for non unique value': function (browser) {
     browser.options.desiredCapabilities.name = 'Unique field not valid non unique value (\'test\')'
     browser.expect.element('#unique-example input[type=string]').to.be.present

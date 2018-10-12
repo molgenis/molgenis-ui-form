@@ -8,6 +8,14 @@ module.exports = {
     browser.pause(browser.globals.waitBeforeTestStart)
   },
 
+  afterEach: function (client, done) {
+    client.customSauceEnd()
+
+    setTimeout(function () {
+      done()
+    }, 1000)
+  },
+
   'Click on submit and check if event is fired': function (browser) {
     browser.options.desiredCapabilities.name = 'Click on submit and check if event is fired'
     browser.click('#save-btn')

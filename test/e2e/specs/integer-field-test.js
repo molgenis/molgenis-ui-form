@@ -8,6 +8,14 @@ module.exports = {
     browser.url(browser.globals.devServerURL + '/integer')
   },
 
+  afterEach: function (client, done) {
+    client.customSauceEnd()
+
+    setTimeout(function () {
+      done()
+    }, 1000)
+  },
+
   'Integer field should be valid with valid integer': function (browser) {
     browser.options.desiredCapabilities.name = 'Integer field only valid for integers'
     browser.expect.element('#integer-example input[type=number]').to.be.present

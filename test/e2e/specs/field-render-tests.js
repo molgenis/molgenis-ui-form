@@ -13,6 +13,14 @@ module.exports = {
     browser.end()
   },
 
+  afterEach: function (client, done) {
+    client.customSauceEnd()
+
+    setTimeout(function () {
+      done()
+    }, 1000)
+  },
+
   // Use BDD-style interface for assertions
   // http://nightwatchjs.org/api#expect-api
   'Correctly render a field-group and its child fields': function (browser) {
