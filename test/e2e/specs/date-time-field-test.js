@@ -22,9 +22,14 @@ module.exports = {
     } else {
       browser.getValue('#datetime-example-field ', function (result) {
         var format = 'Y-MM-DD\\Thh:mm:ssZ'
-        var utcResult = moment(result.value, format, true).utc().unix()
-        var utcExpected = moment('1985-08-12T08:12:13+02:00', format, true).utc().unix()
-        this.assert.equal(utcResult, utcExpected)
+        var utcResult = moment(result.value, format, true).utc()
+        var utcExpected = moment('1985-08-12T08:12:13+02:00', format, true).utc()
+        this.assert.equal(utcResult.year(), utcExpected.year())
+        this.assert.equal(utcResult.month(), utcExpected.month())
+        this.assert.equal(utcResult.dayOfYear(), utcExpected.dayOfYear())
+        this.assert.equal(utcResult.hour(), utcExpected.hour())
+        this.assert.equal(utcResult.minute(), utcExpected.minute())
+        this.assert.equal(utcResult.second(), utcExpected.second())
       })
     }
     browser.expect.element('#datetime-example-field').to.have.attribute('class').which.contains('vf-valid')
