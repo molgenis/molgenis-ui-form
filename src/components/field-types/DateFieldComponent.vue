@@ -104,8 +104,9 @@
         config: {
           wrap: true,
           allowInput: true,
+          enableSeconds: this.isTimeIncluded,
           enableTime: this.isTimeIncluded,
-          dateFormat: this.isTimeIncluded ? 'Z' : 'Y-m-d',
+          dateFormat: 'Y-m-d',
           formatDate: this.isTimeIncluded ? (date) => {
             return moment(date).format(DATA_TIME_DISPLAY)
           } : undefined
