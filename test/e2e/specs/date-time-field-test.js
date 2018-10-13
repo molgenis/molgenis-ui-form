@@ -14,9 +14,15 @@ module.exports = {
     browser.expect.element('#datetime-example-field').to.be.present
     browser.getValue('#datetime-example-field ', function (result) {
       var format = moment.ISO_8601
-      var utcResult = moment(result.value, format, true).utc().toDate().getTime()
-      var utcExpected = moment('1985-08-12T11:12:13+05:00', format, true).utc().toDate().getTime()
-      this.assert.equal(utcResult, utcExpected)
+      var utcResult = moment(result.value, format, true).utc()
+      var utcExpected = moment('1985-08-12T11:12:13+05:00', format, true).utc()
+      this.assert.equal(utcResult.year(), utcExpected.year())
+      this.assert.equal(utcResult.month(), utcExpected.month()) // month is zero indexed
+      this.assert.equal(utcResult.date(), utcExpected.date())
+      this.assert.equal(utcResult.hour(), utcExpected.hour())
+      this.assert.equal(utcResult.minute(), utcExpected.minute())
+      this.assert.equal(utcResult.second(), utcExpected.second())
+      this.assert.equal(utcResult.toDate().getTime(), utcExpected.toDate().getTime())
     })
     browser.expect.element('#datetime-example-field').to.have.attribute('class').which.contains('vf-valid')
     browser.end()
