@@ -23,6 +23,7 @@ module.exports = {
       this.assert.equal(timeString.substring(5, 7), '08', '01 as month')
       this.assert.equal(timeString.substring(8, 10), '12', '12 as day')
       this.assert.equal(timeString.substring(10, 11), 'T', 'T as time symbol')
+      this.assert.equal(timeString, '1985-08-12T11:12:13+05:00', 'timestring')
       const hoursString = timeString.substring(11, 13)
       const offsetString = timeString.substring(20, 22)
       const hours = parseInt(hoursString)
