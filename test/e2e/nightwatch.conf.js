@@ -103,7 +103,8 @@ module.exports = {
         name: packageJson.name,
         build: packageJson.name + '#build-${BUILD_NUMBER}',
         'tunnel-identifier': process.env.TUNNEL_IDENTIFIER,
-        browserName: 'safari'
+        browserName: 'safari',
+        'time-zone': 'Europe/Amsterdam'
       },
       globals: {
         waitForConditionTimeout: 10000,
