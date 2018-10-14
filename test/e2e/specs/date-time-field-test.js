@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 var moment = require('moment')
+var flatpickr = require('flatpickr')
 
 module.exports = {
   tags: ['date-time'], // run this suite with 'yarn e2e --tag date-time'
@@ -14,8 +15,8 @@ module.exports = {
     browser.expect.element('#datetime-example-field').to.be.present
     browser.getValue('#datetime-example-field ', function (result) {
       var format = moment.ISO_8601
-      var utcResult = moment(result.value, format, true).utc()
-      var utcExpected = moment('1985-08-12T11:12:13+05:00', format, true).utc()
+      var utcResult = moment(result.value, format).utc(true)
+      var utcExpected = moment('1985-08-12T11:12:13+05:00', format).utc(true)
       this.assert.equal(utcResult.year(), utcExpected.year())
       this.assert.equal(utcResult.month(), utcExpected.month()) // month is zero indexed
       this.assert.equal(utcResult.date(), utcExpected.date())
