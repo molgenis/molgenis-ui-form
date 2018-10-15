@@ -133,7 +133,7 @@ describe('DateFieldComponent', () => {
       it('should return a moment object for a date string', () => {
         const date = '2018-08-12T11:12:13+0500'
         const actual = wrapper.vm.getDateFromValue(date)
-        const expected = moment(date, 'Y-MM-DD\\Thh:mm:ssZ', true)
+        const expected = moment(date, 'Y-MM-DD\\THH:mm:ssZ', true)
 
         expect(actual).to.deep.equal(expected)
       })
