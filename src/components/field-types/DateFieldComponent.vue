@@ -65,7 +65,7 @@
     de: German
   }
 
-  const DATA_TIME_DISPLAY = 'Y-MM-DD\\Thh:mm:ssZ'
+  const DATA_TIME_DISPLAY = 'Y-MM-DD\\THH:mm:ssZ'
 
   export default {
     name: 'DateFieldComponent',
