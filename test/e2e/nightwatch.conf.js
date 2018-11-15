@@ -119,10 +119,7 @@ module.exports = {
       desiredCapabilities: {
         browserName: 'chrome',
         javascriptEnabled: true,
-        acceptSslCerts: true,
-        prefs: {
-          'intl.accept_languages':"de-DE,de"
-        }
+        acceptSslCerts: true
       }
     },
 
