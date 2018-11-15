@@ -24,7 +24,7 @@ module.exports = {
 
     browser.click('#integer-example input[type=number]') // https://github.com/nightwatchjs/nightwatch/issues/504
     browser.clearValue('#integer-example input[type=number]')
-    browser.setValue('#integer-example input[type=number]', '0.25')
+    browser.setValue('#integer-example input[type=number]', '0,25')
 
     browser.keys(browser.Keys.TAB)
     browser.click('h5.card-header.text-center') // click outside of input to trigger validation

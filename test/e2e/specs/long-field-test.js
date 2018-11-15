@@ -24,7 +24,7 @@ module.exports = {
 
     browser.click('#long-example')
     browser.clearValue('#long-example')
-    browser.setValue('#long-example', '0.25')
+    browser.setValue('#long-example', '0,25')
 
     browser.keys(browser.Keys.TAB)
     browser.click('h5.card-header.text-center') // click outside of input to trigger validation
