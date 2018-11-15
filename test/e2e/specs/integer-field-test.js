@@ -43,6 +43,7 @@ module.exports = {
     browser.click('#integer-example input[type=number]') // https://github.com/nightwatchjs/nightwatch/issues/504
 
     // Send backspace as workaround for nightwatch clearValue issues
+    browser.clearValue('#integer-example input[type=number]')
     browser.setValue('#integer-example input[type=number]', '\u0008')
 
     browser.keys(browser.Keys.TAB)
