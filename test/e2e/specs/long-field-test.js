@@ -25,6 +25,7 @@ module.exports = {
     browser.click('#long-example')
     browser.clearValue('#long-example')
     browser.setValue('#long-example', '0.25')
+    browser.pause(1000)
     browser.setValue('#long-example', '0,25')
 
     browser.keys(browser.Keys.TAB)
