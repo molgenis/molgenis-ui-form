@@ -42,9 +42,6 @@ module.exports = {
       username: process.env.SAUCE_CRED_USR,
       access_key: process.env.SAUCE_CRED_PSW,
       desiredCapabilities: {
-        prefs: {
-          'intl.accept_languages':"de-DE,de"
-        },
         name: packageJson.name,
         build: packageJson.name + '#PR-${CHANGE_ID}-build-${BUILD_NUMBER}',
         'tunnel-identifier': process.env.TUNNEL_IDENTIFIER,
