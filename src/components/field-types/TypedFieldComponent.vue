@@ -13,17 +13,39 @@
         :aria-describedby="field.id + '-description'"
         :required="isRequired"
         :disabled="field.disabled"
-        :step="stepSize">
+        :step="stepSize"
+        :placeholder="'\u00a0'">
 
       <small :id="field.id + '-description'" class="form-text text-muted">
         {{ field.description }}
       </small>
+      <div class="invalid-message bad-input" v-if="!localValue">{{ 'ui-form:bad_input' | i18n }}</div>
 
-      <form-field-messages :field-id="field.id" :type="field.type" :range="field.range" :field-state="fieldState">
+      <form-field-messages class="vue-form-messages" :field-id="field.id" :type="field.type" :range="field.range" :field-state="fieldState">
       </form-field-messages>
     </div>
   </validate>
 </template>
+
+<style>
+  .invalid-message {
+    color: red
+  }
+  /* Hide the bad-input message by default */
+  .bad-input { display: none }
+  /*
+    If input is :invalid the html validation has failed.
+    Show the bad-input message and hide the vue-form messages
+   */
+  input[type=number]:invalid ~.bad-input { display: block }
+  input[type=number]:invalid:not(:placeholder-shown) ~.bad-input ~.vue-form-messages { display: none }
+  /*
+    Except if the input is still empty, then you should show the vue-form messages
+   */
+  input[type=number]:placeholder-shown ~.bad-input { display: none }
+  input[type=number]:placeholder-shown ~.vue-form-messages { display: block }
+
+</style>
 
 <script>
   import VueForm from 'vue-form'
