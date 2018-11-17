@@ -40,7 +40,12 @@ module.exports = {
     // Send backspace as workaround for nightwatch clearValue issues
     browser.setValue('#integer-example', '\u0008')
     browser.pause(1000)
-    browser.setValue('#integer-example', '0' + separator + '5')
+    browser.setValue('#integer-example', '0')
+    browser.pause(1000)
+    browser.setValue('#integer-example', separator)
+    browser.pause(1000)
+    browser.setValue('#integer-example', '5')
+
 
     browser.keys(browser.Keys.TAB)
     browser.click('h5.card-header.text-center') // click outside of input to trigger validation
