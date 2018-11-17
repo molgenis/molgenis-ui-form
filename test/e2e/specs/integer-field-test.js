@@ -42,18 +42,22 @@ module.exports = {
       browser.expect.element('#integer-example').to.have.attribute('class').which.contains('vf-invalid-integer')
       browser.expect.element('.invalid-message').to.be.present
       browser.expect.element('.invalid-message').text.to.be.equal('Not a valid integer value')
+      browser.setValue('#integer-example', '\u0008')
+      browser.setValue('#integer-example', '\u0008')
+      browser.setValue('#integer-example', '\u0008')
       browser.end()
     })
   },
 
   'Clearing the value should place "null" in the model': function (browser) {
-    browser.options.desiredCapabilities.name = 'Integer field not valid for decimal value'
+    browser.options.desiredCapabilities.name = 'Clearing the value should place "null" in the model'
     browser.expect.element('#integer-example').to.be.present
 
     browser.click('#integer-example') // https://github.com/nightwatchjs/nightwatch/issues/504
+    browser.pause(1000)
     // Send backspace as workaround for nightwatch clearValue issues
     browser.setValue('#integer-example', '\u0008')
-    browser.pause(5000)
+    browser.pause(1000)
 
     browser.expect.element('#integer-example').to.have.attribute('class').which.contains('vf-valid')
     browser.getText('.field-data-json', function (result) {
