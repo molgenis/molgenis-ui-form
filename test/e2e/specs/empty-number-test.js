@@ -16,6 +16,7 @@ module.exports = {
     browser.click('#integer-example')
     browser.pause(1000)
     browser.setValue('#integer-example', '\u0008')
+    browser.clearValue('#integer-example')
     browser.pause(1000)
 
     browser.expect.element('#integer-example').to.have.attribute('class').which.contains('vf-valid')
