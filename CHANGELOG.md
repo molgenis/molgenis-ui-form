@@ -6,6 +6,15 @@
 ### Features
 
 ### Bugfixes
+
+<a name="4.0.0"></a>
+## 4.0.0 (2-5-2019)
+
+### Breaking
+* [#298 Gracefully handle evaluator errors](https://github.com/molgenis/molgenis-ui-form/pull/298)
+### Features
+
+### Bugfixes
 * [#293 Null or undefined date string results in invalid parse attempt](https://github.com/molgenis/molgenis-ui-form/issues/293)
 
 <a name="3.0.2"></a>
