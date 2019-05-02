@@ -12,6 +12,8 @@
 
 ### Breaking
 * [#298 Gracefully handle evaluator errors](https://github.com/molgenis/molgenis-ui-form/pull/298)
+Erroneous validation expressions in the `visibleExpression`, `nullableExpression` and `validationExpression`
+will not stop execution of the scripts but instead fallback to a default value (see documentation) and continue with a warning.
 ### Features
 
 ### Bugfixes
