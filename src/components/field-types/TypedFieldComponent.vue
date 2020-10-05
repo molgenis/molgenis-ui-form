@@ -30,7 +30,7 @@
         :step="stepSize"
       />
       <div class="validationMessage">
-        {{ genericInvalidinputMsg }}
+        {{ 'form_invalid_input' | i18n }}
       </div>
 
       <small :id="field.id + '-description'" class="form-text text-muted">
@@ -236,11 +236,6 @@ export default {
         return true
       }
       return REGEX_HYPERLINK.test(this.localValue)
-    },
-    genericInvalidinputMsg () {
-      const key = 'form_invalid_input'
-      const i18nMessage = this.$t ? this.$t(`ui-form:${key}`) : key
-      return i18nMessage !== key ? i18nMessage : 'This is not a valid input for this field type.'
     }
   }
 }

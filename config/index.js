@@ -78,6 +78,7 @@ module.exports = {
           'form_show_optional_hint': 'Show all fields.',
           'form_file_change': 'Change',
           'form_file_browse': 'Browse',
+          'form_invalid_input': 'This is not a valid input for this field type'
         }
         res.json(localizedMessages)
       })
