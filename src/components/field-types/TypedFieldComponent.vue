@@ -29,7 +29,7 @@
         :disabled="field.disabled"
         :step="stepSize"
       />
-      <div class="validationMessage invalid-feedback">
+      <div class="validationMessage">
         {{ genericInvalidinputMsg }}
       </div>
 
@@ -63,6 +63,10 @@
 }
 input:invalid + .validationMessage {
   display: block;
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545;
 }
 </style>
 
