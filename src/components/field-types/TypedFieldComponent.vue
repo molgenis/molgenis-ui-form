@@ -235,7 +235,7 @@ export default {
     },
     genericInvalidinputMsg () {
       const key = 'form_invalid_input'
-      const i18nMessage = this.$t(`ui-form:${key}`)
+      const i18nMessage = this.$t ? this.$t(`ui-form:${key}`) : key
       return i18nMessage !== key ? i18nMessage : 'This is not a valid input for this field type.'
     }
   }
