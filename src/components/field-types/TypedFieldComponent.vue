@@ -1,15 +1,16 @@
 <template>
   <validate
-    :class="{'mlg-was-validated': wasValidated}"
+    :class="{ 'mlg-was-validated': wasValidated }"
     :state="fieldState"
     :custom="{
       validate: isValid,
       integer: isValidInt,
       long: isValidLong,
       unique: isUnique,
-      hyperlink: isValidHyperlink
+      hyperlink: isValidHyperlink,
     }"
-    :debounce="inputDebounceTime">
+    :debounce="inputDebounceTime"
+  >
     <div class="form-group">
       <label :for="field.id">{{ field.label }}</label>
 
@@ -22,29 +23,51 @@
         :maxlength="maxlength"
         :name="field.id"
         class="form-control"
-        :class="{ 'is-invalid' : wasValidated && fieldState.$invalid}"
+        :class="{ 'is-invalid': wasValidated && fieldState.$invalid }"
         :aria-describedby="field.id + '-description'"
         :required="isRequired"
         :disabled="field.disabled"
-        :step="stepSize">
+        :step="stepSize"
+      />
+      <div class="validationMessage">
+        {{ 'form_invalid_input' | i18n }}
+      </div>
 
       <small :id="field.id + '-description'" class="form-text text-muted">
         {{ field.description }}
       </small>
 
-      <form-field-messages :field-id="field.id" :type="field.type" :min="min" :max="max" :maxlength="maxlength" :field-state="fieldState">
+      <form-field-messages
+        :field-id="field.id"
+        :type="field.type"
+        :min="min"
+        :max="max"
+        :maxlength="maxlength"
+        :field-state="fieldState"
+      >
       </form-field-messages>
     </div>
   </validate>
 </template>
 
 <style scoped>
-  .mlg-was-validated .form-control:invalid {
-    border-color: #dc3545;
-  }
-  .mlg-was-validated .form-control:invalid:focus {
-    box-shadow: 0 0 0 .2rem rgba(220,53,69,.25);
-  }
+.mlg-was-validated .form-control:invalid {
+  border-color: #dc3545;
+}
+.mlg-was-validated .form-control:invalid:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.validationMessage {
+  display: none;
+}
+input:invalid + .validationMessage {
+  display: block;
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
 </style>
 
 <script>
@@ -106,8 +129,10 @@ export default {
   },
   watch: {
     localValue (value) {
-      let typedValue = this.isNumberField && !Number.isNaN(Number(value)) ? this.toNumber(value)
-        : value
+      let typedValue =
+        this.isNumberField && !Number.isNaN(Number(value))
+          ? this.toNumber(value)
+          : value
 
       this.$emit('input', typedValue)
     }
@@ -119,7 +144,12 @@ export default {
   },
   computed: {
     wasValidated () {
-      return this.fieldState && (this.fieldState.$touched || this.fieldState.$submitted || this.fieldState.$dirty)
+      return (
+        this.fieldState &&
+        (this.fieldState.$touched ||
+          this.fieldState.$submitted ||
+          this.fieldState.$dirty)
+      )
     },
     min () {
       if (this.field.range && this.field.range.hasOwnProperty('min')) {
@@ -146,7 +176,9 @@ export default {
       return null
     },
     stepSize () {
-      return (this.field.type === 'integer' || this.field.type === 'long') ? 1 : 1e-10
+      return this.field.type === 'integer' || this.field.type === 'long'
+        ? 1
+        : 1e-10
     },
     maxlength () {
       switch (this.field.type) {
@@ -176,7 +208,11 @@ export default {
       if (Number.isNaN(this.localValue)) {
         return false
       }
-      return Number.isSafeInteger(numberValue) && numberValue <= MAX_JAVA_INT && numberValue >= MIN_JAVA_INT
+      return (
+        Number.isSafeInteger(numberValue) &&
+        numberValue <= MAX_JAVA_INT &&
+        numberValue >= MIN_JAVA_INT
+      )
     },
     isValidLong () {
       if (this.field.type !== 'long' || this.localValue === '') {
@@ -189,7 +225,11 @@ export default {
       return Number.isInteger(numberValue)
     },
     isNumberField () {
-      return this.field.type === 'integer' || this.field.type === 'long' || this.field.type === 'decimal'
+      return (
+        this.field.type === 'integer' ||
+        this.field.type === 'long' ||
+        this.field.type === 'decimal'
+      )
     },
     isValidHyperlink () {
       if (this.field.type !== 'hyperlink' || this.localValue === '') {
