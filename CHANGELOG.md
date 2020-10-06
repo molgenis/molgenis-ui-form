@@ -1,3 +1,10 @@
+## [5.1.2](https://github.com/molgenis/molgenis-ui-form/compare/v5.1.1...v5.1.2) (2020-10-06)
+
+
+### Bug Fixes
+
+* add namespace ui-form ([31c7025](https://github.com/molgenis/molgenis-ui-form/commit/31c7025))
+
 ## [5.1.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.1.0...v5.1.1) (2020-10-06)
 
 
