@@ -1,3 +1,10 @@
+## [5.1.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.1.0...v5.1.1) (2020-10-06)
+
+
+### Bug Fixes
+
+* only show when a user actually typed invalid input ([34699d7](https://github.com/molgenis/molgenis-ui-form/commit/34699d7))
+
 # [5.1.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.0.0...v5.1.0) (2020-10-06)
 
 
