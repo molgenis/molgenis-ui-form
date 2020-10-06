@@ -1,3 +1,17 @@
+# [5.1.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.0.0...v5.1.0) (2020-10-06)
+
+
+### Bug Fixes
+
+* **styling:** added correct styling directly to the message ([7569bab](https://github.com/molgenis/molgenis-ui-form/commit/7569bab))
+* **unit:** added conditional for unittest ([360108c](https://github.com/molgenis/molgenis-ui-form/commit/360108c))
+
+
+### Features
+
+* added correct styling for message ([ea41a4d](https://github.com/molgenis/molgenis-ui-form/commit/ea41a4d))
+* Added I18n message for when browser says the input is invalid (but browser gives no value for framework to check) ([368647a](https://github.com/molgenis/molgenis-ui-form/commit/368647a))
+
 # [5.0.0](https://github.com/molgenis/molgenis-ui-form/compare/v4.0.3...v5.0.0) (2020-08-24)
 
 
