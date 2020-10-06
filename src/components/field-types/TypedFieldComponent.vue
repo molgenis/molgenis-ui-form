@@ -29,7 +29,7 @@
         :disabled="field.disabled"
         :step="stepSize"
       />
-      <div class="validationMessage">
+      <div v-if="fieldState && fieldState.$dirty" class="validationMessage">
         {{ 'ui-form:form_invalid_input' | i18n }}
       </div>
 
