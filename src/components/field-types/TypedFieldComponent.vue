@@ -30,7 +30,7 @@
         :step="stepSize"
       />
       <div v-if="fieldState && fieldState.$dirty" class="validationMessage">
-        {{ 'form_invalid_input' | i18n }}
+        {{ 'ui-form:form_invalid_input' | i18n }}
       </div>
 
       <small :id="field.id + '-description'" class="form-text text-muted">
