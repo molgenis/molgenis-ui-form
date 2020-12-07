@@ -1,3 +1,10 @@
+## [5.1.3](https://github.com/molgenis/molgenis-ui-form/compare/v5.1.2...v5.1.3) (2020-12-07)
+
+
+### Bug Fixes
+
+* Missing add button for multi select in compound ([bc1d40d](https://github.com/molgenis/molgenis-ui-form/commit/bc1d40d)), closes [#333](https://github.com/molgenis/molgenis-ui-form/issues/333)
+
 ## [5.1.2](https://github.com/molgenis/molgenis-ui-form/compare/v5.1.1...v5.1.2) (2020-10-06)
 
 
