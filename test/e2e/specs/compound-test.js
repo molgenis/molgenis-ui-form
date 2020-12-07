@@ -14,5 +14,11 @@ module.exports = {
     browser.expect.element('fieldset fieldset#compound-string-fs').to.be.present
     browser.expect.element('fieldset fieldset#compound-multi-select-fs').to.be.present
     browser.end()
+  },
+
+  'Should show add option button for mref': function (browser) {
+    browser.options.desiredCapabilities.name = 'Show add option button for mref'
+    browser.expect.element('fieldset fieldset#compound-multi-select-fs .mg-select-add-btn').to.be.present
+    browser.end()
   }
 }
