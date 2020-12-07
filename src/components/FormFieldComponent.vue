@@ -51,7 +51,6 @@
           :level="level + 1"
           :showOptionalFields="showOptionalFields"
           :key="child.id"
-          :formComponentOptions="formComponentOptions"
           @dataChange="onDataChange">
         </form-field-component>
       </div>
