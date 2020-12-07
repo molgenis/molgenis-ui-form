@@ -45,6 +45,9 @@
       <li class="nav-item">
         <router-link to="/multi-select" class="nav-link">Multi Select</router-link>
       </li>
+      <li class="nav-item">
+        <router-link to="/compound" class="nav-link">Compound</router-link>
+      </li>
     </ul>
 
     <div>
