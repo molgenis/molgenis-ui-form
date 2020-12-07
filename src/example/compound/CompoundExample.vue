@@ -12,6 +12,7 @@
               :initialFormData="formData"
               :formState="formState"
               @valueChange="onValueChanged"
+              @addOptionRequest="onAddOptionRequest"
             ></form-component>
           </div>
         </div>
@@ -86,6 +87,9 @@ export default {
   methods: {
     onValueChanged (formData) {
       this.formData = formData
+    },
+    onAddOptionRequest (optionCreatedCallback, event, sourceField) {
+      alert('onAddOptionRequest from: ' + sourceField.id)
     }
   },
   filters: {
