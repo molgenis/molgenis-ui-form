@@ -8,6 +8,7 @@
       long: isValidLong,
       unique: isUnique,
       hyperlink: isValidHyperlink,
+      expression: !hasExpressionError
     }"
     :debounce="inputDebounceTime"
   >
@@ -43,6 +44,7 @@
         :min="min"
         :max="max"
         :maxlength="maxlength"
+        :expressionError="expressionErrorMsg"
         :field-state="fieldState"
       >
       </form-field-messages>
@@ -114,6 +116,14 @@ export default {
     isRequired: {
       type: Boolean,
       default: false
+    },
+    hasExpressionError: {
+      type: Boolean,
+      default: false
+    },
+    expressionErrorMsg: {
+      type: String,
+      default: ''
     },
     inputDebounceTime: {
       type: Number,

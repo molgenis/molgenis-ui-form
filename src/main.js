@@ -17,6 +17,7 @@ import MaxLengthExample from './example/max-length/MaxLengthExample'
 import SingleSelectExample from './example/single-select/SingleSelectExample'
 import MultiSelectExample from './example/multi-select/MultiSelectExample'
 import CompoundExample from './example/compound/CompoundExample'
+import ErrorExample from './example/validation-functions/ErrorExample'
 import i18n from '@molgenis/molgenis-i18n-js'
 
 Vue.config.productionTip = false
@@ -86,6 +87,10 @@ const router = new Router({
     {
       path: '/',
       redirect: '/update-entity'
+    },
+    {
+      path: '/eval-error/',
+      component: ErrorExample
     }]
 })
 
