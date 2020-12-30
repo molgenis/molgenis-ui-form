@@ -1,3 +1,10 @@
+# [5.2.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.1.3...v5.2.0) (2020-12-30)
+
+
+### Features
+
+* show evaluation message to user ([#339](https://github.com/molgenis/molgenis-ui-form/issues/339)) ([942d8ce](https://github.com/molgenis/molgenis-ui-form/commit/942d8ce))
+
 ## [5.1.3](https://github.com/molgenis/molgenis-ui-form/compare/v5.1.2...v5.1.3) (2020-12-07)
 
 
