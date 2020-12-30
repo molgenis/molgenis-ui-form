@@ -28,7 +28,6 @@ export default {
   name: 'model-settings',
   props: {
     fieldSettings: {
-      type: Object,
       required: true
     },
     fieldData: {
