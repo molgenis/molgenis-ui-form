@@ -22,6 +22,12 @@ describe('expressionEvaluators', () => {
       attribute.validationExpression = '% // Note: forced error'
       expect(isValid(attribute)({ 'name': '' })).to.equal(true)
     })
+    it('Calls the onErrorCallBack if passed a callback function', () => {
+      attribute.validationExpression = '% // Note: forced error'
+      let callBackHasBeenCalled = false
+      isValid(attribute, mapperOptions)({ 'name': '' }, () => { callBackHasBeenCalled = true })
+      expect(callBackHasBeenCalled).to.equal(true)
+    })
   })
 
   describe('isVisible', () => {
@@ -35,6 +41,12 @@ describe('expressionEvaluators', () => {
       attribute.visible = false
       expect(isVisible(attribute, mapperOptions)({ 'name': 'name' })).to.equal(false)
     })
+    it('Calls the onErrorCallBack if passed a callback function', () => {
+      attribute.visibleExpression = '% // Note: forced SyntaxError'
+      let callBackHasBeenCalled = false
+      isVisible(attribute, mapperOptions)({ 'name': 'name' }, () => { callBackHasBeenCalled = true })
+      expect(callBackHasBeenCalled).to.equal(true)
+    })
   })
 
   describe('isRequired', () => {
@@ -47,6 +59,12 @@ describe('expressionEvaluators', () => {
       expect(isRequired(attribute)({ 'name': 'name' })).to.equal(false)
       attribute.nillable = false
       expect(isRequired(attribute)({ 'name': 'name' })).to.equal(true)
+    })
+    it('Calls the onErrorCallBack if passed a callback function', () => {
+      attribute.nullableExpression = '% // Note: forced SyntaxError'
+      let callBackHasBeenCalled = false
+      isRequired(attribute, mapperOptions)({ 'name': 'name' }, () => { callBackHasBeenCalled = true })
+      expect(callBackHasBeenCalled).to.equal(true)
     })
   })
 })

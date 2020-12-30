@@ -1,6 +1,7 @@
 import FormFieldComponent from '@/components/FormFieldComponent'
 import { mount, shallow } from 'vue-test-utils'
 import Vue from 'vue'
+import { expect } from 'chai'
 
 describe('FormFieldComponents unit tests', () => {
   const field = {
@@ -209,6 +210,47 @@ describe('FormFieldComponents unit tests', () => {
 
     it('should be visible because field is required', () => {
       expect(wrapper.vm.isVisible).to.equal(true)
+    })
+  })
+
+  describe('evaluateScript', () => {
+    const field = {
+      id: 'string',
+      type: 'text',
+      validate: (data) => true,
+      required: () => true,
+      visible: () => true
+    }
+
+    const propsData = {
+      formData: { 'string': 'data' },
+      field: field,
+      formState: formState,
+      showOptionalFields: false,
+      eventBus: {}
+    }
+
+    const wrapper = mount(FormFieldComponent, {
+      propsData: propsData
+    })
+
+    it('should return the "onErrorResult" value in case of error ', () => {
+      const scriptFunction = () => { throw new Error() }
+      const scriptData = { some: 'data' }
+      const onErrorResult = true
+      expect(wrapper.vm.evaluateScript(scriptFunction, scriptData, onErrorResult)).to.equal(true)
+    })
+
+    it('should call the onErrorCallback if passed', () => {
+      let hasBeenCalled = false
+      const scriptFunction = (data, onErrorCallback) => {
+        hasBeenCalled = true
+        throw new Error()
+      }
+      const scriptData = { some: 'data' }
+      const onErrorResult = true
+      expect(wrapper.vm.evaluateScript(scriptFunction, scriptData, onErrorResult)).to.equal(true)
+      expect(hasBeenCalled).to.equal(true)
     })
   })
 

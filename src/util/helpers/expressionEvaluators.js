@@ -14,12 +14,17 @@ const isVisible = (attribute, mapperOptions: MapperSettings): ((?Object) => bool
   const expression = attribute.visibleExpression
 
   if (expression) {
-    return (data) => {
+    return (data, onErrorCallBack) => {
       try {
         return evaluator(expression, data)
       } catch (e) {
-        evaluationLogging('Error evaluating visible expression', attribute.name, expression, e)
-        return mapperOptions.showNonVisibleAttributes || attribute.visible
+        const errorMessage = buildErrorMessage('Error evaluating visible expression', attribute.name, expression, e)
+        evaluationLogging(errorMessage)
+        const errorResult = mapperOptions.showNonVisibleAttributes || attribute.visible
+        if (typeof (onErrorCallBack) === 'function') {
+          onErrorCallBack(new Error(errorMessage))
+        }
+        return errorResult
       }
     }
   }
@@ -38,11 +43,15 @@ const isRequired = (attribute): ((?Object) => boolean) => {
 
   // If an attribute is nullable, it is NOT required
   if (expression) {
-    return (data) => {
+    return (data, onErrorCallBack) => {
       try {
         return !evaluator(expression, data)
       } catch (e) {
-        evaluationLogging('Error evaluating required expression', attribute.name, expression, e)
+        const errorMessage = buildErrorMessage('Error evaluating visible expression', attribute.name, expression, e)
+        evaluationLogging(errorMessage)
+        if (typeof (onErrorCallBack) === 'function') {
+          onErrorCallBack(new Error(errorMessage))
+        }
         return !attribute.nillable
       }
     }
@@ -61,11 +70,15 @@ const isValid = (attribute): ((?Object) => boolean) => {
   const expression = attribute.validationExpression
 
   if (expression) {
-    return (data) => {
+    return (data, onErrorCallBack) => {
       try {
         return evaluator(expression, data)
       } catch (e) {
-        evaluationLogging('Error evaluating valid expression', attribute.name, expression, e)
+        const errorMessage = buildErrorMessage('Error evaluating visible expression', attribute.name, expression, e)
+        evaluationLogging(errorMessage)
+        if (typeof (onErrorCallBack) === 'function') {
+          onErrorCallBack(new Error(errorMessage))
+        }
         return true
       }
     }
@@ -77,19 +90,18 @@ const isValid = (attribute): ((?Object) => boolean) => {
  * Helper function for logging data to the console on evaluation error
  *
  * @param message
- * @param field
- * @param expression
- * @param e
  * @returns {*}
  */
-const evaluationLogging = (message: string, field: string, expression: string, e: Error) => {
+const evaluationLogging = (errorMessage: string) => {
   if (console && console.warn) {
-    const warningMessage = `${message} (field: ${field})
+    console.warn(errorMessage)
+  }
+}
+
+const buildErrorMessage = (message: string, field: string, expression: string, e: Error) => {
+  return `${message} (field: ${field})
     ${expression}
     ${e.toString()}`
-
-    console.warn(warningMessage)
-  }
 }
 
 export { isValid, isRequired, isVisible }
