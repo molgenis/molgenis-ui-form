@@ -89,7 +89,7 @@ const isValid = (attribute): ((?Object) => boolean) => {
 /**
  * Helper function for logging data to the console on evaluation error
  *
- * @param message
+ * @param errorMessage
  * @returns {*}
  */
 const evaluationLogging = (errorMessage: string) => {
