@@ -1,7 +1,14 @@
 import evaluator from '@/util/helpers/evaluator'
+import { expect } from 'chai'
 import moment from 'moment'
 
 describe('evaluator', () => {
+  describe('newValue', () => {
+    it('should create a new value', () => {
+      expect(evaluator('newValue(42).value()')).to.equal(42)
+    })
+  })
+
   describe('string comparison', () => {
     const expression = '$(\'myProp\').value() === "test"'
     it('should eval  "test === "test" as true ', () => {

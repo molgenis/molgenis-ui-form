@@ -391,6 +391,10 @@ export default function (script, entity) {
     return new attribute(this[attr])
   }
 
+  function newValue(x) {
+    return new attribute(x)
+  }
+
   $ = $.bind(entity)
 
   return eval(script)
