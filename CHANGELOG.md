@@ -1,3 +1,10 @@
+## [5.2.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.2.0...v5.2.1) (2021-01-12)
+
+
+### Bug Fixes
+
+* add newValue function to evaluator.js ([db9c765](https://github.com/molgenis/molgenis-ui-form/commit/db9c765)), closes [#342](https://github.com/molgenis/molgenis-ui-form/issues/342)
+
 # [5.2.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.1.3...v5.2.0) (2020-12-30)
 
 
