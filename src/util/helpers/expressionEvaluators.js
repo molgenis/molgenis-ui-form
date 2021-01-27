@@ -47,7 +47,7 @@ const isRequired = (attribute): ((?Object) => boolean) => {
       try {
         return !evaluator(expression, data)
       } catch (e) {
-        const errorMessage = buildErrorMessage('Error evaluating visible expression', attribute.name, expression, e)
+        const errorMessage = buildErrorMessage('Error evaluating isRequired expression', attribute.name, expression, e)
         evaluationLogging(errorMessage)
         if (typeof (onErrorCallBack) === 'function') {
           onErrorCallBack(new Error(errorMessage))
@@ -74,7 +74,7 @@ const isValid = (attribute): ((?Object) => boolean) => {
       try {
         return evaluator(expression, data)
       } catch (e) {
-        const errorMessage = buildErrorMessage('Error evaluating visible expression', attribute.name, expression, e)
+        const errorMessage = buildErrorMessage('Error evaluating isValid expression', attribute.name, expression, e)
         evaluationLogging(errorMessage)
         if (typeof (onErrorCallBack) === 'function') {
           onErrorCallBack(new Error(errorMessage))
