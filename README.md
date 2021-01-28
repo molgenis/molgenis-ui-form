@@ -390,6 +390,7 @@ yarn run build --report
 # run unit tests
 yarn run unit
 
+-- these are disabled for now
 # run e2e tests
 yarn run e2e
 
