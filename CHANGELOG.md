@@ -1,3 +1,13 @@
+## [5.2.2](https://github.com/molgenis/molgenis-ui-form/compare/v5.2.1...v5.2.2) (2021-02-10)
+
+
+### Bug Fixes
+
+* bump version ([39752ed](https://github.com/molgenis/molgenis-ui-form/commit/39752ed))
+* disable CI e2e tests ([#346](https://github.com/molgenis/molgenis-ui-form/issues/346)) ([197dc9f](https://github.com/molgenis/molgenis-ui-form/commit/197dc9f))
+* fix version error due to release fail ([#348](https://github.com/molgenis/molgenis-ui-form/issues/348)) ([89f7dd9](https://github.com/molgenis/molgenis-ui-form/commit/89f7dd9))
+* trigger release after tags where cleaned ([#349](https://github.com/molgenis/molgenis-ui-form/issues/349)) ([f922ab9](https://github.com/molgenis/molgenis-ui-form/commit/f922ab9))
+
 # [5.2.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.1.3...v5.2.0) (2020-12-30)
 
 
