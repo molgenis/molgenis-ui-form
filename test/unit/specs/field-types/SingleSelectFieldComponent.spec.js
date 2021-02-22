@@ -46,7 +46,8 @@ describe('SingleSelectFieldComponent unit tests', () => {
             ]
           }
           return Promise.resolve(optionsSearchResult)
-        }
+        },
+        isAddOptionAllowed: () => Promise.resolve(true)
       },
       fieldState: {
         $touched: false,
@@ -195,13 +196,14 @@ describe('SingleSelectFieldComponent unit tests', () => {
     expect(wrapper.vm.localValue).to.deep.equal(myOption)
   })
 
-  it('should render the add btn when the allowAddingOptions property is set to true ', () => {
+  it('should render the add btn when the allowAddingOptions property is set to true ', async () => {
     propsData.allowAddingOptions = true
 
     const wrapper = mount(SingleSelectFieldComponent, {
       propsData: propsData,
       stubs: ['fieldMessages']
     })
+    await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
   })
 })

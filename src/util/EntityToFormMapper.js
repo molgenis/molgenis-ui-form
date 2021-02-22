@@ -41,6 +41,21 @@ MappingException.prototype.toString = function () {
   return this.name + ': "' + this.message + '"'
 }
 
+// Cache fetchFieldOptions request responses.
+// key:  requestUri as string, value: raw api v2 response
+const refOptionsCache = {}
+
+const refEntityLabelAttribute = (refEntity) => refEntity.labelAttribute ? refEntity.labelAttribute : refEntity.idAttribute
+
+const buildRefOptionsQuery = (refEntity: RefEntityType, search: ?string | ?Array<string>):string => {
+  const idAttribute = refEntity.idAttribute
+  const labelAttribute = refEntityLabelAttribute(refEntity)
+
+  // map refEntity.hrefCollection v1 URLs to v2 to enable the use of RSQL queries
+  let uri = refEntity.hrefCollection.replace('/v1/', '/v2/')
+  return UriGenerator.generateUri(search, uri, idAttribute, labelAttribute)
+}
+
 /**
  * Uses the idAttribute, labelAttribute, and hrefCollection parameters of the refEntity
  * to query a data table. Returns a list of {id, value, label} items as a Promise
@@ -50,22 +65,42 @@ MappingException.prototype.toString = function () {
  * @return {Promise} Promise object representing an Array of FieldOption
  */
 const fetchFieldOptions = (refEntity: RefEntityType, search: ?string | ?Array<string>): Promise<Array<FieldOption>> => {
-  const idAttribute = refEntity.idAttribute
-  const labelAttribute = refEntity.labelAttribute ? refEntity.labelAttribute : refEntity.idAttribute
+  const uri = buildRefOptionsQuery(refEntity, search)
 
-  // map refEntity.hrefCollection v1 URLs to v2 to enable the use of RSQL queries
-  let uri = refEntity.hrefCollection.replace('/v1/', '/v2/')
+  const itemToOption = (item) => ({
+    id: item[refEntity.idAttribute],
+    value: item[refEntity.idAttribute],
+    label: item[refEntityLabelAttribute(refEntity)]
+  })
 
-  uri = UriGenerator.generateUri(search, uri, idAttribute, labelAttribute)
+  if (refOptionsCache[uri]) {
+    return Promise.resolve(refOptionsCache[uri].items.map(itemToOption))
+  }
 
   return api.get(uri).then(response => {
-    return response.items.map(item => {
-      return {
-        id: item[idAttribute],
-        value: item[idAttribute],
-        label: item[labelAttribute]
-      }
-    })
+    refOptionsCache[uri] = response
+    return response.items.map(itemToOption)
+  })
+}
+
+/**
+ * Uses the idAttribute, labelAttribute, and hrefCollection parameters of the refEntity
+ * to check if current user is allowed to add option. Returns boolean true if allowed else false
+ *
+ * @param refEntity The refEntity of the attribute.
+ * @param search An optional search query used to filter the items of the response
+ * @return {Promise} Promise resulting in boolean
+ */
+const isUserAllowedAddOption = (refEntity: RefEntityType, search: ?string | ?Array<string>): Promise<boolean> => {
+  const uri = buildRefOptionsQuery(refEntity, search)
+
+  if (refOptionsCache[uri]) {
+    return Promise.resolve(refOptionsCache[uri].meta.permissions.includes('ADD_DATA'))
+  }
+
+  return api.get(uri).then((response) => {
+    refOptionsCache[uri] = response
+    return refOptionsCache[uri].meta.permissions.includes('ADD_DATA')
   })
 }
 
@@ -140,6 +175,30 @@ const getFieldOptions = (attribute, options: MapperSettings): ?(() => Promise<Ar
       return (): Promise<Array<FieldOption>> => Promise.resolve(boolOptions)
     default:
       return null
+  }
+}
+
+/**
+ * Build a function that returns a Promise resulting in bool indicating if user is allowed to a an option
+ *
+ * @param attribute
+ * @returns {Function} Function which returns a Promise indicating if user can add a option
+ */
+const buildIsAddAllowedFunction = (attribute): ?(() => Promise<boolean>) => {
+  switch (attribute.fieldType) {
+    case 'CATEGORICAL':
+    case 'CATEGORICAL_MREF':
+    case 'ONE_TO_MANY':
+    case 'XREF':
+    case 'MREF':
+    case 'ENUM':
+      return (search: ?string | Array<string>): Promise<boolean> => {
+        return isUserAllowedAddOption(attribute.refEntity, search).then(response => {
+          return response
+        })
+      }
+    default:
+      return () => Promise.resolve(false)
   }
 }
 
@@ -283,7 +342,8 @@ const generateFormSchemaField = (attribute, entityMetadata:any, mapperOptions: M
     readOnly: isDisabled,
     visible: isVisible(attribute, mapperOptions),
     validate: isValid(attribute),
-    unique: buildIsUniqueFunction(attribute, entityMetadata, mapperOptions)
+    unique: buildIsUniqueFunction(attribute, entityMetadata, mapperOptions),
+    isAddOptionAllowed: buildIsAddAllowedFunction(attribute)
   }
 
   if (attribute.fieldType === 'COMPOUND') {

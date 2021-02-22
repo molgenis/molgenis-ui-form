@@ -85,7 +85,8 @@ module.exports = {
 
       // mock unique test response
       app.get('/api/v2/it_emx_datatypes_TypeTest', function (req, res) {
-        const result = req.query.q === 'string==\'string value\';id!=123-abc' ? {items: []} : {items: [{foo: 'bar'}]}
+        const meta = { permissions: ['ADD_DATA'] }
+        const result = req.query.q === 'string==\'string value\';id!=123-abc' ? {items: [], meta} : {items: [{foo: 'bar'}], meta}
         res.json(result)
       })
 

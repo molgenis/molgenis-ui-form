@@ -21,7 +21,7 @@
           </div>
         </v-select>
 
-        <div v-if="allowAddingOptions">
+        <div v-if="allowAddingOptions && isAddOptionAllowed">
           <button @click="addOptionClicked($event)" class="btn btn-outline-secondary mg-select-add-btn" type="button">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </button>
@@ -89,7 +89,8 @@ export default {
     return {
       // Store a local value to prevent changing the parent state
       localValue: this.value,
-      options: []
+      options: [],
+      isAddOptionAllowed: true // init as true to allow for backward compatibility
     }
   },
   methods: {
@@ -129,6 +130,12 @@ export default {
         this.localValue = this.options.find(option => option.id === this.value)
       }
     })
+
+    if(this.field.isAddOptionAllowed) {
+      this.field.isAddOptionAllowed(this.value).then(response => {
+        this.isAddOptionAllowed = response
+      })
+    } 
   },
   components: {
     vSelect,

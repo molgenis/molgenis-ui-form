@@ -49,7 +49,8 @@ describe('MultiSelectFieldComponent unit tests', () => {
               resolve([])
             })
           }
-        }
+        },
+        isAddOptionAllowed: () => Promise.resolve(true)
       },
       fieldState: {
         $touched: false,
@@ -235,13 +236,14 @@ describe('MultiSelectFieldComponent unit tests', () => {
     expect(wrapper.findAll('.input-group-append').exists()).to.equal(false)
   })
 
-  it('should render the add btn when the allowAddingOptions property is set to true ', () => {
+  it('should render the add btn when the allowAddingOptions property is set to true ', async () => {
     propsData.allowAddingOptions = true
 
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
+    await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
   })
 })

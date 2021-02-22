@@ -70,6 +70,7 @@ export default {
                   { id: '2', label: 'Option 2', value: 'val-2' },
                   { id: '3', label: 'Option 3', value: 'val-3' }
                 ]),
+              isAddOptionAllowed: () => Promise.resolve(true),
               visible: () => true,
               required: () => false,
               validate: () => true
