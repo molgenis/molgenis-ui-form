@@ -246,4 +246,16 @@ describe('MultiSelectFieldComponent unit tests', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
   })
+
+  it('should not throw an error if isAddOptionAllowed function is missing from field', async () => {
+    propsData.allowAddingOptions = true
+    propsData.field.isAddOptionAllowed = undefined
+
+    const wrapper = mount(MultiSelectFieldComponent, {
+      propsData: propsData,
+      stubs: ['fieldMessages']
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
+  })
 })
