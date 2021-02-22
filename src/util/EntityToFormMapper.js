@@ -191,7 +191,6 @@ const buildIsAddAllowedFunction = (attribute): ?(() => Promise<boolean>) => {
     case 'ONE_TO_MANY':
     case 'XREF':
     case 'MREF':
-    case 'ENUM':
       return (search: ?string | Array<string>): Promise<boolean> => {
         return isUserAllowedAddOption(attribute.refEntity, search).then(response => {
           return response

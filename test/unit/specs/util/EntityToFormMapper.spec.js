@@ -651,7 +651,7 @@ describe('Entity to state mapper', () => {
       const form = EntityToFormMapper.generateForm(schemas.categoricalSchema, data)
       const field = form.formFields[0]
 
-      it('should map a [CATEGORICAL] attribute to a form field object', done => {
+      it('should map a [CATEGORICAL] attribute to a form field object', async () => {
         expect(field.type).to.equal('radio')
         expect(field.id).to.equal('categorical')
         expect(field.label).to.equal('Categorical Field')
@@ -660,15 +660,12 @@ describe('Entity to state mapper', () => {
         expect(field.readOnly).to.equal(false)
         expect(field.visible()).to.equal(true)
         expect(typeof field.options).to.equal('function')
-
-        field.options().then(response => {
-          expect(response).to.deep.equal([
-            { id: 'ref1', value: 'ref1', label: 'ref1' },
-            { id: 'ref2', value: 'ref2', label: 'ref2' },
-            { id: 'ref3', value: 'ref3', label: 'ref3' }
-          ])
-          done()
-        })
+        expect((await field.isAddOptionAllowed())).to.equal(true)
+        expect((await field.options())).to.deep.equal([
+          { id: 'ref1', value: 'ref1', label: 'ref1' },
+          { id: 'ref2', value: 'ref2', label: 'ref2' },
+          { id: 'ref3', value: 'ref3', label: 'ref3' }
+        ])
       })
 
       it('should map a [CATEGORICAL] entity to a form data object', () => {
