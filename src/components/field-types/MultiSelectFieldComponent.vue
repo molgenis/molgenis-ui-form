@@ -135,11 +135,11 @@ export default {
       }
     })
 
-    if(this.field.isAddOptionAllowed) {
+    if (this.field.isAddOptionAllowed) {
       this.field.isAddOptionAllowed(this.value).then(response => {
         this.isAddOptionAllowed = response
       })
-    } 
+    }
   },
   components: {
     vSelect,
