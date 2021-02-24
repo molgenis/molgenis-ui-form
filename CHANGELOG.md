@@ -1,3 +1,10 @@
+# [5.3.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.2.2...v5.3.0) (2021-02-24)
+
+
+### Features
+
+* Only show add option button if use is allowed to add option ([#350](https://github.com/molgenis/molgenis-ui-form/issues/350)) ([627fb0d](https://github.com/molgenis/molgenis-ui-form/commit/627fb0d))
+
 ## [5.2.2](https://github.com/molgenis/molgenis-ui-form/compare/v5.2.1...v5.2.2) (2021-02-10)
 
 
