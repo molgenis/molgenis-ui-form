@@ -4,26 +4,30 @@ import api from '@molgenis/molgenis-api-client'
 
 import * as schemas from './test-schemas'
 
+const meta = { permissions: ['ADD_DATA'] }
+
 const response = {
   items: [
     { value: 'ref1', label: 'label1' },
     { value: 'ref2', label: 'label2' },
     { value: 'ref3', label: 'label3' }
-  ]
+  ],
+  meta
 }
 
 const responseBySearch = {
   items: [
     { value: 'ref1', label: 'label1' }
-  ]
+  ],
+  meta
 }
 
 const get = td.function('api.get')
 td.when(get('/api/v2/it_emx_datatypes_TypeTestRef')).thenResolve(response)
 td.when(get('/api/v2/it_emx_datatypes_TypeTestRef?q=value=like=ref1,label=like=ref1')).thenResolve(responseBySearch)
 td.when(get('/api/v2/it_emx_datatypes_TypeTestRef?q=value=in=(ref1,ref2,ref3),label=in=(ref1,ref2,ref3)')).thenResolve(response)
-td.when(get('/api/v2/sys_demo/unique_example?&num=1&q=unique_demo==\'am%20i%20unique%3F\'')).thenResolve({ items: [] })
-td.when(get('/api/v2/sys_demo/unique_example?&num=1&q=unique_demo==\'i%20am%20not%20unique%3F\';id!=123')).thenResolve({ items: [] })
+td.when(get('/api/v2/sys_demo/unique_example?&num=1&q=unique_demo==\'am%20i%20unique%3F\'')).thenResolve({ items: [], meta })
+td.when(get('/api/v2/sys_demo/unique_example?&num=1&q=unique_demo==\'i%20am%20not%20unique%3F\';id!=123')).thenResolve({ items: [], meta })
 td.replace(api, 'get', get)
 
 describe('Entity to state mapper', () => {
@@ -647,7 +651,7 @@ describe('Entity to state mapper', () => {
       const form = EntityToFormMapper.generateForm(schemas.categoricalSchema, data)
       const field = form.formFields[0]
 
-      it('should map a [CATEGORICAL] attribute to a form field object', done => {
+      it('should map a [CATEGORICAL] attribute to a form field object', async () => {
         expect(field.type).to.equal('radio')
         expect(field.id).to.equal('categorical')
         expect(field.label).to.equal('Categorical Field')
@@ -656,15 +660,12 @@ describe('Entity to state mapper', () => {
         expect(field.readOnly).to.equal(false)
         expect(field.visible()).to.equal(true)
         expect(typeof field.options).to.equal('function')
-
-        field.options().then(response => {
-          expect(response).to.deep.equal([
-            { id: 'ref1', value: 'ref1', label: 'ref1' },
-            { id: 'ref2', value: 'ref2', label: 'ref2' },
-            { id: 'ref3', value: 'ref3', label: 'ref3' }
-          ])
-          done()
-        })
+        expect((await field.isAddOptionAllowed())).to.equal(true)
+        expect((await field.options())).to.deep.equal([
+          { id: 'ref1', value: 'ref1', label: 'ref1' },
+          { id: 'ref2', value: 'ref2', label: 'ref2' },
+          { id: 'ref3', value: 'ref3', label: 'ref3' }
+        ])
       })
 
       it('should map a [CATEGORICAL] entity to a form data object', () => {
@@ -794,7 +795,7 @@ describe('Entity to state mapper', () => {
     const form = EntityToFormMapper.generateForm(schemas.xrefSchema, data)
     const field = form.formFields[0]
 
-    it('should map a [XREF] attribute to a form field object', done => {
+    it('should map a [XREF] attribute to a form field object', async () => {
       expect(field.type).to.equal('single-select')
       expect(field.id).to.equal('xref')
       expect(field.label).to.equal('XREF Field')
@@ -803,14 +804,13 @@ describe('Entity to state mapper', () => {
       expect(field.readOnly).to.equal(false)
       expect(field.visible()).to.equal(true)
       expect(typeof field.options).to.equal('function')
-      field.options().then(response => {
-        expect(response).to.deep.equal([
-          { id: 'ref1', value: 'ref1', label: 'label1' },
-          { id: 'ref2', value: 'ref2', label: 'label2' },
-          { id: 'ref3', value: 'ref3', label: 'label3' }
-        ])
-        done()
-      })
+      const optionsResponse = await field.options()
+      expect(optionsResponse).to.deep.equal([
+        { id: 'ref1', value: 'ref1', label: 'label1' },
+        { id: 'ref2', value: 'ref2', label: 'label2' },
+        { id: 'ref3', value: 'ref3', label: 'label3' }
+      ])
+      expect((await field.isAddOptionAllowed())).to.equal(true)
     })
 
     it('should filter [XREF] response based on search', done => {

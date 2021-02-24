@@ -22,7 +22,18 @@ module.exports = {
     ],
     'isAbstract': false,
     'languageCode': 'en',
-    'writable': true
+    'writable': true,
+    'permissions': [
+      'UPDATE_METADATA',
+      'DELETE_METADATA',
+      'COUNT_DATA',
+      'UPDATE_DATA',
+      'DELETE_DATA',
+      'READ_DATA',
+      'ADD_DATA',
+      'READ_METADATA',
+      'AGGREGATE_DATA'
+    ]
   },
   'start': 0,
   'num': 100,

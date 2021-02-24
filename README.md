@@ -211,10 +211,13 @@ const fields = [
       ]
 
       return Promise.resolve(options)
-    }
+    },
+    isAddOptionAllowed: () => Promise.resolve(true)
   }
 ]
 ```
+
+The ```isAddOptionAllowed``` function indicated if the user should be allowed to add options 
 
 ### field group example
 A field group can be used to group a set of fields.
