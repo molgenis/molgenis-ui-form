@@ -34,9 +34,7 @@
         {{ 'ui-form:form_invalid_input' | i18n }}
       </div>
 
-      <small :id="field.id + '-description'" class="form-text text-muted">
-        {{ field.description }}
-      </small>
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages
         :field-id="field.id"
@@ -76,6 +74,7 @@ input:invalid + .validationMessage {
 import VueForm from 'vue-form'
 import { FormField } from '../../flow.types'
 import FormFieldMessages from '../FormFieldMessages'
+import Description from '../Description'
 
 const MIN_JAVA_INT = -2147483648
 const MAX_JAVA_INT = 2147483647
@@ -89,7 +88,7 @@ let debounceTime = 500
 export default {
   name: 'TypedFieldComponent',
   components: {
-    FormFieldMessages
+    FormFieldMessages, Description
   },
   props: {
     value: {
