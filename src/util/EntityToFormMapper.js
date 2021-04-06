@@ -362,6 +362,10 @@ const generateFormSchemaField = (attribute, entityMetadata:any, mapperOptions: M
     fieldProperties = { ...fieldProperties, range }
   }
 
+  if (attribute.maxLength) {
+    fieldProperties = { ...fieldProperties, maxlength: attribute.maxLength }
+  }
+
   return options ? { ...fieldProperties, options } : fieldProperties
 }
 
