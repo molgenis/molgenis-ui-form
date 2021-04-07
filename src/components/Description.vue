@@ -1,16 +1,26 @@
 <template>
   <small :id="id + '-description'" class="form-text text-muted">
-    <div v-if="description.length == 1" v-html="description"></div>
+    <div v-if="description.length == 1">
+      <span>{{description[0][0][0]}}</span>
+    </div>
     <div v-else>
-      <div><span v-html="description[0]" /> <a v-if="!showMore" href="#showmore" @click.prevent="showMore=true">(show more)</a></div>
-      <div v-if="showMore"><span v-html="description[1]" />  <a href="#showless" @click.prevent="showMore=false">(show less)</a></div>
+      <div>
+        <span v-for="(item, index) in description[0]" :key="`short-desc-${index}`">
+          <span>{{ item[0] }}</span>
+          <a v-if="item[1]" :href="item[1]">{{item[1]}}</a>
+        </span>
+        <a v-if="!showMore" href="#showmore" @click.prevent="showMore=true">(show more)</a></div>
+      <div v-if="showMore">
+        <span v-for="(item, index) in description[1]" :key="`long-desc-${index}`">
+          <span>{{ item[0] }}</span>
+          <a v-if="item[1]" :href="item[1]">{{item[1]}}</a>
+        </span>
+        <a href="#showless" @click.prevent="showMore=false">(show less)</a></div>
     </div>
   </small>
 </template>
 
 <script>
-// TODO: add show more
-// TODO: add automatic url to link
 export default {
   name: 'Description',
   props: {
@@ -29,23 +39,23 @@ export default {
     }
   },
   methods: {
-    addLinks (text) {
-      // based on: https://www.labnol.org/code/20294-regex-extract-links-javascript
-      return (text || '').replace(
-        /([^\S]|^)(((https?\:\/\/)|(www\.))(\S+))/gi,
-        function (match, space, url) {
-          let hyperlink = url
-          if (!hyperlink.match('^https?://')) {
-            hyperlink = 'http://' + hyperlink
-          }
-          return space + '<a target="_blank" href="' + hyperlink + '">' + url + '</a>'
+    // Returns an array like [[text, url], [text, url], [text, url], ...]
+    // Note it may be [[text]] if no url found
+    textURLSplit (text) {
+      const split = text.split(/(?:[^\S]|^)((?:(?:https?:\/\/)|(?:www\.))(?:\S+))/gi)
+      const res = split.reduce((accumulator, current, index, array) => {
+        if (index % 2) {
+          return accumulator
+        } else {
+          return [...accumulator, [current, array[index + 1]]]
         }
-      )
+      }, [])
+      return res
     }
   },
   computed: {
     description () {
-      return this.text.split('\n', 2).map(item => this.addLinks(item))
+      return this.text.split('\n', 2).map(item => this.textURLSplit(item))
     }
   }
 }
