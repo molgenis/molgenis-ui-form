@@ -43,9 +43,11 @@ import 'codemirror/addon/dialog/dialog.js'
 import detectLang from '../../util/helpers/langDetect'
 
 import { FormField } from '../../flow.types'
+import Description from '../Description'
 
 export default {
   name: 'CodeEditorFieldComponent',
+  components: { Description },
   mixins: [VueForm],
   props: {
     value: {

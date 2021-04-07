@@ -39,11 +39,12 @@
 import VueForm from 'vue-form'
 import { FormField } from '../../flow.types'
 import FormFieldMessages from '../FormFieldMessages'
+import Description from '../Description'
 
 export default {
   name: 'FileFieldComponent',
   components: {
-    FormFieldMessages
+    FormFieldMessages, Description
   },
   props: {
     value: {

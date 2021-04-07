@@ -70,7 +70,7 @@ const metadata = {
       'unique': false,
       'lookupAttribute': true,
       'isAggregatable': false,
-      'description': 'https://www.molgenis.org TEXT description\nbla'
+      'description': 'https://www.molgenis.org TEXT description'
     },
     {
       'href': '/api/v2/it_emx_datatypes_TypeTest/meta/boolean',

@@ -40,11 +40,12 @@
 import VueForm from 'vue-form'
 import FormFieldMessages from '../FormFieldMessages'
 import { FormField } from '../../flow.types'
+import Description from '../Description'
 
 export default {
   name: 'CheckboxFieldComponent',
   components: {
-    FormFieldMessages
+    FormFieldMessages, Description
   },
   mixins: [VueForm],
   props: {

@@ -41,12 +41,13 @@
 import VueForm from 'vue-form'
 import vSelect from 'vue-select'
 import FormFieldMessages from '../FormFieldMessages'
-
+import Description from '../Description'
 import { FormField } from '../../flow.types'
 
 export default {
   name: 'SingleSelectFieldComponent',
   mixins: [VueForm],
+  components: { Description },
   props: {
     value: {
       // ID of select field can be of type: Integer, Long, String etc.

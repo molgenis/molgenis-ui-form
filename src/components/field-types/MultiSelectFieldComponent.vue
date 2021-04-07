@@ -43,12 +43,13 @@
 import VueForm from 'vue-form'
 import vSelect from 'vue-select'
 import FormFieldMessages from '../FormFieldMessages'
-
+import Description from '../Description'
 import { FormField } from '../../flow.types'
 
 export default {
   name: 'MultiSelectFieldComponent',
   mixins: [VueForm],
+  components: { Description },
   props: {
     value: {
       type: Array,

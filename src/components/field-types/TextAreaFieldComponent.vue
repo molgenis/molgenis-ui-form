@@ -27,13 +27,14 @@
 import VueForm from 'vue-form'
 import { FormField } from '../../flow.types'
 import FormFieldMessages from '../FormFieldMessages'
+import Description from '../Description'
 
 let debounceTime = 500
 
 export default {
   name: 'TextAreaFieldComponent',
   components: {
-    FormFieldMessages
+    FormFieldMessages, Description
   },
   props: {
     value: {

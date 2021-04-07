@@ -54,6 +54,7 @@ import { Italian } from 'flatpickr/dist/l10n/it.js'
 import { French } from 'flatpickr/dist/l10n/fr.js'
 import { Dutch } from 'flatpickr/dist/l10n/nl.js'
 import { German } from 'flatpickr/dist/l10n/de.js'
+import Description from '../Description'
 
 const flatpickerLangMap = {
   pt: Portuguese,
@@ -69,6 +70,7 @@ const DATE_TIME_DISPLAY = 'Y-MM-DD\\THH:mm:ssZ'
 export default {
   name: 'DateFieldComponent',
   mixins: [VueForm],
+  components: { Description },
   props: {
     value: {
       type: [String, Date],
