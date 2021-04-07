@@ -26,9 +26,7 @@
         <label class="custom-file-label" :for="field.id" :data-browse="buttonText">{{ label }}</label>
       </div>
 
-      <small :id="field.id + '-description'" class="form-text text-muted">
-        {{ field.description }}
-      </small>
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState">
       </form-field-messages>

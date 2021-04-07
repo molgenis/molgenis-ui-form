@@ -35,9 +35,7 @@
         <label :for="field.id + '-null'" class="form-check-label">{{ nullOptionLabel }}</label>
       </div>
 
-      <small :id="field.id + '-description'" class="form-text text-muted">
-        {{ field.description }}
-      </small>
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState">
       </form-field-messages>

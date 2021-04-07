@@ -27,9 +27,7 @@
       <button class="select-all btn btn-link btn-sm" @click="selectAll" type="button"><i>Select all</i></button>
       <button class="deselect-all btn btn-link btn-sm" @click="deSelectAll" type="button"><i>Deselect all</i></button>
 
-      <small :id="field.id + '-description'" class="form-text text-muted">
-        {{ field.description }}
-      </small>
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState">
       </form-field-messages>

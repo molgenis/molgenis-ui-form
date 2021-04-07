@@ -1,0 +1,20 @@
+<template>
+  <span>
+    <span v-for="(item, index) in description" :key="`desc-${index}`">
+      <span>{{ item.text }}</span>
+      <a v-if="item.url" :href="item.url" target="_blank">{{item.url}}</a>
+    </span>
+  </span>
+</template>
+
+<script>
+export default {
+  name: 'DescriptionUrls',
+  props: {
+    description: {
+      type: Array,
+      required: true
+    }
+  }
+}
+</script>

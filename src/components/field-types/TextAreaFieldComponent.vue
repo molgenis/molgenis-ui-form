@@ -15,9 +15,7 @@
         :disabled="field.disabled">
       </textarea>
 
-      <small :id="field.id + '-description'" class="form-text text-muted">
-        {{ field.description }}
-      </small>
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState" :maxlength="maxlength">
       </form-field-messages>

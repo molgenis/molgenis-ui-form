@@ -1,28 +1,27 @@
 <template>
   <small :id="id + '-description'" class="form-text text-muted">
-    <div v-if="description.length == 1">
-      <span>{{description[0][0][0]}}</span>
+    <div v-if="!description.long">
+      <description-urls :description="description.normal"/>
     </div>
     <div v-else>
       <div>
-        <span v-for="(item, index) in description[0]" :key="`short-desc-${index}`">
-          <span>{{ item[0] }}</span>
-          <a v-if="item[1]" :href="item[1]">{{item[1]}}</a>
-        </span>
-        <a v-if="!showMore" href="#showmore" @click.prevent="showMore=true">(show more)</a></div>
+        <description-urls :description="description.normal"/>
+        <small><a v-if="!showMore" href="#showmore" @click.prevent="showMore=true">(show more)</a></small>
+      </div>
       <div v-if="showMore">
-        <span v-for="(item, index) in description[1]" :key="`long-desc-${index}`">
-          <span>{{ item[0] }}</span>
-          <a v-if="item[1]" :href="item[1]">{{item[1]}}</a>
-        </span>
-        <a href="#showless" @click.prevent="showMore=false">(show less)</a></div>
+        <description-urls :description="description.long"/>
+        <small><a href="#showless" @click.prevent="showMore=false">(show less)</a></small>
+      </div>
     </div>
   </small>
 </template>
 
 <script>
+import DescriptionUrls from './DescriptionUrls'
+
 export default {
   name: 'Description',
+  components: { DescriptionUrls },
   props: {
     id: {
       type: String,
@@ -39,15 +38,15 @@ export default {
     }
   },
   methods: {
-    // Returns an array like [[text, url], [text, url], [text, url], ...]
-    // Note it may be [[text]] if no url found
+    // Returns an array of structure [{text, url}, {text, url}, ...]
+    // Note: it may be [{text}] if no url is found
     textURLSplit (text) {
       const split = text.split(/(?:[^\S]|^)((?:(?:https?:\/\/)|(?:www\.))(?:\S+))/gi)
       const res = split.reduce((accumulator, current, index, array) => {
         if (index % 2) {
           return accumulator
         } else {
-          return [...accumulator, [current, array[index + 1]]]
+          return [...accumulator, { text: current, url: array[index + 1] }]
         }
       }, [])
       return res
@@ -55,7 +54,8 @@ export default {
   },
   computed: {
     description () {
-      return this.text.split('\n', 2).map(item => this.textURLSplit(item))
+      const items = this.text.split('\n', 2).map(item => this.textURLSplit(item))
+      return { normal: items[0], long: items[1] }
     }
   }
 }
