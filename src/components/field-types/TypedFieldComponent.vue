@@ -190,14 +190,7 @@ export default {
         : 1e-10
     },
     maxlength () {
-      switch (this.field.type) {
-        case 'text':
-        case 'hyperlink':
-        case 'email':
-          return 255
-        default:
-          return null
-      }
+      return this.field.maxlength
     },
     inputType () {
       if (this.isNumberField) {

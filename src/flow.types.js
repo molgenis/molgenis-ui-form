@@ -24,7 +24,8 @@ export type FormField = {
   visible: ((?Object) => boolean),
   options?: (() => Promise<Array<FieldOption>>),
   children?: Array<FormField>,
-  validate: ((?Object) => boolean)
+  validate: ((?Object) => boolean),
+  maxlength?: number
 }
 
 export type RefEntityType = {
