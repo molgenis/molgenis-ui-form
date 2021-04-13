@@ -61,10 +61,6 @@ export default {
     inputDebounceTime: {
       type: Number,
       default: debounceTime
-    },
-    maxlength: {
-      type: Number,
-      default: 65535
     }
   },
   mixins: [VueForm],
@@ -72,6 +68,11 @@ export default {
     return {
       // Store a local value to prevent changing the parent state
       localValue: this.value
+    }
+  },
+  computed: {
+    maxlength () {
+      return this.field.maxlength
     }
   },
   watch: {

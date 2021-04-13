@@ -22,7 +22,7 @@
       </div>
 
       <div class="col-sm">
-        <model-settings :field-settings="formFields[0]" :field-data="formData"></model-settings>
+        <model-settings :field-settings="formFields" :field-data="formData"></model-settings>
       </div>
 
     </div>
@@ -51,6 +51,7 @@ export default {
           label: 'String field with too many characters',
           description: 'This field will be marked as invalid because it consists of too many characters (>255)',
           type: 'text',
+          maxlength: 255,
           visible: () => true,
           required: () => false,
           validate: () => true,
@@ -61,6 +62,7 @@ export default {
           label: 'Text field with too many characters',
           description: 'This text field contains a random DNA sequence of 65536 characters, which is invalid.',
           type: 'text-area',
+          maxlength: 65535,
           visible: () => true,
           required: () => false,
           validate: () => true,
@@ -71,6 +73,7 @@ export default {
           label: 'Hyperlink field with too many characters',
           description: 'This Hyperlink is too long',
           type: 'hyperlink',
+          maxlength: 255,
           visible: () => true,
           required: () => false,
           validate: () => true,
@@ -81,6 +84,7 @@ export default {
           label: 'Email field with too many characters',
           description: 'This Email address is too long',
           type: 'email',
+          maxlength: 255,
           visible: () => true,
           required: () => false,
           validate: () => true,
