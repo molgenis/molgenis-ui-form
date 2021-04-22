@@ -11,7 +11,7 @@
                   :required="isRequired">
         </vue-code>
       </div>
-      <description :text="field.description" />
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState" :maxlength="maxlength">
       </form-field-messages>

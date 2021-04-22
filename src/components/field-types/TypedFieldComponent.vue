@@ -34,7 +34,7 @@
         {{ 'ui-form:form_invalid_input' | i18n }}
       </div>
 
-      <description :text="field.description" />
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages
         :field-id="field.id"

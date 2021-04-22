@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <description :text="field.description" />
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState">
       </form-field-messages>
