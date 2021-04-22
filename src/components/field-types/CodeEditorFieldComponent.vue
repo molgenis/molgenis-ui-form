@@ -11,7 +11,7 @@
                   :required="isRequired">
         </vue-code>
       </div>
-      <description :id="field.id" :text="field.description" />
+      <description :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState" :maxlength="maxlength">
       </form-field-messages>
@@ -47,7 +47,6 @@ import Description from '../Description'
 
 export default {
   name: 'CodeEditorFieldComponent',
-  components: { Description },
   mixins: [VueForm],
   props: {
     value: {
@@ -120,7 +119,8 @@ export default {
   },
   components: {
     VueCode,
-    FormFieldMessages
+    FormFieldMessages,
+    Description
   }
 }
 </script>

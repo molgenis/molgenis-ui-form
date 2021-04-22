@@ -15,7 +15,7 @@
         :disabled="field.disabled">
       </textarea>
 
-      <description :id="field.id" :text="field.description" />
+      <description :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState" :maxlength="maxlength">
       </form-field-messages>

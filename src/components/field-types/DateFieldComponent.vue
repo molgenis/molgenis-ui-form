@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <description :id="field.id" :text="field.description" />
+      <description :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState">
       </form-field-messages>
@@ -70,7 +70,6 @@ const DATE_TIME_DISPLAY = 'Y-MM-DD\\THH:mm:ssZ'
 export default {
   name: 'DateFieldComponent',
   mixins: [VueForm],
-  components: { Description },
   props: {
     value: {
       type: [String, Date],
@@ -168,7 +167,8 @@ export default {
   },
   components: {
     flatPickr,
-    FormFieldMessages
+    FormFieldMessages,
+    Description
   }
 }
 </script>

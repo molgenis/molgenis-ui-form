@@ -23,10 +23,6 @@ export default {
   name: 'Description',
   components: { DescriptionUrls },
   props: {
-    id: {
-      type: String,
-      required: true
-    },
     text: {
       type: String,
       required: true

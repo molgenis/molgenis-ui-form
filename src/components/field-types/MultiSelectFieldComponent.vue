@@ -30,7 +30,7 @@
         </div>
 
       </div>
-      <description :id="field.id" :text="field.description" />
+      <description :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState">
       </form-field-messages>
@@ -49,7 +49,6 @@ import { FormField } from '../../flow.types'
 export default {
   name: 'MultiSelectFieldComponent',
   mixins: [VueForm],
-  components: { Description },
   props: {
     value: {
       type: Array,
@@ -142,7 +141,8 @@ export default {
   },
   components: {
     vSelect,
-    FormFieldMessages
+    FormFieldMessages,
+    Description
   }
 }
 </script>

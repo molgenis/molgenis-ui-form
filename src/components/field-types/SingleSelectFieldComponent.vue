@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <description :id="field.id" :text="field.description" />
+      <description :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState">
       </form-field-messages>
@@ -47,7 +47,6 @@ import { FormField } from '../../flow.types'
 export default {
   name: 'SingleSelectFieldComponent',
   mixins: [VueForm],
-  components: { Description },
   props: {
     value: {
       // ID of select field can be of type: Integer, Long, String etc.
@@ -138,7 +137,8 @@ export default {
   },
   components: {
     vSelect,
-    FormFieldMessages
+    FormFieldMessages,
+    Description
   }
 }
 </script>
