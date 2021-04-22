@@ -54,11 +54,11 @@ export default {
   },
   computed: {
     description () {
-      if (this.text != null && this.text != undefined) {
+      if (this.text !== null && this.text !== undefined) {
         const items = this.text.split('\n', 2).map(item => this.textURLSplit(item))
         return { normal: items[0], long: items[1] }
       } else {
-        return { normal: '', long: '' }
+        return { normal: [], long: [] }
       }
     }
   }
