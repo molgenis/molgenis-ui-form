@@ -1,3 +1,10 @@
+## [5.3.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.3.0...v5.3.1) (2021-04-13)
+
+
+### Bug Fixes
+
+* use maxLength from attribute metadata ([29d659a](https://github.com/molgenis/molgenis-ui-form/commit/29d659a))
+
 # [5.3.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.2.2...v5.3.0) (2021-02-24)
 
 
