@@ -33,9 +33,7 @@
         </div>
       </div>
 
-      <small :id="field.id + '-description'" class="form-text text-muted">
-        {{ field.description }}
-      </small>
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState">
       </form-field-messages>
@@ -56,6 +54,7 @@ import { Italian } from 'flatpickr/dist/l10n/it.js'
 import { French } from 'flatpickr/dist/l10n/fr.js'
 import { Dutch } from 'flatpickr/dist/l10n/nl.js'
 import { German } from 'flatpickr/dist/l10n/de.js'
+import Description from '../Description'
 
 const flatpickerLangMap = {
   pt: Portuguese,
@@ -168,7 +167,8 @@ export default {
   },
   components: {
     flatPickr,
-    FormFieldMessages
+    FormFieldMessages,
+    Description
   }
 }
 </script>

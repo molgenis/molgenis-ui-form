@@ -15,9 +15,7 @@
         :disabled="field.disabled">
       </textarea>
 
-      <small :id="field.id + '-description'" class="form-text text-muted">
-        {{ field.description }}
-      </small>
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState" :maxlength="maxlength">
       </form-field-messages>
@@ -29,13 +27,14 @@
 import VueForm from 'vue-form'
 import { FormField } from '../../flow.types'
 import FormFieldMessages from '../FormFieldMessages'
+import Description from '../Description'
 
 let debounceTime = 500
 
 export default {
   name: 'TextAreaFieldComponent',
   components: {
-    FormFieldMessages
+    FormFieldMessages, Description
   },
   props: {
     value: {

@@ -35,9 +35,7 @@
         <label :for="field.id + '-null'" class="form-check-label">{{ nullOptionLabel }}</label>
       </div>
 
-      <small :id="field.id + '-description'" class="form-text text-muted">
-        {{ field.description }}
-      </small>
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState">
       </form-field-messages>
@@ -50,17 +48,22 @@
 import VueForm from 'vue-form'
 import { FormField } from '../../flow.types'
 import FormFieldMessages from '../FormFieldMessages'
+import Description from '../Description'
 
 export default {
   name: 'RadioFieldComponent',
   components: {
-    FormFieldMessages
+    FormFieldMessages, Description
   },
   props: {
     value: {
       // ID of select field can be of type: Integer, Long, String etc.
       type: [String, Number, Boolean],
       required: false
+    },
+    id: {
+      type: String,
+      required: true
     },
     field: {
       type: FormField,

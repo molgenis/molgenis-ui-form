@@ -54,7 +54,7 @@ const metadata = {
       'lookupAttribute': true,
       'isAggregatable': false,
       'visible': true,
-      'description': 'STRING description'
+      'description': 'Complex description with http://molgenis.org url\nAnd more text here www.molgenis.org Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     },
     {
       'href': '/api/v2/it_emx_datatypes_TypeTest/meta/text',
@@ -70,7 +70,7 @@ const metadata = {
       'unique': false,
       'lookupAttribute': true,
       'isAggregatable': false,
-      'description': 'TEXT description'
+      'description': 'https://www.molgenis.org TEXT description'
     },
     {
       'href': '/api/v2/it_emx_datatypes_TypeTest/meta/boolean',
@@ -86,7 +86,7 @@ const metadata = {
       'visible': true,
       'lookupAttribute': true,
       'isAggregatable': false,
-      'description': 'Boolean description'
+      'description': 'Boolean\n description'
     },
     {
       'href': '/api/v2/it_emx_datatypes_TypeTest/meta/integer',

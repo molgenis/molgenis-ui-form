@@ -11,9 +11,7 @@
                   :required="isRequired">
         </vue-code>
       </div>
-      <small :id="field.id + '-description'" class="form-text text-muted">
-        {{ field.description }}
-      </small>
+      <description :id="field.id" :text="field.description" />
 
       <form-field-messages :field-id="field.id" :field-state="fieldState" :maxlength="maxlength">
       </form-field-messages>
@@ -45,6 +43,7 @@ import 'codemirror/addon/dialog/dialog.js'
 import detectLang from '../../util/helpers/langDetect'
 
 import { FormField } from '../../flow.types'
+import Description from '../Description'
 
 export default {
   name: 'CodeEditorFieldComponent',
@@ -120,7 +119,8 @@ export default {
   },
   components: {
     VueCode,
-    FormFieldMessages
+    FormFieldMessages,
+    Description
   }
 }
 </script>
