@@ -1,3 +1,18 @@
+# [5.4.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.3.1...v5.4.0) (2021-04-28)
+
+
+### Bug Fixes
+
+* fixes broken imports ([692b587](https://github.com/molgenis/molgenis-ui-form/commit/692b587))
+* force urls starting with www. to be external urls ([a1c9a56](https://github.com/molgenis/molgenis-ui-form/commit/a1c9a56))
+
+
+### Features
+
+* add automatic url's and show more text to description ([f903508](https://github.com/molgenis/molgenis-ui-form/commit/f903508))
+* add discription component to all components ([bdc4829](https://github.com/molgenis/molgenis-ui-form/commit/bdc4829))
+* dont use v-html ([014d97d](https://github.com/molgenis/molgenis-ui-form/commit/014d97d))
+
 ## [5.3.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.3.0...v5.3.1) (2021-04-13)
 
 
