@@ -1,3 +1,10 @@
+## [5.4.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.4.0...v5.4.1) (2021-04-29)
+
+
+### Bug Fixes
+
+* filter compound attributes too ([bd4b125](https://github.com/molgenis/molgenis-ui-form/commit/bd4b125)), closes [#358](https://github.com/molgenis/molgenis-ui-form/issues/358)
+
 # [5.4.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.3.1...v5.4.0) (2021-04-28)
 
 
