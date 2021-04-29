@@ -24,6 +24,53 @@ const metadata = {
       'visible': false
     },
     {
+      'attributes': [
+        {
+          'attributes': [],
+          'auto': true,
+          'description': 'Creation date, automatically generated',
+          'fieldType': 'DATE',
+          'href': '/api/v2/it_emx_datatypes_TypeTest/meta/createdOn',
+          'isAggregatable': false,
+          'label': 'Created On',
+          'labelAttribute': false,
+          'lookupAttribute': false,
+          'name': 'createdOn',
+          'nillable': false,
+          'readOnly': true,
+          'unique': false,
+          'visible': true
+        }, {
+          'attributes': [],
+          'auto': false,
+          'description': 'Author',
+          'fieldType': 'STRING',
+          'href': '/api/v2/it_emx_datatypes_TypeTest/meta/createdBy',
+          'isAggregatable': false,
+          'label': 'Created By',
+          'labelAttribute': false,
+          'lookupAttribute': false,
+          'name': 'createdBy',
+          'nillable': false,
+          'readOnly': true,
+          'unique': false,
+          'visible': true
+        }],
+      'auto': false,
+      'description': 'Audit info',
+      'fieldType': 'COMPOUND',
+      'href': '/api/v2/it_emx_datatypes_TypeTest/meta/auditing',
+      'isAggregatable': false,
+      'label': 'Auditing',
+      'labelAttribute': false,
+      'lookupAttribute': false,
+      'name': 'auditing',
+      'nillable': false,
+      'readOnly': true,
+      'unique': false,
+      'visible': false
+    },
+    {
       'attributes': [],
       'auto': true,
       'description': 'auto value',
@@ -34,7 +81,7 @@ const metadata = {
       'labelAttribute': false,
       'lookupAttribute': false,
       'maxLength': 255,
-      'name': 'auto val',
+      'name': 'autoval',
       'nillable': false,
       'readOnly': true,
       'unique': false,
@@ -751,6 +798,9 @@ const metadata = {
 
 const items = {
   id: '123-abc',
+  createdOn: '2020-01-01',
+  createdBy: 'Bofke',
+  autoval: 'Auto-generated value',
   string: 'string value',
   text: 'text value',
   hyperlink: 'www.nu.nl',

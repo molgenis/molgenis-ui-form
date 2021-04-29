@@ -767,7 +767,7 @@ export const oneToManySchema = {
   ]
 }
 
-export const autoIdSchema = {
+export const autoFilterSchema = {
   'attributes': [
     {
       'attributes': [],
@@ -784,6 +784,53 @@ export const autoIdSchema = {
       'nillable': false,
       'readOnly': true,
       'unique': true,
+      'visible': true
+    },
+    {
+      'attributes': [
+        {
+          'attributes': [],
+          'auto': true,
+          'description': 'Creation date, automatically generated',
+          'fieldType': 'DATE',
+          'href': '/api/v2/it_emx_datatypes_TypeTest/meta/createdOn',
+          'isAggregatable': false,
+          'label': 'Created On',
+          'labelAttribute': false,
+          'lookupAttribute': false,
+          'name': 'createdOn',
+          'nillable': false,
+          'readOnly': true,
+          'unique': false,
+          'visible': true
+        }, {
+          'attributes': [],
+          'auto': false,
+          'description': 'Author',
+          'fieldType': 'STRING',
+          'href': '/api/v2/it_emx_datatypes_TypeTest/meta/createdBy',
+          'isAggregatable': false,
+          'label': 'Created By',
+          'labelAttribute': false,
+          'lookupAttribute': false,
+          'name': 'createdBy',
+          'nillable': false,
+          'readOnly': true,
+          'unique': false,
+          'visible': true
+        }],
+      'auto': false,
+      'description': 'Audit info',
+      'fieldType': 'COMPOUND',
+      'href': '/api/v2/it_emx_datatypes_TypeTest/meta/auditing',
+      'isAggregatable': false,
+      'label': 'Auditing',
+      'labelAttribute': false,
+      'lookupAttribute': false,
+      'name': 'auditing',
+      'nillable': false,
+      'readOnly': true,
+      'unique': false,
       'visible': false
     }
   ]

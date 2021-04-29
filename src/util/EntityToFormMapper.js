@@ -346,7 +346,9 @@ const generateFormSchemaField = (attribute, entityMetadata:any, mapperOptions: M
   }
 
   if (attribute.fieldType === 'COMPOUND') {
-    const children = attribute.attributes.map(attribute => generateFormSchemaField(attribute, entityMetadata, mapperOptions))
+    const children = attribute.attributes
+      .filter(attr => isFormFieldAttribute(attr, mapperOptions))
+      .map(attr => generateFormSchemaField(attr, entityMetadata, mapperOptions))
     fieldProperties = { ...fieldProperties, children }
   }
 
