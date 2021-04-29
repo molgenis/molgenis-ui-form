@@ -874,9 +874,16 @@ describe('Entity to state mapper', () => {
   describe('Auto generated ( server side) field value validation', () => {
     const data = {}
 
-    it('should not map auto, non-visible attribute to field in create mode', () => {
-      const form = EntityToFormMapper.generateForm(schemas.autoIdSchema, data, { mapperMode: 'CREATE' })
-      expect(form.formFields.length).to.equal(0)
+    it('should not map auto, visible attributes to field in create mode', () => {
+      const form = EntityToFormMapper.generateForm(schemas.autoFilterSchema, data, { mapperMode: 'CREATE' })
+      expect(form.formFields.map(field => field.id)).to.deep.equal(['auditing'])
+      expect(form.formFields[0].children.map(field => field.id)).to.deep.equal(['createdBy'])
+    })
+
+    it('should not filter auto attributes in update mode', () => {
+      const form = EntityToFormMapper.generateForm(schemas.autoFilterSchema, data, { mapperMode: 'UPDATE' })
+      expect(form.formFields.map(field => field.id)).to.deep.equal(['id', 'auditing'])
+      expect(form.formFields[1].children.map(field => field.id)).to.deep.equal(['createdOn', 'createdBy'])
     })
   })
 
