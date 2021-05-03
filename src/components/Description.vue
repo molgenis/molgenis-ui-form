@@ -1,18 +1,10 @@
 <template>
   <small :id="id + '-description'" class="form-text text-muted">
-    <div v-if="!description.long">
       <description-urls :description="description.normal"/>
-    </div>
-    <div v-else>
-      <div>
-        <description-urls :description="description.normal"/>
-        <small><a v-if="!showMore" href="#showmore" @click.prevent="showMore=true">(show more)</a></small>
+      <div class=" d-inline" v-if="description.long">
+        <description-urls v-if="showMore" :description="description.long"/>
+        <small><a href="#" @click.prevent="showMore = !showMore">{{ showMore ? '(show less)' : '(show more)' }}</a></small>
       </div>
-      <div v-if="showMore">
-        <description-urls :description="description.long"/>
-        <small><a href="#showless" @click.prevent="showMore=false">(show less)</a></small>
-      </div>
-    </div>
   </small>
 </template>
 
