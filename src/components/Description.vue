@@ -55,8 +55,8 @@ export default {
     },
     descriptionToggleText () {
       // check if i18n exists and string has been key-e-fied
-      if (this.$t && this.$t('ui-form:show-more') !== 'show-more') {
-        return this.showMore ? this.$t('ui-form:show-less') : this.$t('ui-form:show-more')
+      if (this.$t && this.$t('ui-form:form_show_more') !== 'form_show_more') {
+        return this.showMore ? this.$t('ui-form:form_show_less') : this.$t('ui-form:form_show_more')
       } else {
         return this.showMore ? '(show less)' : '(show more)'
       }
