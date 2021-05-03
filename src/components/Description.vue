@@ -3,7 +3,7 @@
       <description-urls :description="description.normal"/>
       <div class=" d-inline" v-if="description.long">
         <description-urls v-if="showMore" :description="description.long"/>
-        <small><a href="#" @click.prevent="showMore = !showMore">{{ showMore ? '(show less)' : '(show more)' }}</a></small>
+        <small><a href="#" @click.prevent="showMore = !showMore">{{ descriptionToggleText }}</a></small>
       </div>
   </small>
 </template>
@@ -51,6 +51,14 @@ export default {
         return { normal: items[0], long: items[1] }
       } else {
         return { normal: [], long: [] }
+      }
+    },
+    descriptionToggleText () {
+      // check if i18n exists and string has been key-e-fied
+      if (this.$t && this.$t('ui-form:show-more') !== 'show-more') {
+        return this.showMore ? this.$t('ui-form:show-less') : this.$t('ui-form:show-more')
+      } else {
+        return this.showMore ? '(show less)' : '(show more)'
       }
     }
   }
