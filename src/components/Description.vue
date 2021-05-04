@@ -1,18 +1,10 @@
 <template>
   <small :id="id + '-description'" class="form-text text-muted">
-    <div v-if="!description.long">
       <description-urls :description="description.normal"/>
-    </div>
-    <div v-else>
-      <div>
-        <description-urls :description="description.normal"/>
-        <small><a v-if="!showMore" href="#showmore" @click.prevent="showMore=true">(show more)</a></small>
+      <div class=" d-inline" v-if="description.long">
+        <description-urls v-if="showMore" :description="description.long"/>
+        <small><a href="#" @click.prevent="showMore = !showMore">{{ descriptionToggleText }}</a></small>
       </div>
-      <div v-if="showMore">
-        <description-urls :description="description.long"/>
-        <small><a href="#showless" @click.prevent="showMore=false">(show less)</a></small>
-      </div>
-    </div>
   </small>
 </template>
 
@@ -59,6 +51,14 @@ export default {
         return { normal: items[0], long: items[1] }
       } else {
         return { normal: [], long: [] }
+      }
+    },
+    descriptionToggleText () {
+      // check if i18n exists and string has been key-e-fied
+      if (this.$t && this.$t('ui-form:form_show_more') !== 'form_show_more') {
+        return this.showMore ? this.$t('ui-form:form_show_less') : this.$t('ui-form:form_show_more')
+      } else {
+        return this.showMore ? '(show less)' : '(show more)'
       }
     }
   }

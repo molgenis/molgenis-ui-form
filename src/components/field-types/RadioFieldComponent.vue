@@ -61,10 +61,6 @@ export default {
       type: [String, Number, Boolean],
       required: false
     },
-    id: {
-      type: String,
-      required: true
-    },
     field: {
       type: FormField,
       required: true

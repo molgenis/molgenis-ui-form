@@ -18,16 +18,15 @@ describe('Description unit tests', () => {
   it('description should split a string on a \\n and call textURLSplit on the two parts', () => {
     expect(wrapper.vm.description).to.deep.equal({ normal: [{ text: 'test', url: undefined }], long: [{ text: 'test', url: undefined }] })
   })
-  it('it should generate a read more button', () => {
-    const more = wrapper.findAll('small a[href="#showmore"]')
-    expect(more.length).to.equal(1)
+  it('it should show a read more button', () => {
+    const linkButton = wrapper.find('small a[href="#"]')
+    expect(linkButton.html()).to.contain('(show more)')
   })
-  it('it should generate a read less button after clicking "read more"', () => {
-    const more = wrapper.findAll('small a[href="#showmore"]')
-    let less = wrapper.findAll('small a[href="#showless"]')
-    expect(less.length).to.equal(0)
-    more.trigger('click')
-    less = wrapper.findAll('small a[href="#showless"]')
-    expect(less.length).to.equal(1)
+  it('it should have a read less text after clicking "read more"', () => {
+    const linkButton = wrapper.find('small a[href="#"]')
+    // Assert that the button is actually in the show more state
+    expect(linkButton.html()).to.contain('(show more)')
+    linkButton.trigger('click')
+    expect(linkButton.html()).to.contain('(show less)')
   })
 })
