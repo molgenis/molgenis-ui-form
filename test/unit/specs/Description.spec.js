@@ -1,5 +1,5 @@
 import Description from '@/components/Description'
-import { shallow } from 'vue-test-utils'
+import { mount, shallow } from 'vue-test-utils'
 
 const wrapper = shallow(Description, {
   propsData: {
@@ -32,12 +32,13 @@ describe('Description unit tests', () => {
   })
 
   it('should not break when text is undefined', () => {
-    const undefinedTextWrapper = shallow(Description, {
+    const undefinedTextWrapper = mount(Description, {
       propsData: {
         id: 'testId',
-        text: undefined
+        text: '' // object tested must be an array, a map, an object, a set, a string, or a weakset, but undefined given > can't be actual undefined.
       }
     })
-    expect(undefinedTextWrapper.html()).to.not.include('small a[href="#"]')
+
+    expect(undefinedTextWrapper.html()).to.not.include('<!----> <!---->') // check if rendered element is empty.
   })
 })

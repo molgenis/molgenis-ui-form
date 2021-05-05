@@ -55,7 +55,24 @@ const metadata = {
           'readOnly': true,
           'unique': false,
           'visible': true
-        }],
+        },
+        {
+          'attributes': [],
+          'auto': false,
+          'description': undefined,
+          'fieldType': 'STRING',
+          'href': '/api/v2/it_emx_datatypes_TypeTest/meta/createdBy',
+          'isAggregatable': false,
+          'label': 'Undefined description created by',
+          'labelAttribute': false,
+          'lookupAttribute': false,
+          'name': 'Undefined-Description-Createdby',
+          'nillable': false,
+          'readOnly': true,
+          'unique': false,
+          'visible': true
+        }
+      ],
       'auto': false,
       'description': 'Audit info',
       'fieldType': 'COMPOUND',
