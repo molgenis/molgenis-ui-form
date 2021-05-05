@@ -1,3 +1,10 @@
+## [5.4.2](https://github.com/molgenis/molgenis-ui-form/compare/v5.4.1...v5.4.2) (2021-05-05)
+
+
+### Bug Fixes
+
+* trigger release ([b9f85b9](https://github.com/molgenis/molgenis-ui-form/commit/b9f85b9))
+
 ## [5.4.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.4.0...v5.4.1) (2021-04-29)
 
 
