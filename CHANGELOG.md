@@ -1,3 +1,10 @@
+## [5.4.3](https://github.com/molgenis/molgenis-ui-form/compare/v5.4.2...v5.4.3) (2021-05-05)
+
+
+### Bug Fixes
+
+* made text not required, as it can be undefined from the database ([#364](https://github.com/molgenis/molgenis-ui-form/issues/364)) ([8b8c5b3](https://github.com/molgenis/molgenis-ui-form/commit/8b8c5b3))
+
 ## [5.4.2](https://github.com/molgenis/molgenis-ui-form/compare/v5.4.1...v5.4.2) (2021-05-05)
 
 
