@@ -1,5 +1,5 @@
 <template>
-  <small :id="id + '-description'" class="form-text text-muted">
+  <small :id="id + '-description'" class="form-text text-muted" v-if="description.normal.length">
       <description-urls :description="description.normal"/>
       <div class=" d-inline" v-if="description.long">
         <description-urls v-if="showMore" :description="description.long"/>
@@ -17,7 +17,7 @@ export default {
   props: {
     text: {
       type: String,
-      required: true
+      required: false
     },
     id: {
       type: String,
