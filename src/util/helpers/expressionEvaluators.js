@@ -1,5 +1,5 @@
 import type { MapperSettings } from '../../flow.types'
-import evaluator from './evaluator'
+import { Expressions } from '@molgenis/expressions'
 
 /**
  * If there is a visible expression present, return a function which evaluates the expression.
@@ -16,7 +16,7 @@ const isVisible = (attribute, mapperOptions: MapperSettings): ((?Object) => bool
   if (expression) {
     return (data, onErrorCallBack) => {
       try {
-        return evaluator(expression, data)
+        return Expressions.evaluate(expression, data)
       } catch (e) {
         const errorMessage = buildErrorMessage('Error evaluating visible expression', attribute.name, expression, e)
         evaluationLogging(errorMessage)
@@ -45,7 +45,7 @@ const isRequired = (attribute): ((?Object) => boolean) => {
   if (expression) {
     return (data, onErrorCallBack) => {
       try {
-        return !evaluator(expression, data)
+        return !Expressions.evaluate(expression, data)
       } catch (e) {
         const errorMessage = buildErrorMessage('Error evaluating isRequired expression', attribute.name, expression, e)
         evaluationLogging(errorMessage)
@@ -72,7 +72,7 @@ const isValid = (attribute): ((?Object) => boolean) => {
   if (expression) {
     return (data, onErrorCallBack) => {
       try {
-        return evaluator(expression, data)
+        return Expressions.evaluate(expression, data)
       } catch (e) {
         const errorMessage = buildErrorMessage('Error evaluating isValid expression', attribute.name, expression, e)
         evaluationLogging(errorMessage)

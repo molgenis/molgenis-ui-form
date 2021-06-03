@@ -5,9 +5,9 @@ describe('expressionEvaluators', () => {
     name: 'name',
     visible: true,
     nillable: true,
-    validationExpression: '$(\'name\').value() !== "not valid"',
-    visibleExpression: '$(\'name\').value() === ""',
-    nullableExpression: '$(\'name\').value() !== "not valid"'
+    validationExpression: '{name} != "not valid"',
+    visibleExpression: '{name} empty',
+    nullableExpression: '{name} != "not valid"'
   }
   const mapperOptions = {
     showNonVisibleAttributes: false

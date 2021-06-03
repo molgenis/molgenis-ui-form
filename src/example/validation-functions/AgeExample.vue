@@ -49,7 +49,7 @@
 import { FormComponent } from '../../molgenisUiForm'
 import ModelSettings from '../components/ModelSettings'
 import moment from 'moment'
-import evaluator from '@/util/helpers/evaluator'
+import { Expressions } from '@molgenis/expressions'
 
 export default {
   name: 'age-example',
@@ -81,9 +81,9 @@ export default {
   },
   computed: {
     age () {
-      const expression = '$("date").age().value()'
+      const expression = 'age({date})'
       const entity = { date: this.formData['age-example-field'] }
-      return evaluator(expression, entity)
+      return Expressions.evaluate(expression, entity)
     }
   },
   methods: {
