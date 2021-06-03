@@ -3,14 +3,14 @@ export const compoundSchema = {
     {
       'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound',
       'fieldType': 'COMPOUND',
-      'name': 'compound-field',
+      'name': 'compound_field',
       'label': 'Compound field',
       'description': 'Compound description',
       'attributes': [
         {
           'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_int',
           'fieldType': 'INT',
-          'name': 'compound-int',
+          'name': 'compound_int',
           'label': 'Compound integer field',
           'attributes': [],
           'auto': false,
@@ -27,14 +27,14 @@ export const compoundSchema = {
         {
           'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound',
           'fieldType': 'COMPOUND',
-          'name': 'nested-compound',
+          'name': 'nested_compound',
           'label': 'Nested Compound field',
           'description': 'Nested Compound description',
           'attributes': [
             {
               'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_int',
               'fieldType': 'ENUM',
-              'name': 'nested-compound-enum',
+              'name': 'nested_compound_enum',
               'label': 'An enum, inside a compound, inside a compound',
               'attributes': [],
               'enumOptions': ['enum1', 'enum2', 'enum3'],
@@ -52,7 +52,7 @@ export const compoundSchema = {
             {
               'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_string',
               'fieldType': 'STRING',
-              'name': 'nested-compound-string',
+              'name': 'nested_compound_string',
               'label': 'Nested Compound string field',
               'description': 'TypeTest compound string attribute',
               'attributes': [],
@@ -70,7 +70,7 @@ export const compoundSchema = {
             {
               'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_string',
               'fieldType': 'LONG',
-              'name': 'nested-compound-long',
+              'name': 'nested_compound_long',
               'label': 'Nested Compound Long field',
               'description': 'TypeTest compound long attribute',
               'attributes': [],
@@ -97,7 +97,7 @@ export const compoundSchema = {
         {
           'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_string',
           'fieldType': 'STRING',
-          'name': 'compound-string',
+          'name': 'compound_string',
           'label': 'Compound string field',
           'description': 'TypeTest compound string attribute',
           'attributes': [],
@@ -111,9 +111,9 @@ export const compoundSchema = {
           'visible': true,
           'lookupAttribute': false,
           'isAggregatable': true,
-          'visibleExpression': '$("nested-compound-string").value() === "show"',
-          'nullableExpression': '$("compound-int").value() === 1',
-          'validationExpression': '$("compound-string").value() === "valid"'
+          'visibleExpression': '{nested_compound_string} = "show"',
+          'nullableExpression': '{compound_int} = 1',
+          'validationExpression': '{compound_string} = "valid"'
         }],
       'auto': false,
       'nillable': false,
@@ -144,8 +144,8 @@ export const stringSchema = {
       'lookupAttribute': true,
       'isAggregatable': false,
       'description': 'STRING description',
-      'nullableExpression': '$("text").value() !== "test"',
-      'validationExpression': '$("string").value() === "valid"'
+      'nullableExpression': '{text} != "test"',
+      'validationExpression': '{string} = "valid"'
     }
   ]
 }
@@ -1063,7 +1063,7 @@ export const defaultFileValue = {
       'labelAttribute': true,
       'lookupAttribute': true,
       'maxLength': 255,
-      'name': 'file-field',
+      'name': 'file_field',
       'nillable': false,
       'readOnly': true,
       'unique': true,
@@ -1085,7 +1085,7 @@ export const defaultEnumValue = {
       'labelAttribute': true,
       'lookupAttribute': true,
       'maxLength': 255,
-      'name': 'enum-field',
+      'name': 'enum_field',
       'nillable': false,
       'readOnly': true,
       'unique': true,
@@ -1108,7 +1108,7 @@ export const defaultCategoricalMref = {
       'labelAttribute': true,
       'lookupAttribute': true,
       'maxLength': 255,
-      'name': 'cat-mref-field',
+      'name': 'cat_mref_field',
       'nillable': false,
       'readOnly': true,
       'unique': true,
@@ -1131,7 +1131,7 @@ export const defaultDateValue = {
       'labelAttribute': true,
       'lookupAttribute': true,
       'maxLength': 255,
-      'name': 'date-of-birth',
+      'name': 'date_of_birth',
       'nillable': false,
       'readOnly': true,
       'unique': true,

@@ -22,52 +22,52 @@ module.exports = {
   'Correctly render a field-group and its child fields': function (browser) {
     browser.options.desiredCapabilities.name = 'Correctly render a field-group and its child fields'
 
-    browser.expect.element('#compound-field-fs').to.be.visible
-    browser.getTagName('#compound-field-fs', function (result) {
+    browser.expect.element('#compound_field-fs').to.be.visible
+    browser.getTagName('#compound_field-fs', function (result) {
       this.assert.equal(result.value.toLowerCase(), 'fieldset')
     })
-    browser.expect.element('#compound-field-fs legend').text.to.contain('Compound field')
-    browser.expect.element('#compound-field-fs small').text.to.contain('Compound description')
-    browser.expect.element('#compound-field-fs hr').to.be.visible
-    browser.expect.element('#compound-field-fs div').to.have.attribute('class').which.contains('pl-2')
+    browser.expect.element('#compound_field-fs legend').text.to.contain('Compound field')
+    browser.expect.element('#compound_field-fs small').text.to.contain('Compound description')
+    browser.expect.element('#compound_field-fs hr').to.be.visible
+    browser.expect.element('#compound_field-fs div').to.have.attribute('class').which.contains('pl-2')
 
-    browser.expect.element('#compound-int-fs').to.be.visible
-    browser.getTagName('#compound-int-fs', function (result) {
+    browser.expect.element('#compound_int-fs').to.be.visible
+    browser.getTagName('#compound_int-fs', function (result) {
       this.assert.equal(result.value.toLowerCase(), 'fieldset')
     })
 
-    browser.expect.element('#compound-int-fs input').to.have.attribute('id').which.contains('compound-int')
-    browser.expect.element('#compound-int-fs input').to.have.attribute('type').which.contains('number')
+    browser.expect.element('#compound_int-fs input').to.have.attribute('id').which.contains('compound_int')
+    browser.expect.element('#compound_int-fs input').to.have.attribute('type').which.contains('number')
 
-    browser.expect.element('#nested-compound-field-fs').to.be.visible
-    browser.getTagName('#nested-compound-field-fs', function (result) {
+    browser.expect.element('#nested_compound_field-fs').to.be.visible
+    browser.getTagName('#nested_compound_field-fs', function (result) {
       this.assert.equal(result.value.toLowerCase(), 'fieldset')
     })
-    browser.expect.element('#nested-compound-field-fs legend').text.to.contain('Nested Compound field')
-    browser.expect.element('#nested-compound-field-fs small').text.to.contain('Nested Compound description')
-    browser.expect.element('#nested-compound-field-fs hr').to.be.visible
-    browser.expect.element('#nested-compound-field-fs div').to.have.attribute('class').which.contains('pl-4')
+    browser.expect.element('#nested_compound_field-fs legend').text.to.contain('Nested Compound field')
+    browser.expect.element('#nested_compound_field-fs small').text.to.contain('Nested Compound description')
+    browser.expect.element('#nested_compound_field-fs hr').to.be.visible
+    browser.expect.element('#nested_compound_field-fs div').to.have.attribute('class').which.contains('pl-4')
 
-    browser.expect.element('#nested-compound-enum-fs').to.be.visible
-    browser.getTagName('#nested-compound-enum-fs', function (result) {
+    browser.expect.element('#nested_compound_enum-fs').to.be.visible
+    browser.getTagName('#nested_compound_enum-fs', function (result) {
       this.assert.equal(result.value.toLowerCase(), 'fieldset')
     })
-    browser.expect.element('#nested-compound-enum-fs input[id=nested-compound-enum-0]').to.be.visible
-    browser.expect.element('#nested-compound-enum-fs input[id=nested-compound-enum-0]').to.have.attribute('type').which.contains('radio')
+    browser.expect.element('#nested_compound_enum-fs input[id=nested_compound_enum-0]').to.be.visible
+    browser.expect.element('#nested_compound_enum-fs input[id=nested_compound_enum-0]').to.have.attribute('type').which.contains('radio')
 
-    browser.expect.element('#nested-compound-string-fs').to.be.visible
-    browser.getTagName('#nested-compound-string-fs', function (result) {
+    browser.expect.element('#nested_compound_string-fs').to.be.visible
+    browser.getTagName('#nested_compound_string-fs', function (result) {
       this.assert.equal(result.value.toLowerCase(), 'fieldset')
     })
-    browser.expect.element('#nested-compound-string-fs input').to.have.attribute('id').which.contains('nested-compound-string')
-    browser.expect.element('#nested-compound-string-fs input').to.have.attribute('type').which.contains('text')
+    browser.expect.element('#nested_compound_string-fs input').to.have.attribute('id').which.contains('nested_compound_string')
+    browser.expect.element('#nested_compound_string-fs input').to.have.attribute('type').which.contains('text')
 
-    browser.expect.element('#compound-string-fs').to.be.not.visible
-    browser.getTagName('#compound-string-fs', function (result) {
+    browser.expect.element('#compound_string-fs').to.be.not.visible
+    browser.getTagName('#compound_string-fs', function (result) {
       this.assert.equal(result.value.toLowerCase(), 'fieldset')
     })
-    browser.expect.element('#compound-string-fs input').to.have.attribute('id').which.contains('compound-string')
-    browser.expect.element('#compound-string-fs input').to.have.attribute('type').which.contains('text')
+    browser.expect.element('#compound_string-fs input').to.have.attribute('id').which.contains('compound_string')
+    browser.expect.element('#compound_string-fs input').to.have.attribute('type').which.contains('text')
   },
 
   'Correctly render a multi select field with a list of options': function (browser) {
@@ -103,14 +103,14 @@ module.exports = {
   'Toggle visibility of string field': function (browser) {
     browser.options.desiredCapabilities.name = 'Toggle visibility of string field'
 
-    browser.expect.element('#nested-compound-string-fs').to.be.present
-    browser.expect.element('#nested-compound-string-fs').to.be.visible
-    browser.getTagName('#nested-compound-string-fs', function (result) {
+    browser.expect.element('#nested_compound_string-fs').to.be.present
+    browser.expect.element('#nested_compound_string-fs').to.be.visible
+    browser.getTagName('#nested_compound_string-fs', function (result) {
       this.assert.equal(result.value.toLowerCase(), 'fieldset')
     })
 
-    browser.setValue('#nested-compound-string', 'show')
-    browser.expect.element('#compound-string-fs').to.be.visible
+    browser.setValue('#nested_compound_string', 'show')
+    browser.expect.element('#compound_string-fs').to.be.visible
   },
 
   'Fill out date field using picker': function (browser) {
@@ -120,11 +120,11 @@ module.exports = {
 
     browser.click('#date')
     browser.pause(500)
-    browser.expect.element('.flatpickr-calendar').to.be.visible
+    browser.expect.element('.flatpickr-calendar.open').to.be.present
 
     browser.click('.today')
     browser.click('#form-demo') // click outside calender (work around for IE11 issue: https://github.com/chmln/flatpickr/issues/900)
-    browser.expect.element('.flatpickr-calendar').to.be.not.visible
+    browser.expect.element('.flatpickr-calendar.open').to.be.not.present
 
     const today = moment().toJSON().slice(0, 10)
     browser.expect.element('#date').to.have.value.that.equals(today)
