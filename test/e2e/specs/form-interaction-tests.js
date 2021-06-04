@@ -49,9 +49,9 @@ module.exports = {
 
   'Change value for fields inside field-groups and check if event is fired': function (browser) {
     browser.options.desiredCapabilities.name = 'Change value for fields inside field-groups and check if event is fired'
-    browser.setValue('#nested-compound-string', 'test string')
+    browser.setValue('#nested_compound_string', 'test string')
     browser.expect.element('#message-span').to.be.visible
-    browser.expect.element('#message-span').text.to.contain('"nested-compound-string":"test string"')
+    browser.expect.element('#message-span').text.to.contain('"nested_compound_string":"test string"')
 
     browser.end()
   },
@@ -82,51 +82,51 @@ module.exports = {
 
   'Check if required state works when dependant on another field': function (browser) {
     browser.options.desiredCapabilities.name = 'Check if required state works when dependant on another field'
-    browser.setValue('#nested-compound-string', 'show')
-    browser.expect.element('#compound-string-fs').to.be.visible
-    browser.expect.element('#compound-string-fs').to.not.have.attribute('class').which.contains('required-field')
+    browser.setValue('#nested_compound_string', 'show')
+    browser.expect.element('#compound_string-fs').to.be.visible
+    browser.expect.element('#compound_string-fs').to.not.have.attribute('class').which.contains('required-field')
 
-    browser.setValue('#compound-int', 1)
-    browser.expect.element('#compound-string-fs').to.have.attribute('class').which.contains('required-field')
+    browser.setValue('#compound_int', 1)
+    browser.expect.element('#compound_string-fs').to.have.attribute('class').which.contains('required-field')
     browser.end()
   },
 
   'Check if visible state works when dependant on another field': function (browser) {
     browser.options.desiredCapabilities.name = 'Check if visible state works when dependant on another field'
-    browser.setValue('#nested-compound-string', 'show')
-    browser.expect.element('#compound-string-fs').to.be.visible
+    browser.setValue('#nested_compound_string', 'show')
+    browser.expect.element('#compound_string-fs').to.be.visible
     browser.end()
   },
 
   'Check if in-validation works when dependant on input data': function (browser) {
     browser.options.desiredCapabilities.name = 'Check if in-validation works when dependant on input data'
-    browser.setValue('#nested-compound-string', 'show')
-    browser.expect.element('#compound-string-fs').to.be.visible
+    browser.setValue('#nested_compound_string', 'show')
+    browser.expect.element('#compound_string-fs').to.be.visible
 
-    browser.setValue('input#compound-string', 'not valid')
-    browser.click('#compound-int') // trigger validation via onBlur()
-    browser.expect.element('#compound-string').to.have.attribute('class').which.contains('is-invalid')
+    browser.setValue('input#compound_string', 'not valid')
+    browser.click('#compound_int') // trigger validation via onBlur()
+    browser.expect.element('#compound_string').to.have.attribute('class').which.contains('is-invalid')
     browser.end()
   },
 
   'Check if validation works when dependant on input data': function (browser) {
     browser.options.desiredCapabilities.name = 'Check if validation works when dependant on input data'
-    browser.setValue('#nested-compound-string', 'show')
-    browser.expect.element('#compound-string-fs').to.be.visible
+    browser.setValue('#nested_compound_string', 'show')
+    browser.expect.element('#compound_string-fs').to.be.visible
 
-    browser.setValue('input#compound-string', 'valid')
-    browser.click('#compound-int') // trigger validation via onBlur()
-    browser.expect.element('#compound-string').to.not.have.attribute('class').which.contains('is-invalid')
+    browser.setValue('input#compound_string', 'valid')
+    browser.click('#compound_int') // trigger validation via onBlur()
+    browser.expect.element('#compound_string').to.not.have.attribute('class').which.contains('is-invalid')
     browser.end()
   },
 
   'Check if expressions work when changing data outside of the form': function (browser) {
     browser.options.desiredCapabilities.name = 'Check if expressions work when changing data outside of the form'
-    browser.expect.element('#compound-string-fs').to.not.be.visible
+    browser.expect.element('#compound_string-fs').to.not.be.visible
 
     browser.click('#update-data-btn')
-    browser.expect.element('#compound-string-fs').to.be.visible
-    browser.expect.element('#compound-string').to.not.have.attribute('required')
+    browser.expect.element('#compound_string-fs').to.be.visible
+    browser.expect.element('#compound_string').to.not.have.attribute('required')
 
     browser.end()
   }

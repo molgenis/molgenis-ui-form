@@ -49,8 +49,8 @@ describe('Entity to state mapper', () => {
 
   describe('generate form fields and data for a [COMPOUND] attribute', () => {
     const data = {
-      'compound-string': 'string value',
-      'compound-int': 1
+      'compound_string': 'string value',
+      'compound_int': 1
     }
 
     const form = EntityToFormMapper.generateForm(schemas.compoundSchema, data)
@@ -59,7 +59,7 @@ describe('Entity to state mapper', () => {
     it('should map a [COMPOUND] attribute to a form field object', () => {
       expect(field.children.length).to.equal(3)
       expect(field.type).to.equal('field-group')
-      expect(field.id).to.equal('compound-field')
+      expect(field.id).to.equal('compound_field')
       expect(field.label).to.equal('Compound field')
       expect(field.description).to.equal('Compound description')
       expect(field.disabled).to.equal(false)
@@ -69,18 +69,18 @@ describe('Entity to state mapper', () => {
 
     const compoundString = field.children[2]
     it('should have working validation expressions', () => {
-      expect(compoundString.validate({ 'compound-string': 'valid' })).to.equal(true)
-      expect(compoundString.validate({ 'compound-string': 'not valid' })).to.equal(false)
+      expect(compoundString.validate({ 'compound_string': 'valid' })).to.equal(true)
+      expect(compoundString.validate({ 'compound_string': 'not valid' })).to.equal(false)
     })
 
     it('should have working required expressions', () => {
-      expect(compoundString.required({ 'compound-int': 1 })).to.equal(false)
-      expect(compoundString.required({ 'compound-int': 2 })).to.equal(true)
+      expect(compoundString.required({ 'compound_int': 1 })).to.equal(false)
+      expect(compoundString.required({ 'compound_int': 2 })).to.equal(true)
     })
 
     it('should have working visible expressions', () => {
-      expect(compoundString.visible({ 'nested-compound-string': 'show' })).to.equal(true)
-      expect(compoundString.visible({ 'nested-compound-string': 'don not show' })).to.equal(false)
+      expect(compoundString.visible({ 'nested_compound_string': 'show' })).to.equal(true)
+      expect(compoundString.visible({ 'nested_compound_string': 'don not show' })).to.equal(false)
     })
 
     const compoundInt = field.children[0]
@@ -92,11 +92,11 @@ describe('Entity to state mapper', () => {
 
     it('should map a [COMPOUND] entity to a form data object', () => {
       const expectedData = {
-        'compound-int': 1,
-        'nested-compound-enum': undefined,
-        'nested-compound-string': undefined,
-        'nested-compound-long': undefined,
-        'compound-string': 'string value'
+        'compound_int': 1,
+        'nested_compound_enum': undefined,
+        'nested_compound_string': undefined,
+        'nested_compound_long': undefined,
+        'compound_string': 'string value'
       }
 
       expect(form.formData).to.deep.equal(expectedData)
@@ -1020,22 +1020,22 @@ describe('Entity to state mapper', () => {
 
       it('A default file value should be mapped using the file name', () => {
         const form = EntityToFormMapper.generateForm(schemas.defaultFileValue, data, mapperOptions)
-        expect(form.formData['file-field']).to.equal('file_example.xlsx')
+        expect(form.formData['file_field']).to.equal('file_example.xlsx')
       })
 
       it('A default enum value should be mapped to the form value', () => {
         const form = EntityToFormMapper.generateForm(schemas.defaultEnumValue, data, mapperOptions)
-        expect(form.formData['enum-field']).to.equal('option1')
+        expect(form.formData['enum_field']).to.equal('option1')
       })
 
       it('A default categorical mref value should be mapped to the form values', () => {
         const form = EntityToFormMapper.generateForm(schemas.defaultCategoricalMref, data, mapperOptions)
-        expect(form.formData['cat-mref-field']).to.deep.equal(['option1', 'option2'])
+        expect(form.formData['cat_mref_field']).to.deep.equal(['option1', 'option2'])
       })
 
       it('A default date value should be mapped to the form values', () => {
         const form = EntityToFormMapper.generateForm(schemas.defaultDateValue, data, mapperOptions)
-        expect(form.formData['date-of-birth']).to.equal('2015-03-28')
+        expect(form.formData['date_of_birth']).to.equal('2015-03-28')
       })
     })
 
@@ -1056,12 +1056,12 @@ describe('Entity to state mapper', () => {
 
       it('A default file value should NOT be mapped using the file name', () => {
         const form = EntityToFormMapper.generateForm(schemas.defaultFileValue, data, mapperOptions)
-        expect(form.formData['file-field']).to.equal(undefined)
+        expect(form.formData['file_field']).to.equal(undefined)
       })
 
       it('A default enum value should NOT be mapped to the form value', () => {
         const form = EntityToFormMapper.generateForm(schemas.defaultEnumValue, data, mapperOptions)
-        expect(form.formData['enum-field']).to.equal(undefined)
+        expect(form.formData['enum_field']).to.equal(undefined)
       })
     })
   })

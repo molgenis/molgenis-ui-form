@@ -103,6 +103,11 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@molgenis/expressions@~0.16.4":
+  version "0.16.4"
+  resolved "https://registry.yarnpkg.com/@molgenis/expressions/-/expressions-0.16.4.tgz#b92abbecdd08f435aee3b266feb65c5735f6183c"
+  integrity sha512-vikZ43Grd6dfR7ueF5sKklu/El0aPFW4eoZLfLfkV4fG3i+sTsd+UJ2Wtf1KxMt4yQaM353rDmHTOd7uMVJPgw==
+
 "@molgenis/molgenis-api-client@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@molgenis/molgenis-api-client/-/molgenis-api-client-2.1.2.tgz#3ef5f69721aebacdb75349e0251f0cbb6c63bc92"

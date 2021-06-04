@@ -336,7 +336,7 @@ const metadata = {
       'lookupAttribute': true,
       'isAggregatable': false,
       'description': 'Nillable DATE description',
-      'validationExpression': '$("nillable_date").age().value() == null || ($("nillable_date").age().value() >= 0 && $("nillable_date").age().value() < 150)'
+      'validationExpression': '{nillable_date} notempty && age({nillable_date}) >= 0 && age({nillable_date}) < 150'
     },
     {
       'href': '/api/v2/it_emx_datatypes_TypeTest/meta/date_time',
@@ -536,14 +536,14 @@ const metadata = {
     {
       'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound',
       'fieldType': 'COMPOUND',
-      'name': 'compound-field',
+      'name': 'compound_field',
       'label': 'Compound field',
       'description': 'Compound description',
       'attributes': [
         {
           'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_int',
           'fieldType': 'INT',
-          'name': 'compound-int',
+          'name': 'compound_int',
           'label': 'Compound integer field',
           'attributes': [],
           'auto': false,
@@ -560,14 +560,14 @@ const metadata = {
         {
           'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound',
           'fieldType': 'COMPOUND',
-          'name': 'nested-compound-field',
+          'name': 'nested_compound_field',
           'label': 'Nested Compound field',
           'description': 'Nested Compound description',
           'attributes': [
             {
               'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_int',
               'fieldType': 'ENUM',
-              'name': 'nested-compound-enum',
+              'name': 'nested_compound_enum',
               'label': 'An enum, inside a compound, inside a compound',
               'attributes': [],
               'enumOptions': ['enum1', 'enum2', 'enum3'],
@@ -585,7 +585,7 @@ const metadata = {
             {
               'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_string',
               'fieldType': 'STRING',
-              'name': 'nested-compound-string',
+              'name': 'nested_compound_string',
               'label': 'Nested Compound string field',
               'description': 'TypeTest compound string attribute',
               'attributes': [],
@@ -603,7 +603,7 @@ const metadata = {
             {
               'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_string',
               'fieldType': 'LONG',
-              'name': 'nested-compound-long',
+              'name': 'nested_compound_long',
               'label': 'Nested Compound Long field',
               'description': 'TypeTest compound long attribute',
               'attributes': [],
@@ -630,7 +630,7 @@ const metadata = {
         {
           'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_string',
           'fieldType': 'STRING',
-          'name': 'compound-string',
+          'name': 'compound_string',
           'label': 'Compound string field',
           'description': 'TypeTest compound string attribute',
           'attributes': [],
@@ -643,9 +643,9 @@ const metadata = {
           'unique': false,
           'lookupAttribute': false,
           'isAggregatable': true,
-          'visibleExpression': '$("nested-compound-string").value() === "show"',
-          'nullableExpression': '$("compound-int").value() !== 1',
-          'validationExpression': '$("compound-string").value() === "valid"'
+          'visibleExpression': '{nested_compound_string} = "show"',
+          'nullableExpression': '{compound_int} != 1',
+          'validationExpression': '{compound_string} = "valid"'
         },
         {
           'href': '/api/v2/sys_md_EntityType/meta/attributes',
@@ -727,14 +727,14 @@ const metadata = {
     {
       'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound',
       'fieldType': 'COMPOUND',
-      'name': 'hidden-compound',
+      'name': 'hidden_compound',
       'label': 'Hidden compound field',
       'description': 'Hidden Compound description',
       'attributes': [
         {
           'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_int',
           'fieldType': 'STRING',
-          'name': 'hidden-compound-child',
+          'name': 'hidden_compound_child',
           'label': 'Hidden compound string field',
           'attributes': [],
           'auto': false,
@@ -751,13 +751,13 @@ const metadata = {
         {
           'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_int',
           'fieldType': 'COMPOUND',
-          'name': 'nested-hidden-compound',
+          'name': 'nested_hidden_compound',
           'label': 'Nested Hidden compound',
           'attributes': [
             {
               'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound_int',
               'fieldType': 'STRING',
-              'name': 'nested-hidden-compound-child',
+              'name': 'nested_hidden_compound_child',
               'label': 'Hidden compound string field',
               'attributes': [],
               'auto': false,

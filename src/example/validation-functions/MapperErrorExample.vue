@@ -102,7 +102,7 @@ export default {
           isAggregatable: false,
           unique: false,
           visible: true,
-          visibleExpression: '$("fieldA").value() == null || ($("fieldA").value() === "foo"'
+          visibleExpression: '{fieldA} empty || ({fieldA} = "foo"'
         }
       ]
     }
