@@ -1,3 +1,10 @@
+# [5.5.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.4.3...v5.5.0) (2021-06-04)
+
+
+### Features
+
+* switch to simple expressions ([63f9f3c](https://github.com/molgenis/molgenis-ui-form/commit/63f9f3c))
+
 ## [5.4.3](https://github.com/molgenis/molgenis-ui-form/compare/v5.4.2...v5.4.3) (2021-05-05)
 
 
