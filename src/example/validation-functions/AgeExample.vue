@@ -49,7 +49,7 @@
 import { FormComponent } from '../../molgenisUiForm'
 import ModelSettings from '../components/ModelSettings'
 import moment from 'moment'
-import { Expressions } from '@molgenis/expressions'
+/* global Expressions */
 
 export default {
   name: 'age-example',

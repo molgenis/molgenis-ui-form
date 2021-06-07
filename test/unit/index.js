@@ -1,5 +1,8 @@
 import Vue from 'vue'
 
+const exp = require('@molgenis/expressions')
+global.Expressions = exp
+
 Vue.config.productionTip = false
 
 // require all test files (files that ends with .spec.js)

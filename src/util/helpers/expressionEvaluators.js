@@ -1,5 +1,5 @@
 import type { MapperSettings } from '../../flow.types'
-import { Expressions } from '@molgenis/expressions'
+/* global Expressions */
 
 /**
  * If there is a visible expression present, return a function which evaluates the expression.
