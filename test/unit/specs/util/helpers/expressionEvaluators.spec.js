@@ -9,6 +9,16 @@ describe('expressionEvaluators', () => {
     visibleExpression: '{name} empty',
     nullableExpression: '{name} != "not valid"'
   }
+
+  const attributeTruthyTest = {
+    name: 'name',
+    visible: true,
+    nillable: true,
+    validationExpression: '{name}',
+    visibleExpression: '{name}',
+    nullableExpression: '{name}'
+  }
+
   const mapperOptions = {
     showNonVisibleAttributes: false
   }
@@ -17,6 +27,10 @@ describe('expressionEvaluators', () => {
     it('validates correctly via expression', () => {
       expect(isValid(attribute)({ 'name': '' })).to.equal(true)
       expect(isValid(attribute)({ 'name': 'not valid' })).to.equal(false)
+    })
+    it('uses truthiness of expression value', () => {
+      expect(isValid(attributeTruthyTest)({})).to.equal(false)
+      expect(isValid(attributeTruthyTest)({ name: 'foo' })).to.equal(true)
     })
     it('Falls back to the true on script error', () => {
       attribute.validationExpression = '% // Note: forced error'
@@ -34,6 +48,10 @@ describe('expressionEvaluators', () => {
     it('validates correctly via expression', () => {
       expect(isVisible(attribute, mapperOptions)({ 'name': '' })).to.equal(true)
       expect(isVisible(attribute, mapperOptions)({ 'name': 'something' })).to.equal(false)
+    })
+    it('uses truthiness of expression value', () => {
+      expect(isVisible(attributeTruthyTest)({})).to.equal(false)
+      expect(isVisible(attributeTruthyTest)({ name: 'foo' })).to.equal(true)
     })
     it('Falls back to the default "visible" value on script error', () => {
       attribute.visibleExpression = '% // Note: forced SyntaxError'
@@ -53,6 +71,10 @@ describe('expressionEvaluators', () => {
     it('validates correctly via expression', () => {
       expect(isRequired(attribute, mapperOptions)({ 'name': '' })).to.equal(false)
       expect(isRequired(attribute, mapperOptions)({ 'name': 'not valid' })).to.equal(true)
+    })
+    it('uses truthiness of expression value', () => {
+      expect(isRequired(attributeTruthyTest)({})).to.equal(true)
+      expect(isRequired(attributeTruthyTest)({ name: 'foo' })).to.equal(false)
     })
     it('Falls back to the default "nillable" value on script error', () => {
       attribute.nullableExpression = '% // Note: forced SyntaxError'

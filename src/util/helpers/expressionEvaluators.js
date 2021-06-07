@@ -16,7 +16,7 @@ const isVisible = (attribute, mapperOptions: MapperSettings): ((?Object) => bool
   if (expression) {
     return (data, onErrorCallBack) => {
       try {
-        return Expressions.evaluate(expression, data)
+        return !!Expressions.evaluate(expression, data)
       } catch (e) {
         const errorMessage = buildErrorMessage('Error evaluating visible expression', attribute.name, expression, e)
         evaluationLogging(errorMessage)
@@ -72,7 +72,7 @@ const isValid = (attribute): ((?Object) => boolean) => {
   if (expression) {
     return (data, onErrorCallBack) => {
       try {
-        return Expressions.evaluate(expression, data)
+        return !!Expressions.evaluate(expression, data)
       } catch (e) {
         const errorMessage = buildErrorMessage('Error evaluating isValid expression', attribute.name, expression, e)
         evaluationLogging(errorMessage)
