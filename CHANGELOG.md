@@ -1,3 +1,10 @@
+## [5.5.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.5.0...v5.5.1) (2021-06-08)
+
+
+### Bug Fixes
+
+* use truthiness of expression result ([3786a48](https://github.com/molgenis/molgenis-ui-form/commit/3786a48))
+
 # [5.5.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.4.3...v5.5.0) (2021-06-04)
 
 
