@@ -11,7 +11,12 @@
   "plugins": ["transform-vue-jsx", "transform-runtime", "transform-flow-comments"],
   "env": {
     "test": {
-      "presets": ["env", "stage-2"],
+      "presets": [["env", {
+        "modules": "umd",
+        "targets": {
+          "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+        }
+      }], "stage-2"],
       "plugins": ["transform-vue-jsx", ["istanbul", {
         "include": ["src/**"],
         "exclude": ["test/**", "src/FormDemo.vue", "src/main.js", "src/molgenisUiForm.js", "src/flow.types.js"]

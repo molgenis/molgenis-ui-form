@@ -14,8 +14,11 @@ module.exports = function (config) {
     browsers: ['PhantomJS'],
     frameworks: ['mocha', 'sinon-chai', 'babel-polyfill', 'promise'],
     reporters: ['spec', 'coverage'],
-    files: ['./index.js'],
+    files: [
+      './index.js'
+    ],
     preprocessors: {
+      '../../node_modules/@molgenis/expressions/dist/main.js': ['webpack'],
       './index.js': ['webpack', 'sourcemap']
     },
     webpack: webpackConfig,
