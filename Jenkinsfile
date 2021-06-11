@@ -12,17 +12,11 @@ pipeline {
         }
         container('vault') {
           script {
-            // env.TUNNEL_IDENTIFIER = sh(script: 'echo ${GIT_COMMIT}-${BUILD_NUMBER}', returnStdout: true)
             env.GITHUB_TOKEN = sh(script: 'vault read -field=value secret/ops/token/github', returnStdout: true)
             env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-ui-form secret/ops/token/codecov', returnStdout: true)
-            // env.SAUCE_CRED_USR = sh(script: 'vault read -field=username secret/ops/token/saucelabs', returnStdout: true)
-            // env.SAUCE_CRED_PSW = sh(script: 'vault read -field=value secret/ops/token/saucelabs', returnStdout: true)
             env.NPM_TOKEN = sh(script: 'vault read -field=value secret/ops/token/npm', returnStdout: true)
           }
         }
-        // container('node') {
-          // sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
-        // }
       }
     }
     stage('Build: [ pull request ]') {
@@ -34,14 +28,13 @@ pipeline {
           sh "yarn install"
           sh "yarn lint"
           sh "yarn unit"
-          // sh "yarn e2e --env ci_chrome,ci_safari,ci_ie11,ci_firefox" skip safari untill K8s JENKINS_AGENT_NAME issue can be fixed
-          // sh "yarn e2e --env ci_chrome,ci_ie11,ci_firefox"
         }
       }
       post {
         always {
           container('node') {
-            sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K"
+            fetch_codecov()
+            sh "./codecov -c -F unit -K -C ${GIT_COMMIT}"
           }
         }
       }
@@ -61,14 +54,13 @@ pipeline {
           sh "yarn install"
           sh "yarn lint"
           sh "yarn unit"
-          // sh "yarn e2e --env ci_chrome,ci_safari,ci_ie11,ci_firefox" skip safari untill K8s JENKINS_AGENT_NAME issue can be fixed
-          // sh "yarn e2e --env ci_chrome,ci_ie11,ci_firefox"
         }
       }
       post {
         always {
           container('node') {
-            sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K"
+            fetch_codecov()
+            sh "./codecov -c -F unit -K -C ${GIT_COMMIT}"
           }
         }
       }
@@ -98,11 +90,6 @@ pipeline {
     }
   }
   post {
-    // always {
-      // container('node') {
-        // sh "daemon --name=sauceconnect --stop"
-      // }
-    // }
     failure {
       hubotSend(message: 'Build failed', status:'ERROR', site: 'slack-pr-app-team')
     }
