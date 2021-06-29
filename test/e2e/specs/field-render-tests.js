@@ -122,7 +122,8 @@ module.exports = {
     browser.pause(500)
     browser.expect.element('.flatpickr-calendar.open').to.be.present
 
-    browser.click('.today')
+    browser.expect.element('.flatpickr-calendar.open .today').to.be.present
+    browser.click('.flatpickr-calendar.open .today')
     browser.click('#form-demo') // click outside calender (work around for IE11 issue: https://github.com/chmln/flatpickr/issues/900)
     browser.expect.element('.flatpickr-calendar.open').to.be.not.present
 
