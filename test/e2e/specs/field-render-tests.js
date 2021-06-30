@@ -124,7 +124,6 @@ module.exports = {
 
     browser.expect.element('.flatpickr-calendar.open .today').to.be.present
     browser.click('.flatpickr-calendar.open .today')
-    browser.click('#date .button') // click calendar button
     browser.expect.element('.flatpickr-calendar.open').to.be.not.present
 
     const today = moment().toJSON().slice(0, 10)
