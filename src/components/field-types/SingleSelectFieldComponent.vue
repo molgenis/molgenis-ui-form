@@ -5,9 +5,7 @@
       <label :for="field.id">{{ field.label }}</label>
 
       <div class="input-group">
-
         <v-select v-model="localValue"
-                  class="form-control"
                   :class="{ 'is-invalid' : fieldState && (fieldState.$touched || fieldState.$submitted || fieldState.$dirty) && fieldState.$invalid}"
                   :options="options"
                   :onSearch="fetchOptions"
