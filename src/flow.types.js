@@ -25,7 +25,8 @@ export type FormField = {
   options?: (() => Promise<Array<FieldOption>>),
   children?: Array<FormField>,
   validate: ((?Object) => boolean),
-  maxlength?: number
+  maxlength?: number,
+  addNullOption?: boolean
 }
 
 export type RefEntityType = {
@@ -46,6 +47,11 @@ export type MapperOptions = {
     trueLabel: string,
     falseLabel: string
   },
+  formOptions?: {
+    addEnumNullOption: boolean,
+    addBooleanNullOption: boolean,
+    addCategoricalNullOption: boolean
+  },
   showNonVisibleAttributes?: boolean
 }
 
@@ -57,6 +63,11 @@ export type MapperSettings = {
   booleanLabels: {
     trueLabel: string,
     falseLabel: string
+  },
+  formOptions: {
+    addEnumNullOption: boolean,
+    addBooleanNullOption: boolean,
+    addCategoricalNullOption: boolean
   },
   showNonVisibleAttributes: boolean
 }

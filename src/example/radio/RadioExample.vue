@@ -57,6 +57,7 @@ export default {
             { value: 2, label: 'Option 2' },
             { value: 3, label: 'Option 3' }
           ]),
+          addNullOption: true,
           visible: () => true,
           required: () => true,
           validate: () => true
