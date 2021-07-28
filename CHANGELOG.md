@@ -1,3 +1,10 @@
+# [5.6.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.5.1...v5.6.0) (2021-07-28)
+
+
+### Features
+
+* configure if null option should be added ([b2d5a95](https://github.com/molgenis/molgenis-ui-form/commit/b2d5a95))
+
 ## [5.5.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.5.0...v5.5.1) (2021-06-08)
 
 
