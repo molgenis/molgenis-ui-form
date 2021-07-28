@@ -8,6 +8,7 @@ describe('RadioFieldComponent unit tests', () => {
     label: 'Radio field',
     description: 'This is a nice radio button selection',
     disabled: false,
+    addNullOption: true,
     options: () => {
       return new Promise((resolve, reject) => {
         resolve([

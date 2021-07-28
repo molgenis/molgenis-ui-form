@@ -24,6 +24,11 @@ const DEFAULTS = {
     trueLabel: 'True',
     falseLabel: 'False'
   },
+  formOptions: {
+    addEnumNullOption: true,
+    addBooleanNullOption: true,
+    addCategoricalNullOption: true
+  },
   showNonVisibleAttributes: false
 }
 
@@ -352,6 +357,20 @@ const generateFormSchemaField = (attribute, entityMetadata:any, mapperOptions: M
     fieldProperties = { ...fieldProperties, children }
   }
 
+  if (fieldProperties.type === 'radio') {
+    switch (attribute.fieldType) {
+      case 'ENUM':
+        fieldProperties.addNullOption = mapperOptions.formOptions.addEnumNullOption
+        break
+      case 'CATEGORICAL':
+        fieldProperties.addNullOption = mapperOptions.formOptions.addCategoricalNullOption
+        break
+      case 'BOOL':
+        fieldProperties.addNullOption = mapperOptions.formOptions.addBooleanNullOption
+        break
+    }
+  }
+
   if ((attribute.fieldType === 'INT' || attribute.fieldType === 'LONG') && attribute.range) {
     let range = {}
     if (attribute.range.hasOwnProperty('min')) {
@@ -481,6 +500,8 @@ const buildMapperSettings = (settings?: MapperOptions): MapperSettings => {
 
   const mapperMode = settings.mapperMode ? settings.mapperMode : DEFAULTS.mapperMode
 
+  const formOptions = settings.formOptions || DEFAULTS.formOptions
+
   let booleanLabels = DEFAULTS.booleanLabels
   if (settings.booleanLabels) {
     booleanLabels = {
@@ -497,6 +518,7 @@ const buildMapperSettings = (settings?: MapperOptions): MapperSettings => {
   return {
     mapperMode,
     booleanLabels,
+    formOptions,
     showNonVisibleAttributes
   }
 }

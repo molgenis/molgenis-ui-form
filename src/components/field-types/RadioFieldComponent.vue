@@ -24,7 +24,7 @@
           :bool="localValue === true || localValue === false">
         <label :for="field.id + '-' + index" class="form-check-label">{{ option.label }}</label>
       </div>
-      <div class="form-check" v-if="!isRequired">
+      <div class="form-check" v-if="!isRequired && field.addNullOption">
         <input
           :id="field.id + '-null'"
           v-model="localValue"
