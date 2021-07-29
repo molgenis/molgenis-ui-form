@@ -14,9 +14,9 @@ describe('expressionEvaluators', () => {
     name: 'name',
     visible: true,
     nillable: true,
-    validationExpression: '{name}',
-    visibleExpression: '{name}',
-    nullableExpression: '{name}'
+    validationExpression: '{valid}',
+    visibleExpression: '{visible}',
+    nullableExpression: '{nullable}'
   }
 
   const mapperOptions = {
@@ -30,7 +30,7 @@ describe('expressionEvaluators', () => {
     })
     it('uses truthiness of expression value', () => {
       expect(isValid(attributeTruthyTest)({})).to.equal(false)
-      expect(isValid(attributeTruthyTest)({ name: 'foo' })).to.equal(true)
+      expect(isValid(attributeTruthyTest)({ valid: 'foo' })).to.equal(true)
     })
     it('Falls back to the true on script error', () => {
       attribute.validationExpression = '% // Note: forced error'
@@ -50,8 +50,8 @@ describe('expressionEvaluators', () => {
       expect(isVisible(attribute, mapperOptions)({ 'name': 'something' })).to.equal(false)
     })
     it('uses truthiness of expression value', () => {
-      expect(isVisible(attributeTruthyTest)({})).to.equal(false)
-      expect(isVisible(attributeTruthyTest)({ name: 'foo' })).to.equal(true)
+      expect(isVisible(attributeTruthyTest, mapperOptions)({})).to.equal(false)
+      expect(isVisible(attributeTruthyTest, mapperOptions)({ visible: 'foo' })).to.equal(true)
     })
     it('Falls back to the default "visible" value on script error', () => {
       attribute.visibleExpression = '% // Note: forced SyntaxError'
@@ -73,8 +73,11 @@ describe('expressionEvaluators', () => {
       expect(isRequired(attribute, mapperOptions)({ 'name': 'not valid' })).to.equal(true)
     })
     it('uses truthiness of expression value', () => {
-      expect(isRequired(attributeTruthyTest)({})).to.equal(true)
-      expect(isRequired(attributeTruthyTest)({ name: 'foo' })).to.equal(false)
+      expect(isRequired(attributeTruthyTest)({ visible: true })).to.equal(true)
+      expect(isRequired(attributeTruthyTest)({ nullable: 'foo', visible: true })).to.equal(false)
+    })
+    it('is false when visible expression hides the attribute', () => {
+      expect(isRequired(attributeTruthyTest)({ nullable: false, visible: false })).to.equal(false)
     })
     it('Falls back to the default "nillable" value on script error', () => {
       attribute.nullableExpression = '% // Note: forced SyntaxError'
