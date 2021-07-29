@@ -1,6 +1,19 @@
 import type { MapperSettings } from '../../flow.types'
 /* global Expressions */
 
+const tryEvaluate = (expression, data, errorResult: boolean, name, onErrorCallBack): boolean => {
+  try {
+    return !!Expressions.evaluate(expression, data)
+  } catch (e) {
+    const errorMessage = buildErrorMessage('Error evaluating expression', name, expression, e)
+    evaluationLogging(errorMessage)
+    if (typeof (onErrorCallBack) === 'function') {
+      onErrorCallBack(new Error(errorMessage))
+    }
+    return errorResult
+  }
+}
+
 /**
  * If there is a visible expression present, return a function which evaluates the expression.
  * If there is no expression present, check if mapper is run with showVisibleAttribute option set to true,
@@ -11,24 +24,13 @@ import type { MapperSettings } from '../../flow.types'
  * @returns {Function} Function which evaluates to a boolean
  */
 const isVisible = (attribute, mapperOptions: MapperSettings): ((?Object) => boolean) => {
-  const expression = attribute.visibleExpression
-
-  if (expression) {
-    return (data, onErrorCallBack) => {
-      try {
-        return !!Expressions.evaluate(expression, data)
-      } catch (e) {
-        const errorMessage = buildErrorMessage('Error evaluating visible expression', attribute.name, expression, e)
-        evaluationLogging(errorMessage)
-        const errorResult = mapperOptions.showNonVisibleAttributes || attribute.visible
-        if (typeof (onErrorCallBack) === 'function') {
-          onErrorCallBack(new Error(errorMessage))
-        }
-        return errorResult
-      }
-    }
+  const visibleExpression = attribute.visibleExpression
+  const resultWithoutExpression = mapperOptions.showNonVisibleAttributes || attribute.visible
+  if (visibleExpression) {
+    return (data, onErrorCallBack) =>
+      tryEvaluate(visibleExpression, data, resultWithoutExpression, attribute, onErrorCallBack)
   }
-  return () => mapperOptions.showNonVisibleAttributes || attribute.visible
+  return () => resultWithoutExpression
 }
 
 /**
@@ -39,21 +41,18 @@ const isVisible = (attribute, mapperOptions: MapperSettings): ((?Object) => bool
  * @returns {Function} Function which evaluates to a boolean
  */
 const isRequired = (attribute): ((?Object) => boolean) => {
-  const expression = attribute.nullableExpression
+  const nullableExpression = attribute.nullableExpression
 
   // If an attribute is nullable, it is NOT required
-  if (expression) {
+  if (nullableExpression) {
     return (data, onErrorCallBack) => {
-      try {
-        return !Expressions.evaluate(expression, data)
-      } catch (e) {
-        const errorMessage = buildErrorMessage('Error evaluating isRequired expression', attribute.name, expression, e)
-        evaluationLogging(errorMessage)
-        if (typeof (onErrorCallBack) === 'function') {
-          onErrorCallBack(new Error(errorMessage))
-        }
-        return !attribute.nillable
+      const required = !tryEvaluate(nullableExpression, data, attribute.nillable, attribute.name, onErrorCallBack)
+      const visibleExpression = attribute.visibleExpression
+      if (required && visibleExpression) {
+        // if visibleExpression evaluates to false, not required
+        return tryEvaluate(visibleExpression, data, true, attribute.name, onErrorCallBack)
       }
+      return required
     }
   }
   return () => !attribute.nillable
@@ -67,21 +66,9 @@ const isRequired = (attribute): ((?Object) => boolean) => {
  * @returns {Function} Function which evaluates to a boolean
  */
 const isValid = (attribute): ((?Object) => boolean) => {
-  const expression = attribute.validationExpression
-
-  if (expression) {
-    return (data, onErrorCallBack) => {
-      try {
-        return !!Expressions.evaluate(expression, data)
-      } catch (e) {
-        const errorMessage = buildErrorMessage('Error evaluating isValid expression', attribute.name, expression, e)
-        evaluationLogging(errorMessage)
-        if (typeof (onErrorCallBack) === 'function') {
-          onErrorCallBack(new Error(errorMessage))
-        }
-        return true
-      }
-    }
+  const validationExpression = attribute.validationExpression
+  if (validationExpression) {
+    return (data, onErrorCallBack) => tryEvaluate(validationExpression, data, true, attribute.name, onErrorCallBack)
   }
   return () => true
 }

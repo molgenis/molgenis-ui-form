@@ -74,8 +74,9 @@ describe('Entity to state mapper', () => {
     })
 
     it('should have working required expressions', () => {
-      expect(compoundString.required({ 'compound_int': 1 })).to.equal(false)
-      expect(compoundString.required({ 'compound_int': 2 })).to.equal(true)
+      expect(compoundString.required({ 'compound_int': 1, 'nested_compound_string': 'show' })).to.equal(false)
+      expect(compoundString.required({ 'compound_int': 2, 'nested_compound_string': 'show' })).to.equal(true)
+      expect(compoundString.required({ 'compound_int': 2, 'nested_compound_string': 'hide' })).to.equal(false)
     })
 
     it('should have working visible expressions', () => {
