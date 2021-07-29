@@ -1,3 +1,10 @@
+## [5.6.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.6.0...v5.6.1) (2021-07-29)
+
+
+### Bug Fixes
+
+* invisible attributes are not required ([8275947](https://github.com/molgenis/molgenis-ui-form/commit/8275947)), closes [#375](https://github.com/molgenis/molgenis-ui-form/issues/375)
+
 # [5.6.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.5.1...v5.6.0) (2021-07-28)
 
 
