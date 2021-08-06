@@ -71,7 +71,6 @@ const buildRefOptionsQuery = (refEntity: RefEntityType, search: ?string | ?Array
  */
 const fetchFieldOptions = (refEntity: RefEntityType, search: ?string | ?Array<string>): Promise<Array<FieldOption>> => {
   const uri = buildRefOptionsQuery(refEntity, search)
-
   const itemToOption = (item) => ({
     id: item[refEntity.idAttribute],
     value: item[refEntity.idAttribute],
@@ -147,7 +146,6 @@ const getFieldOptions = (attribute, options: MapperSettings): ?(() => Promise<Ar
       return response
     })
   }
-
   switch (attribute.fieldType) {
     case 'CATEGORICAL':
     case 'CATEGORICAL_MREF':

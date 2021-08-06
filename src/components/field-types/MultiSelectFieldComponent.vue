@@ -5,12 +5,11 @@
       <label :for="field.id">{{ field.label }}</label>
 
       <div class="input-group">
-
         <v-select v-model="localValue"
                   class="form-control mg-multi-select"
                   :class="{ 'is-invalid' : fieldState && (fieldState.$touched || fieldState.$submitted || fieldState.$dirty) && fieldState.$invalid}"
                   :options="options"
-                  :onSearch="fetchOptions"
+                  @search="fetchOptions"
                   :filterable="false"
                   :inputId="field.id"
                   :name="field.id"
@@ -42,6 +41,7 @@
 <script>
 import VueForm from 'vue-form'
 import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css'
 import FormFieldMessages from '../FormFieldMessages'
 import Description from '../Description'
 import { FormField } from '../../flow.types'
@@ -123,6 +123,7 @@ export default {
   },
   created () {
     // Fetch an initial list of options
+    console.log('created', this.value)
     this.field.options(this.value).then(response => {
       this.options = response
       // Replace localValue with the entire object so vue-select can use the label property

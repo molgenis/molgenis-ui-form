@@ -147,13 +147,13 @@
   }
 
   /*  Styling to have v-select look like bootstrap field */
-  .mg-ui-form-field .v-select .dropdown-toggle {
+  .mg-ui-form-field .v-select .vs__dropdown-toggle {
     background-color: white; /* $input-bg */
     padding-bottom: 0;
     min-height: calc(2.25rem + 2px);
   }
 
-  .mg-ui-form-field .v-select.disabled .dropdown-toggle {
+  .mg-ui-form-field .v-select.disabled .vs__dropdown-toggle {
     background-color: #f8f8f8;
   }
 
@@ -170,12 +170,12 @@
     border: 0;
   }
 
-  .mg-ui-form-field .v-select .selected-tag {
+  .mg-ui-form-field .v-select .vs__selected {
     margin-top: 0.375rem;
     margin-bottom: 0.375rem;
   }
 
-  .mg-ui-form-field .v-select.single .vs__selected-options .selected-tag {
+  .mg-ui-form-field .v-select.single .vs__selected-options .vs__selected {
     padding-left: 0;
     margin-left: 0;
   }
