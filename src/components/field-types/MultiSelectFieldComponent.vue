@@ -3,7 +3,6 @@
   <validate :state="fieldState" :custom="{'validate': isValid}" :debounce="1">
     <div class="form-group">
       <label :for="field.id">{{ field.label }}</label>
-
       <div class="input-group">
         <v-select v-model="localValue"
                   class="form-control mg-multi-select"
@@ -123,7 +122,6 @@ export default {
   },
   created () {
     // Fetch an initial list of options
-    console.log('created', this.value)
     this.field.options(this.value).then(response => {
       this.options = response
       // Replace localValue with the entire object so vue-select can use the label property
