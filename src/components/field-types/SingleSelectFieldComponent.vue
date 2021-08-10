@@ -121,7 +121,7 @@ export default {
   },
   created () {
     // Fetch an initial list of options
-    this.field.options(this.value).then(response => {
+    this.field.options('').then(response => { // Make sure the initial search value is empty
       this.options = response
       if (this.value) {
         // Replace localValue with the entire object so vue-select can use the label property
