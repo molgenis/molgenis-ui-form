@@ -123,7 +123,7 @@ export default {
   },
   created () {
     // Fetch an initial list of options
-    this.field.options('').then(response => { // Make sure the initial search value is empty
+    this.field.options().then(response => { // Make sure the initial search value is empty
       this.options = response
       // Replace localValue with the entire object so vue-select can use the label property
       // Filter the list of the options based on the actual selected IDs

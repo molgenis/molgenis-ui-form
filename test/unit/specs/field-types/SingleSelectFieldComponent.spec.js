@@ -94,16 +94,32 @@ describe('SingleSelectFieldComponent unit tests', () => {
     })
   })
 
-  it('should fetch options on create with a search query when initial value is set', done => {
-    propsData.value = 'ref1'
+  it('should fetch all options on create with a search query when initial value is set', done => {
+    propsData.value = 'option-2'
     const wrapper = mount(SingleSelectFieldComponent, {
       propsData: propsData,
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
     wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
-      expect(wrapper.vm.localValue).to.deep.equal({ id: 'ref1', label: 'label1', value: 'ref1' })
+      expect(wrapper.vm.options).to.deep.equal([
+        {
+          id: 'option-1',
+          label: 'Option 1',
+          value: 'option-1'
+        },
+        {
+          id: 'option-2',
+          label: 'Option 2',
+          value: 'option-2'
+        },
+        {
+          id: 'option-3',
+          label: 'Option 3',
+          value: 'option-3'
+        }
+      ])
+      expect(wrapper.vm.localValue).to.deep.equal({ id: 'option-2', label: 'Option 2', value: 'option-2' })
       done()
     })
   })
