@@ -53,7 +53,16 @@ module.exports = {
       })
 
       app.get('/api/v2/it_emx_datatypes_TypeTestRef', function (req, res) {
-        res.json(mockResponse)
+        // try to mock (some) search behavior
+        const likeQuery = /value=like=*([^,]+),label=like=\1/.exec(req.query.q)
+        const inQuery = /value=in=*([^,]+),label=in=\1/.exec(req.query.q)
+        if (inQuery !== null) {
+          res.json({...mockResponse, items: mockResponse.items.filter(item => item.value === inQuery[1] || item.label === inQuery[1])})
+        } else if (likeQuery !== null) {
+          res.json({...mockResponse, items: mockResponse.items.filter(item => item.value.includes(likeQuery[1]) || item.label.includes(likeQuery[1]))})
+        } else {
+          res.json(mockResponse)
+        }
       })
 
       app.get('/api/v2/i18n/ui-form/en', function (req, res) {
