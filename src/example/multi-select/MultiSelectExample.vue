@@ -32,6 +32,34 @@
 import { FormComponent } from '../../molgenisUiForm'
 import ModelSettings from '../components/ModelSettings'
 
+const options = [
+  {
+    id: '1',
+    label: 'Option 1',
+    value: 'val-1'
+  },
+  {
+    id: '2',
+    label: 'Option 2',
+    value: 'val-2'
+  },
+  {
+    id: '3',
+    label: 'Option 3',
+    value: 'val-3'
+  },
+  {
+    id: '4',
+    label: 'Option 4',
+    value: 'val-4'
+  },
+  {
+    id: '5',
+    label: 'Option 5',
+    value: 'val-5'
+  }
+]
+
 export default {
   name: 'multi-select-example',
   components: {
@@ -49,34 +77,12 @@ export default {
           label: 'Multi select field',
           description: 'test the multi select',
           type: 'multi-select',
-          options: () =>
-            Promise.resolve([
-              {
-                id: '1',
-                label: 'Option 1',
-                value: 'val-1'
-              },
-              {
-                id: '2',
-                label: 'Option 2',
-                value: 'val-2'
-              },
-              {
-                id: '3',
-                label: 'Option 3',
-                value: 'val-3'
-              },
-              {
-                id: '4',
-                label: 'Option 4',
-                value: 'val-4'
-              },
-              {
-                id: '5',
-                label: 'Option 5',
-                value: 'val-5'
-              }
-            ]),
+          options: (search) => {
+            if (!search) {
+              return Promise.resolve(options)
+            }
+            return Promise.resolve(options.filter(({ label, value }) => label.includes(search) || value.includes(search)))
+          },
           visible: () => true,
           required: () => false,
           validate: () => true
