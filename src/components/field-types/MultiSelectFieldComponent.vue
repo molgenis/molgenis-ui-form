@@ -139,7 +139,6 @@ export default {
       this.fieldState.$pristine = false
       this.fieldState.$touched = true
       this.fieldState.$untouched = false
-      this.options = []
 
       // Emit value changes to the parent (form)
       this.$emit('input', newValues.map(value => value.id))

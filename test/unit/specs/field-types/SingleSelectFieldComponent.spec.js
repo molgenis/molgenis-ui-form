@@ -130,11 +130,10 @@ describe('SingleSelectFieldComponent unit tests', () => {
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
-    wrapper.vm.fetchOptions('ref1', (loading) => {
-      if (loading === false) {
-        expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
-        done()
-      }
+    wrapper.vm.fetchOptions('ref1')
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
+      done()
     })
   })
 
@@ -144,11 +143,10 @@ describe('SingleSelectFieldComponent unit tests', () => {
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
-    wrapper.vm.fetchOptions('non existing option', (loading) => {
-      if (loading === false) {
-        expect(wrapper.vm.options).to.deep.equal([])
-        done()
-      }
+    wrapper.vm.fetchOptions('non existing option')
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.vm.options).to.deep.equal([])
+      done()
     })
   })
 
