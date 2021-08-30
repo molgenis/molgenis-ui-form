@@ -6,20 +6,35 @@
 
       <div class="input-group">
 
-        <v-select v-model="localValue"
-                  class="form-control"
-                  :class="{ 'is-invalid' : fieldState && (fieldState.$touched || fieldState.$submitted || fieldState.$dirty) && fieldState.$invalid}"
-                  :options="options"
-                  :onSearch="fetchOptions"
-                  :filterable="false"
-                  :inputId="field.id"
-                  :name="field.id"
-                  :required="isRequired">
-
-          <div slot="no-options">
+        <multiselect
+          :id="field.id"
+          :name="field.id"
+          :required="isRequired"
+          :disabled="field.disabled"
+          :class="{
+            'is-invalid': fieldState && (fieldState.$touched || fieldState.$submitted || fieldState.$dirty) && fieldState.$invalid,
+            'multiselect--clearable': isClearable
+          }"
+          v-model="localValue"
+          openDirection="below"
+          :options="options"
+          :multiple="false"
+          :searchable="true"
+          :loading="isLoading"
+          :internal-search="false"
+          :clear-on-select="true"
+          :close-on-select="true"
+          :hide-selected="false"
+          label="label"
+          trackBy="id"
+          @search-change="fetchOptions">
+          <template slot="clear">
+            <button class="multiselect__clear" name="Clear All Values" @click.prevent="clearValue"></button>
+          </template>
+          <div slot="noOptions">
             <small>{{ noOptionsMessage }}</small>
           </div>
-        </v-select>
+        </multiselect>
 
         <div v-if="allowAddingOptions && isAddOptionAllowed">
           <button @click="addOptionClicked($event)" class="btn btn-outline-secondary mg-select-add-btn" type="button">
@@ -39,7 +54,7 @@
 
 <script>
 import VueForm from 'vue-form'
-import vSelect from 'vue-select'
+import Multiselect from 'vue-multiselect'
 import FormFieldMessages from '../FormFieldMessages'
 import Description from '../Description'
 import { FormField } from '../../flow.types'
@@ -51,7 +66,8 @@ export default {
     value: {
       // ID of select field can be of type: Integer, Long, String etc.
       type: [String, Number],
-      required: false
+      required: false,
+      defaultValue: () => null
     },
     field: {
       type: FormField,
@@ -88,16 +104,24 @@ export default {
       // Store a local value to prevent changing the parent state
       localValue: this.value,
       options: [],
+      isLoading: false,
       isAddOptionAllowed: true // init as true to allow for backward compatibility
     }
   },
+  computed: {
+    isClearable () {
+      return this.localValue != null
+    }
+  },
   methods: {
-    fetchOptions (search, loading) {
-      loading(true)
-      this.field.options(search).then(response => {
-        this.options = response
-        loading(false)
-      })
+    fetchOptions (search) {
+      if (search === '') {
+        search = undefined
+      }
+      this.isLoading = true
+      this.field.options(search)
+        .then(response => { this.options = response })
+        .finally(() => { this.isLoading = false })
     },
     addOptionClicked (event) {
       this.eventBus.$emit('addOption', this.afterOptionCreation, event, this.field)
@@ -105,6 +129,9 @@ export default {
     afterOptionCreation (newOption) {
       this.options.push(newOption)
       this.localValue = newOption
+    },
+    clearValue () {
+      this.localValue = null
     }
   },
   watch: {
@@ -136,9 +163,15 @@ export default {
     }
   },
   components: {
-    vSelect,
+    Multiselect,
     FormFieldMessages,
     Description
   }
 }
 </script>
+<style scoped>
+  .multiselect {
+    width: 1%;
+    flex: 1 1 auto;
+  }
+</style>
