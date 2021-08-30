@@ -78,9 +78,9 @@ module.exports = {
       this.assert.equal(result.value.toLowerCase(), 'fieldset')
     })
 
-    browser.expect.element('#mref-fs input').to.be.visible
+    browser.expect.element('#mref-fs div.multiselect').to.be.visible
 
-    browser.click('input#mref')
+    browser.click('#mref-fs div.multiselect')
     browser.expect.element('#mref-fs ul').to.be.present
     browser.expect.element('#mref-fs li').to.be.present
   },
@@ -93,9 +93,9 @@ module.exports = {
       this.assert.equal(result.value.toLowerCase(), 'fieldset')
     })
 
-    browser.expect.element('#xref-fs input').to.be.visible
+    browser.expect.element('#xref-fs div.multiselect').to.be.visible
 
-    browser.click('input#xref')
+    browser.click('#xref-fs div.multiselect')
     browser.expect.element('#xref-fs ul').to.be.present
     browser.expect.element('#xref-fs li').to.be.present
   },
@@ -164,12 +164,12 @@ module.exports = {
     browser.expect.element('#date_time').to.have.value.which.contains(today)
   },
 
-  'Add new option to muli select': function (browser) {
-    browser.options.desiredCapabilities.name = 'Add new option to muli select'
+  'Add new option to multi select': function (browser) {
+    browser.options.desiredCapabilities.name = 'Add new option to multi select'
     const btnSelector = '#mref-fs > div > div > div.input-group > div:nth-child(2) > button'
     browser.expect.element(btnSelector).to.be.visible
     browser.click(btnSelector)
-    const newOption = '#mref-fs .selected-tag'
-    browser.expect.element(newOption).to.be.visible
+    const tag = '#mref-fs .multiselect__tag'
+    browser.assert.elementCount(tag, 4)
   }
 }
