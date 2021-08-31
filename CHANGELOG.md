@@ -1,3 +1,10 @@
+## [5.6.2](https://github.com/molgenis/molgenis-ui-form/compare/v5.6.1...v5.6.2) (2021-08-31)
+
+
+### Bug Fixes
+
+* switch to vue multiselect ([e36ec15](https://github.com/molgenis/molgenis-ui-form/commit/e36ec15)), closes [molgenis/molgenis-frontend#671](https://github.com/molgenis/molgenis-frontend/issues/671)
+
 ## [5.6.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.6.0...v5.6.1) (2021-07-29)
 
 
