@@ -244,4 +244,19 @@ describe('MultiSelectFieldComponent unit tests', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
   })
+
+  it('should clear selection when clear button is pressed', async () => {
+    const wrapper = mount(MultiSelectFieldComponent, {
+      propsData: {
+        ...propsData,
+        value: ['ref2', 'ref3']
+      },
+      stubs: ['fieldMessages']
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.findAll('.multiselect__tag').length).to.equal(2)
+    wrapper.find('.multiselect__clear').trigger('click')
+    expect(wrapper.findAll('.multiselect__tag').length).to.equal(0)
+    expect(wrapper.emitted('input')).to.deep.equal([[['ref2', 'ref3']], [[]]])
+  })
 })

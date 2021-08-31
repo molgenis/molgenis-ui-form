@@ -232,4 +232,18 @@ describe('SingleSelectFieldComponent unit tests', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
   })
+
+  it('should clear selection when clear button is pressed', async () => {
+    const wrapper = mount(SingleSelectFieldComponent, {
+      propsData: {
+        ...propsData,
+        value: 'option-1'
+      },
+      stubs: ['fieldMessages']
+    })
+    await wrapper.vm.$nextTick()
+    wrapper.find('.multiselect__clear').trigger('click')
+    expect(wrapper.vm.localValue).to.equal(null)
+    expect(wrapper.emitted('input')).to.deep.equal([['option-1'], [null]])
+  })
 })
