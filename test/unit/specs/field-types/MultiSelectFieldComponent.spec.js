@@ -14,40 +14,33 @@ describe('MultiSelectFieldComponent unit tests', () => {
         type: 'multi-select',
         disabled: false,
         options: (search) => {
-          if (Array.isArray(search)) {
-            return new Promise((resolve) => {
-              resolve([
-                {
-                  id: 'ref1',
-                  label: 'label1',
-                  value: 'ref1'
-                },
-                {
-                  id: 'ref2',
-                  label: 'label2',
-                  value: 'ref2'
-                },
-                {
-                  id: 'ref3',
-                  label: 'label3',
-                  value: 'ref3'
-                }
-              ])
-            })
+          if (!search) {
+            return Promise.resolve([
+              {
+                id: 'ref1',
+                label: 'label1',
+                value: 'ref1'
+              },
+              {
+                id: 'ref2',
+                label: 'label2',
+                value: 'ref2'
+              },
+              {
+                id: 'ref3',
+                label: 'label3',
+                value: 'ref3'
+              }])
           } else if (search === 'ref1') {
-            return new Promise((resolve) => {
-              resolve([
-                {
-                  id: 'ref1',
-                  label: 'label1',
-                  value: 'ref1'
-                }
-              ])
-            })
+            return Promise.resolve([
+              {
+                id: 'ref1',
+                label: 'label1',
+                value: 'ref1'
+              }
+            ])
           } else if (search === 'non existing option') {
-            return new Promise((resolve) => {
-              resolve([])
-            })
+            return Promise.resolve([])
           }
         },
         isAddOptionAllowed: () => Promise.resolve(true)
@@ -69,7 +62,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
     }
   })
 
-  it('should fetch with empty search parmam when no initial value is present', done => {
+  it('should fetch with empty search param when no initial value is present', done => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
@@ -97,7 +90,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
     })
   })
 
-  it('should fetch options on create with a search query when initial value is set', done => {
+  it('should show all options on create with a search query when initial value is set', done => {
     propsData.value = ['ref1', 'ref2']
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
@@ -110,11 +103,6 @@ describe('MultiSelectFieldComponent unit tests', () => {
         { id: 'ref2', label: 'label2', value: 'ref2' },
         { id: 'ref3', label: 'label3', value: 'ref3' }
       ])
-
-      expect(wrapper.vm.localValue).to.deep.equal([
-        { id: 'ref1', label: 'label1', value: 'ref1' },
-        { id: 'ref2', label: 'label2', value: 'ref2' }
-      ])
       done()
     })
   })
@@ -125,14 +113,13 @@ describe('MultiSelectFieldComponent unit tests', () => {
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
-    wrapper.vm.fetchOptions('ref1', (loading) => {
-      if (loading === false) {
-        try {
-          expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
-          done()
-        } catch (ex) {
-          done(ex)
-        }
+    wrapper.vm.fetchOptions('ref1')
+    wrapper.vm.$nextTick(() => {
+      try {
+        expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
+        done()
+      } catch (ex) {
+        done(ex)
       }
     })
   })
@@ -143,14 +130,13 @@ describe('MultiSelectFieldComponent unit tests', () => {
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
-    wrapper.vm.fetchOptions('non existing option', (loading) => {
-      if (loading === false) {
-        try {
-          expect(wrapper.vm.options).to.deep.equal([])
-          done()
-        } catch (ex) {
-          done(ex)
-        }
+    wrapper.vm.fetchOptions('non existing option')
+    wrapper.vm.$nextTick((loading) => {
+      try {
+        expect(wrapper.vm.options).to.deep.equal([])
+        done()
+      } catch (ex) {
+        done(ex)
       }
     })
   })
@@ -257,5 +243,20 @@ describe('MultiSelectFieldComponent unit tests', () => {
     })
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
+  })
+
+  it('should clear selection when clear button is pressed', async () => {
+    const wrapper = mount(MultiSelectFieldComponent, {
+      propsData: {
+        ...propsData,
+        value: ['ref2', 'ref3']
+      },
+      stubs: ['fieldMessages']
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.findAll('.multiselect__tag').length).to.equal(2)
+    wrapper.find('.multiselect__clear').trigger('click')
+    expect(wrapper.findAll('.multiselect__tag').length).to.equal(0)
+    expect(wrapper.emitted('input')).to.deep.equal([[['ref2', 'ref3']], [[]]])
   })
 })

@@ -94,16 +94,32 @@ describe('SingleSelectFieldComponent unit tests', () => {
     })
   })
 
-  it('should fetch options on create with a search query when initial value is set', done => {
-    propsData.value = 'ref1'
+  it('should fetch all options on create with a search query when initial value is set', done => {
+    propsData.value = 'option-2'
     const wrapper = mount(SingleSelectFieldComponent, {
       propsData: propsData,
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
     wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
-      expect(wrapper.vm.localValue).to.deep.equal({ id: 'ref1', label: 'label1', value: 'ref1' })
+      expect(wrapper.vm.options).to.deep.equal([
+        {
+          id: 'option-1',
+          label: 'Option 1',
+          value: 'option-1'
+        },
+        {
+          id: 'option-2',
+          label: 'Option 2',
+          value: 'option-2'
+        },
+        {
+          id: 'option-3',
+          label: 'Option 3',
+          value: 'option-3'
+        }
+      ])
+      expect(wrapper.vm.localValue).to.deep.equal({ id: 'option-2', label: 'Option 2', value: 'option-2' })
       done()
     })
   })
@@ -114,11 +130,10 @@ describe('SingleSelectFieldComponent unit tests', () => {
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
-    wrapper.vm.fetchOptions('ref1', (loading) => {
-      if (loading === false) {
-        expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
-        done()
-      }
+    wrapper.vm.fetchOptions('ref1')
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
+      done()
     })
   })
 
@@ -128,11 +143,10 @@ describe('SingleSelectFieldComponent unit tests', () => {
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
-    wrapper.vm.fetchOptions('non existing option', (loading) => {
-      if (loading === false) {
-        expect(wrapper.vm.options).to.deep.equal([])
-        done()
-      }
+    wrapper.vm.fetchOptions('non existing option')
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.vm.options).to.deep.equal([])
+      done()
     })
   })
 
@@ -217,5 +231,19 @@ describe('SingleSelectFieldComponent unit tests', () => {
     })
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
+  })
+
+  it('should clear selection when clear button is pressed', async () => {
+    const wrapper = mount(SingleSelectFieldComponent, {
+      propsData: {
+        ...propsData,
+        value: 'option-1'
+      },
+      stubs: ['fieldMessages']
+    })
+    await wrapper.vm.$nextTick()
+    wrapper.find('.multiselect__clear').trigger('click')
+    expect(wrapper.vm.localValue).to.equal(null)
+    expect(wrapper.emitted('input')).to.deep.equal([['option-1'], [null]])
   })
 })
