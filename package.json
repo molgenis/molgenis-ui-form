@@ -49,7 +49,7 @@
     "registry": "http://registry.npmjs.org"
   },
   "dependencies": {
-    "@molgenis/molgenis-api-client": "^2.1.2",
+    "@molgenis/molgenis-api-client": "^3.1.4",
     "@molgenis/rsql": "^0.1.1",
     "debounce": "^1.1.0",
     "moment": "^2.20.1",

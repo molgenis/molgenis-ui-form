@@ -121,6 +121,19 @@
       </date-field-component>
     </template>
 
+    <!-- Render specialized Pseudonym Registration field-->
+    <template v-else-if="field.tags && field.tags.length > 0 && field.tags.findIndex(tag => tag.objectIRI == 'http://purl.obolibrary.org/obo/NCIT_C142654') != -1">
+      <pseudonym-registration-component
+        v-model="formData[field.id]"
+        :field="field"
+        :fieldState="fieldState"
+        :isValid="isValid"
+        :isRequired="isRequired"
+        :isUnique="isUnique"
+        :inputDebounceTime="formComponentOptions.inputDebounceTime">
+      </pseudonym-registration-component>
+    </template>
+
     <!-- Render email, hyperlink, password, integer, long, decimal, and text fields -->
     <template v-else>
       <typed-field-component
@@ -204,6 +217,7 @@ import RadioFieldComponent from './field-types/RadioFieldComponent'
 import SingleSelectFieldComponent from './field-types/SingleSelectFieldComponent'
 import TextAreaFieldComponent from './field-types/TextAreaFieldComponent'
 import TypedFieldComponent from './field-types/TypedFieldComponent'
+import PseudonymRegistrationComponent from './field-types/PseudonymRegistrationComponent'
 
 import { FormField, FormComponentOptions } from '../flow.types'
 import isCompoundVisible from '../util/helpers/isCompoundVisible'
@@ -222,7 +236,8 @@ export default {
     RadioFieldComponent,
     SingleSelectFieldComponent,
     TextAreaFieldComponent,
-    TypedFieldComponent
+    TypedFieldComponent,
+    PseudonymRegistrationComponent
   },
   props: {
     eventBus: {

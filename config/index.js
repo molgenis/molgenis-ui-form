@@ -11,7 +11,18 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/login': {
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
 
     // Various Dev Server settings
     host: process.env.JENKINS_AGENT_NAME || 'localhost', // can be overwritten by process.env.HOST
