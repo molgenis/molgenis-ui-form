@@ -11,14 +11,17 @@
     <div class="form-group">
         <div :class="{'border border-primary bg-light p-2':showForm}">
             <label :for="field.id">{{ field.label }}</label>
-            <div v-if="loaded || localValue!=null">
+            <div v-if="error!=''">
+                <p class='text-danger'>{{error}}</p>
+                <button id="cancel-btn" class="btn btn-danger" type="reset" @click.prevent="reset()">Try again</button>
+            </div>
+            <div v-else-if="loaded || localValue!=null">
                 <div v-if="localValue!=null">
-
                   <div class="input-group mb-3">
                     <input
                       :id="field.id"
                       :value="localValue"
-                      :type="text"
+                      type="text"
                       :name="field.id"
                       class="form-control"
                       :class="{ 'is-invalid': wasValidated && fieldState.$invalid }"
@@ -31,7 +34,6 @@
                       </button>
                     </div>
                   </div>
-
                 </div>
                 <div v-else>
                   <div v-if="!showForm">
@@ -54,16 +56,10 @@
                 </div>
             </div>
             <div v-else>
-                <div v-if="loadingFailed">
-                    <div class='text-danger'>Connection error</div>
-                    <button id="cancel-btn" class="btn btn-danger" type="reset" @click.prevent="requestConfig()">Try again</button>
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
                 </div>
-                <div v-else>
-                    <div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                    <div>Requesting additional information...</div>
-                </div>
+                <div>Requesting additional information...</div>
             </div>
             <div v-if="fieldState && fieldState.$dirty" class="validationMessage">
                 {{ 'ui-form:form_invalid_input' | i18n }}
@@ -84,6 +80,9 @@
 </template>
 
 <style scoped>
+.vf-field-invalid .btn.btn-primary, .vf-field-invalid .border.border-primary{
+  border:1px solid #dc3545 !important;
+}
 .mlg-was-validated .form-control:invalid {
   border-color: #dc3545;
 }
@@ -167,13 +166,13 @@ export default {
       showForm: false,
       config: {},
       loaded: false,
-      loadingFailed: false,
+      error: '',
       sendToClipboard: false,
 
       // form
       formFields: [
         {
-          id: 'UMCG_NR',
+          id: 'umcgnr',
           label: 'UMCG Number',
           type: 'string',
           visible: () => true,
@@ -198,43 +197,60 @@ export default {
       })
     },
     onSubmitPseudonymRegistration () {
+      // TODO: trigger validation
       this.showForm = false
-      console.log(this.formData)
       const options = {
         body: JSON.stringify(this.formData)
       }
-      api.post('/api/data/koppeltabel', options).then(response => {
+      api.post(`/api/data/${this.config.LinkEntityName}`, options).then(response => {
         if (response.status === 201) {
           // We generated a new id, lets get it  and store it in the create form
-          api.get(`/api/data/koppeltabel?q=UMCG_NR=like=${this.formData.UMCG_NR}`).then(response => {
-            console.log(response.items[0].data.id)
-            this.localValue = response.items[0].data.id
+          api.get(`/api/data/${this.config.LinkEntityName}?q=${this.config.FieldName}==${this.formData.umcgnr}`).then(response => {
+            this.localValue = response.items[0].data.ID
             this.idToClipboard()
           }, (error) => {
-            console.error(error)
+            this.error = `Error: ${error.statusText} Please contact a system administator`
           })
         }
       }, error => {
-        console.log(error)
-        // on fail
-        // already exist? tel user
-        // other error? tell user
+        if (error.status === 400) {
+          // This id may already exist, lets check for it.
+          let preExistingId = ''
+          api.get(`/api/data/${this.config.LinkEntityName}?q=${this.config.FieldName}==${this.formData.umcgnr}`).then(response => {
+            preExistingId = response.items[0].data.ID
+            if (preExistingId !== '') {
+              this.error = `This reccord already exist with the id: ${preExistingId}`
+            } else {
+              this.error = `Error: Please contact a system administator`
+            }
+          }, (error) => {
+            this.error = `Error: ${error.statusText} Please contact a system administator`
+          })
+        } else {
+          this.error = `Error: ${error.statusText} Please contact a system administator`
+        }
       })
     },
     requestConfig () {
       this.loadingFailed = false
       // Get extra configuration information
-      api.get(`/api/v2/PseudonymRegistrationConfig?q=id=like=${this.field.id}`).then(response => {
+      api.get(`/api/v2/PseudonymRegistrationConfig?q=ID=like=${this.field.id}`).then(response => {
         if (response.items.count === 0) {
-          this.loadingFailed = true
+          this.error = 'Error: Please contact a system administator'
           return
         }
         this.config = response.items[0]
         this.loaded = true
-        console.log(this.config)
       }, () => {
-        this.loadingFailed = true
+        this.error = 'Connection error. Please check you internet connection or contact a system administator'
       })
+    },
+    reset () {
+      this.showForm = false
+      this.loaded = false
+      this.error = ''
+      this.sendToClipboard = false
+      this.requestConfig()
     }
   },
   watch: {
@@ -254,12 +270,6 @@ export default {
   },
   created () {
     this.requestConfig()
-    //
-  /*
-    api.get('/api/v2/koppeltabel?attrs=~id,~lbl,&num=20').then(response => {
-      console.log(response)
-    })
-  */
   }
 }
 </script>

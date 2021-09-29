@@ -32,7 +32,7 @@ const metadata = {
           'label': 'Pseudonym Registration ID',
           'attributes': [],
           'auto': false,
-          'nillable': true,
+          'nillable': false,
           'readOnly': false,
           'labelAttribute': true,
           'unique': true,
