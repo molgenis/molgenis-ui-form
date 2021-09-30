@@ -122,7 +122,7 @@
     </template>
 
     <!-- Render specialized Pseudonym Registration field-->
-    <template v-else-if="field.tags && field.tags.length > 0 && field.tags.findIndex(tag => tag.objectIRI == 'http://purl.obolibrary.org/obo/NCIT_C142654') != -1">
+    <template v-else-if="isPseudonymRegistrationComponent(field)">
       <pseudonym-registration-component
         v-model="formData[field.id]"
         :field="field"
@@ -221,6 +221,7 @@ import PseudonymRegistrationComponent from './field-types/PseudonymRegistrationC
 
 import { FormField, FormComponentOptions } from '../flow.types'
 import isCompoundVisible from '../util/helpers/isCompoundVisible'
+import { isPseudonymRegistrationComponent } from '../util/helpers/pseudonymRegistration'
 
 const defaultNoOptionsMessage = 'No options found for given search term.'
 const defaultEvaluationErrorMessage = 'A field expression caused an error'
@@ -281,6 +282,7 @@ export default {
     }
   },
   methods: {
+    isPseudonymRegistrationComponent,
     isUnique (value) {
       if (this.field.hasOwnProperty('unique')) {
         return this.field.unique(value, this.formData)

@@ -106,8 +106,7 @@ import VueForm from 'vue-form'
 import { FormField } from '../../flow.types'
 import FormFieldMessages from '../FormFieldMessages'
 import Description from '../Description'
-import api from '@molgenis/molgenis-api-client'
-
+import { requestConfiguration, submitPseudonymRegistration } from '../../util/helpers/pseudonymRegistration'
 let debounceTime = 500
 
 export default {
@@ -202,39 +201,19 @@ export default {
       const options = {
         body: JSON.stringify(this.formData)
       }
-      api.post(`/api/data/${this.config.LinkEntityName}`, options).then(response => {
-        if (response.status === 201) {
-          // We generated a new id, lets get it  and store it in the create form
-          api.get(`/api/data/${this.config.LinkEntityName}?q=${this.config.FieldName}==${this.formData.umcgnr}`).then(response => {
-            this.localValue = response.items[0].data.ID
-            this.idToClipboard()
-          }, (error) => {
-            this.error = `Error: ${error.statusText} Please contact a system administator`
-          })
-        }
+      submitPseudonymRegistration(this.config, options, this.formData.umcgnr).then(id => {
+        this.localValue = id
+        this.idToClipboard()
+        console.log('ok')
       }, error => {
-        if (error.status === 400) {
-          // This id may already exist, lets check for it.
-          let preExistingId = ''
-          api.get(`/api/data/${this.config.LinkEntityName}?q=${this.config.FieldName}==${this.formData.umcgnr}`).then(response => {
-            preExistingId = response.items[0].data.ID
-            if (preExistingId !== '') {
-              this.error = `This reccord already exist with the id: ${preExistingId}`
-            } else {
-              this.error = `Error: Please contact a system administator`
-            }
-          }, (error) => {
-            this.error = `Error: ${error.statusText} Please contact a system administator`
-          })
-        } else {
-          this.error = `Error: ${error.statusText} Please contact a system administator`
-        }
+        console.log('err', error)
+        this.error = error
       })
     },
     requestConfig () {
       this.loadingFailed = false
       // Get extra configuration information
-      api.get(`/api/v2/PseudonymRegistrationConfig?q=ID=like=${this.field.id}`).then(response => {
+      requestConfiguration(this.field.id).then(response => {
         if (response.items.count === 0) {
           this.error = 'Error: Please contact a system administator'
           return
