@@ -29,7 +29,7 @@
                       :disabled="true"
                     />
                     <div class="input-group-append">
-                      <button id="cancel-btn" class="btn btn-outline-secondary" :class="{'btn-outline-success':sendToClipboard}" @click.prevent="idToClipboard()">
+                      <button id="clipboard-btn" class="btn btn-outline-secondary" :class="{'btn-outline-success':sendToClipboard}" @click.prevent="idToClipboard()">
                         {{ sendToClipboard ? "Copied to clipboard" : "Copy to clipboard" }}
                       </button>
                     </div>
@@ -106,7 +106,7 @@ import VueForm from 'vue-form'
 import { FormField } from '../../flow.types'
 import FormFieldMessages from '../FormFieldMessages'
 import Description from '../Description'
-import { requestConfiguration, submitPseudonymRegistration } from '../../util/helpers/pseudonymRegistration'
+import pseudonymRegistration from '../../util/helpers/pseudonymRegistration'
 let debounceTime = 500
 
 export default {
@@ -201,7 +201,7 @@ export default {
       const options = {
         body: JSON.stringify(this.formData)
       }
-      submitPseudonymRegistration(this.config, options, this.formData.umcgnr).then(id => {
+      pseudonymRegistration.submitPseudonymRegistration(this.config, options, this.formData.umcgnr).then(id => {
         this.localValue = id
         this.idToClipboard()
         console.log('ok')
@@ -213,7 +213,7 @@ export default {
     requestConfig () {
       this.loadingFailed = false
       // Get extra configuration information
-      requestConfiguration(this.field.id).then(response => {
+      pseudonymRegistration.requestConfiguration(this.field.id).then(response => {
         if (response.items.count === 0) {
           this.error = 'Error: Please contact a system administator'
           return

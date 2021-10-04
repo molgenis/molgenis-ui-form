@@ -48,4 +48,6 @@ const submitPseudonymRegistration = async (config, options, id) => {
   return requestID
 }
 
-export { isPseudonymRegistrationComponent, requestConfiguration, submitPseudonymRegistration }
+export default {
+  isPseudonymRegistrationComponent, requestConfiguration, submitPseudonymRegistration
+}

@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import PseudonymRegistrationComponent from '@/components/field-types/PseudonymRegistrationComponent'
 import { mount } from 'vue-test-utils'
 import td from 'testdouble'
-import api from '@molgenis/molgenis-api-client'
+import pseudonymRegistration from '@/util/helpers/pseudonymRegistration'
 
 let PseudonymRegistrationResponse = {
   'items': [
@@ -15,7 +16,11 @@ let PseudonymRegistrationResponse = {
   ]
 }
 
-describe('PseudonymRegistrationComponent unit tests', () => {
+const requestConfiguration = td.function('pseudonymRegistration.requestConfiguration')
+td.when(requestConfiguration('PseudonymRegistration')).thenResolve(PseudonymRegistrationResponse)
+td.replace(pseudonymRegistration, 'requestConfiguration', requestConfiguration)
+
+describe.only('PseudonymRegistrationComponent unit tests', () => {
   const mockParentFunction = () => {
     return null
   }
@@ -47,13 +52,7 @@ describe('PseudonymRegistrationComponent unit tests', () => {
     }
 
     let wrapper
-
     beforeEach(() => {
-      td.reset()
-      const get = td.function('api.get')
-      td.when(get('/api/v2/PseudonymRegistrationConfig?q=ID=like=PseudonymRegistration')).thenResolve(PseudonymRegistrationResponse)
-      td.replace(api, 'get', get)
-
       wrapper = mount(PseudonymRegistrationComponent,
         {
           propsData: propsData,
@@ -65,13 +64,11 @@ describe('PseudonymRegistrationComponent unit tests', () => {
     it('should load the component with "PseudonymRegistrationComponent" as a name', () => {
       expect(PseudonymRegistrationComponent.name).to.equal('PseudonymRegistrationComponent')
     })
-    /*
     it('renders correctly with minimal props', () => {
       expect(wrapper.contains('input')).to.equal(true)
       expect(wrapper.contains('label')).to.equal(true)
       expect(wrapper.contains('small')).to.equal(true)
     })
-    */
     it('should load default data with the help of props', () => {
       expect(wrapper.vm.localValue).to.equal('hallo')
     })
@@ -79,29 +76,31 @@ describe('PseudonymRegistrationComponent unit tests', () => {
     it('should render the label correctly', () => {
       expect(wrapper.contains('label')).to.equal(true)
       const label = wrapper.find('label')
-      expect(label.text()).to.equal('Test Field')
-      expect(label.element.htmlFor).to.equal('test-field')
+      expect(label.text()).to.equal('Pseudonym Registration')
+      expect(label.element.htmlFor).to.equal('PseudonymRegistration')
     })
 
     it('should render the description correctly', () => {
       expect(wrapper.contains('small')).to.equal(true)
       const description = wrapper.find('small')
-      expect(description.text()).to.equal('This is a test field')
-      expect(description.element.id).to.equal('test-field-description')
+      expect(description.text()).to.equal('Pseudonym Registration description')
+      expect(description.element.id).to.equal('PseudonymRegistration-description')
       expect(description.element.className).to.equal('form-text text-muted')
     })
-    /*
+
     it('should render the input correctly', () => {
       expect(wrapper.contains('input')).to.equal(true)
       const input = wrapper.find('input').element
-      expect(input.id).to.equal('test-field')
-      expect(input.name).to.equal('test-field')
+      expect(input.id).to.equal('PseudonymRegistration')
+      expect(input.name).to.equal('PseudonymRegistration')
       expect(input.type).to.equal('text')
-      expect(input.required).to.equal(true)
-      expect(input.className).to.equal(
-        'form-control vf-pristine vf-invalid vf-untouched vf-invalid-validate')
+      expect(input.disabled).to.equal(true)
     })
-*/
+
+    it('should have a working copy button', () => {
+      expect(wrapper.contains('button#clipboard-btn')).to.equal(true)
+    })
+
     /*
     it('should emit an updated value on change', (done) => {
       wrapper.setData({ localValue: 'test' })

@@ -221,7 +221,7 @@ import PseudonymRegistrationComponent from './field-types/PseudonymRegistrationC
 
 import { FormField, FormComponentOptions } from '../flow.types'
 import isCompoundVisible from '../util/helpers/isCompoundVisible'
-import { isPseudonymRegistrationComponent } from '../util/helpers/pseudonymRegistration'
+import pseudonymRegistration from '../util/helpers/pseudonymRegistration'
 
 const defaultNoOptionsMessage = 'No options found for given search term.'
 const defaultEvaluationErrorMessage = 'A field expression caused an error'
@@ -282,7 +282,7 @@ export default {
     }
   },
   methods: {
-    isPseudonymRegistrationComponent,
+    isPseudonymRegistrationComponent: pseudonymRegistration.isPseudonymRegistrationComponent,
     isUnique (value) {
       if (this.field.hasOwnProperty('unique')) {
         return this.field.unique(value, this.formData)
