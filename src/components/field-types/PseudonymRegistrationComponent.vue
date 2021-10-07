@@ -13,7 +13,7 @@
             <label :for="field.id">{{ field.label }}</label>
             <div v-if="error!=''">
                 <p class='text-danger'>{{error}}</p>
-                <button id="cancel-btn" class="btn btn-danger" type="reset" @click.prevent="reset()">Try again</button>
+                <button id="pseudonym-again-btn" class="btn btn-danger" type="reset" @click.prevent="reset()">Try again</button>
             </div>
             <div v-else-if="loaded || localValue!=null">
                 <div v-if="localValue!=null">
@@ -38,7 +38,7 @@
                 <div v-else>
                   <div v-if="!showForm">
                       <div v-if="config.GeneratedTokenDescription"><small>{{config.GeneratedTokenDescription}}</small></div>
-                      <button type="button" class="btn btn-primary create-id" @click='showForm = true'>Create a {{config.GeneratedTokenName}}</button>
+                      <button id="pseudonym-create-btn"  ype="button" class="btn btn-primary" @click='showForm = true'>Create a {{config.GeneratedTokenName}}</button>
                   </div>
                   <div v-else>
                       <p v-if="config.GeneratedTokenDescription"><small>{{config.GeneratedTokenDescription}}</small></p>
@@ -50,8 +50,8 @@
                           :options="options"
                           @valueChange="onValueChanged">
                       </form-component>
-                      <button id="cancel-btn" class="btn btn-secondary" type="reset" @click.prevent="showForm = false">Cancel</button>
-                      <button id="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmitPseudonymRegistration">Generate</button>
+                      <button id="pseudonym-cancel-btn" class="btn btn-secondary" type="reset" @click.prevent="showForm = false">Cancel</button>
+                      <button id="pseudonym-save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmitPseudonymRegistration">Generate</button>
                   </div>
                 </div>
             </div>

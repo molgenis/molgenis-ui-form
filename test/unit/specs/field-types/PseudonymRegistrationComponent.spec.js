@@ -148,16 +148,16 @@ describe.only('PseudonymRegistrationComponent unit tests', () => {
       )
     })
 
-    it('should have a creat-id button', (done) => {
+    it('should have a button to start creating a pseudonym', (done) => {
       setTimeout(function () {
-        expect(wrapper.contains('button.create-id')).to.equal(true)
+        expect(wrapper.contains('button#pseudonym-create-btn')).to.equal(true)
         done()
       })
     })
 
     it('should have a form after clicking the creat-id button', (done) => {
       setTimeout(function () {
-        wrapper.find('button.create-id').trigger('click')
+        wrapper.find('button#pseudonym-create-btn').trigger('click')
         setTimeout(function () {
           expect(wrapper.contains('#create-pseudonym-registration-id')).to.equal(true)
           done()
@@ -167,11 +167,11 @@ describe.only('PseudonymRegistrationComponent unit tests', () => {
 
     it('should have return after clicking the form cancel button', (done) => {
       setTimeout(function () {
-        wrapper.find('button.create-id').trigger('click')
+        wrapper.find('button#pseudonym-create-btn').trigger('click')
         setTimeout(function () {
-          wrapper.find('button#cancel-btn').trigger('click')
+          wrapper.find('button#pseudonym-cancel-btn').trigger('click')
           setTimeout(function () {
-            expect(wrapper.contains('button.create-id')).to.equal(true)
+            expect(wrapper.contains('button#pseudonym-create-btn')).to.equal(true)
             done()
           })
         })
@@ -180,9 +180,9 @@ describe.only('PseudonymRegistrationComponent unit tests', () => {
 
     it('should generate a new ID on save', (done) => {
       setTimeout(function () {
-        wrapper.find('button.create-id').trigger('click')
+        wrapper.find('button#pseudonym-create-btn').trigger('click')
         setTimeout(function () {
-          wrapper.find('button#save-btn').trigger('click')
+          wrapper.find('button#pseudonym-save-btn').trigger('click')
           setTimeout(function () {
             expect(wrapper.vm.localValue).to.equal('newID')
             done()
