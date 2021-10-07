@@ -9,7 +9,7 @@ td.replace(api, 'get', get)
 td.replace(api, 'post', post)
 td.when(get('/api/v2/PseudonymRegistrationConfig?q=ID=like=ID')).thenResolve('ok')
 
-describe.only('pseudonymRegistration helper tests', () => {
+describe('pseudonymRegistration helper tests', () => {
   describe('submitPseudonymRegistration', () => {
     let config = {
       FieldName: 'FieldName',
