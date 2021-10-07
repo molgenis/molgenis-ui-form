@@ -7,7 +7,7 @@ import api from '@molgenis/molgenis-api-client'
  * @returns {Function} Function which evaluates to a boolean
  */
 const isPseudonymRegistrationComponent = (field) => {
-  return field.tags && field.tags.length > 0 && field.tags.findIndex(tag => tag.objectIRI === 'http://purl.obolibrary.org/obo/NCIT_C142654') !== -1
+  return field.hasOwnProperty('tags') && field.tags.length > 0 && field.tags.findIndex(tag => tag.objectIRI === 'http://purl.obolibrary.org/obo/NCIT_C142654') !== -1
 }
 
 const requestConfiguration = (id) => api.get(`/api/v2/PseudonymRegistrationConfig?q=ID=like=${id}`)

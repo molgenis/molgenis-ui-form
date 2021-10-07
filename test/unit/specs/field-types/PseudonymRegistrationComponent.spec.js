@@ -17,7 +17,7 @@ let PseudonymRegistrationResponse = {
   ]
 }
 
-describe.only('PseudonymRegistrationComponent unit tests', () => {
+describe('PseudonymRegistrationComponent unit tests', () => {
   const mockParentFunction = () => {
     return null
   }
