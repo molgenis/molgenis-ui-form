@@ -3,6 +3,7 @@ import PseudonymRegistrationComponent from '@/components/field-types/PseudonymRe
 import { mount } from 'vue-test-utils'
 import td from 'testdouble'
 import pseudonymRegistration from '@/util/helpers/pseudonymRegistration'
+import Vue from 'vue'
 
 let PseudonymRegistrationResponse = {
   'items': [
@@ -16,16 +17,12 @@ let PseudonymRegistrationResponse = {
   ]
 }
 
-const requestConfiguration = td.function('pseudonymRegistration.requestConfiguration')
-td.when(requestConfiguration('PseudonymRegistration')).thenResolve(PseudonymRegistrationResponse)
-td.replace(pseudonymRegistration, 'requestConfiguration', requestConfiguration)
-
 describe.only('PseudonymRegistrationComponent unit tests', () => {
   const mockParentFunction = () => {
     return null
   }
 
-  describe('TypedFieldComponent with type text', () => {
+  describe('PseudonymRegistrationComponent with existing record', () => {
     const field = {
       id: 'PseudonymRegistration',
       label: 'Pseudonym Registration',
@@ -53,6 +50,11 @@ describe.only('PseudonymRegistrationComponent unit tests', () => {
 
     let wrapper
     beforeEach(() => {
+      td.reset()
+      const requestConfiguration = td.function('pseudonymRegistration.requestConfiguration')
+      td.when(requestConfiguration('PseudonymRegistration')).thenResolve(PseudonymRegistrationResponse)
+      td.replace(pseudonymRegistration, 'requestConfiguration', requestConfiguration)
+
       wrapper = mount(PseudonymRegistrationComponent,
         {
           propsData: propsData,
@@ -100,40 +102,93 @@ describe.only('PseudonymRegistrationComponent unit tests', () => {
     it('should have a working copy button', () => {
       expect(wrapper.contains('button#clipboard-btn')).to.equal(true)
     })
-
-    /*
-    it('should emit an updated value on change', (done) => {
-      wrapper.setData({ localValue: 'test' })
-      setTimeout(function () {
-        expect(wrapper.emitted().input[0]).to.deep.equal(['test'])
-        done()
-      }, 1000)
-    })
-    it('should receive the "is-invalid" class if not valid', () => {
-      wrapper.setData({
-        fieldState: {
-          $touched: true,
-          $invalid: true
-        }
-      })
-
-      expect(wrapper.find('input').classes()).to.deep.equal(['form-control', 'is-invalid',
-        'vf-pristine', 'vf-invalid', 'vf-untouched', 'vf-invalid-validate'])
-    })
-
-    it('should show a field message if input is invalid', () => {
-      wrapper.setData({
-        fieldState: {
-          $touched: true,
-          $invalid: true
-        }
-      })
-      expect(wrapper.contains('div.form-control-feedback')).to.equal(true)
-
-      const fieldMessageElement = wrapper.find('div.form-control-feedback')
-      expect(fieldMessageElement.text()).to.equal('This field is required')
-    })
   })
-*/
+
+  describe('PseudonymRegistrationComponent creating a new record', () => {
+    const field = {
+      id: 'PseudonymRegistration',
+      label: 'Pseudonym Registration',
+      description: 'Pseudonym Registration description',
+      type: 'ExistingKey',
+      disabled: false
+    }
+
+    const fieldState = {
+      showOptionalFields: false,
+      $touched: false,
+      $submitted: false,
+      $invalid: false,
+      _addControl: mockParentFunction
+    }
+
+    const propsData = {
+      value: null,
+      field: field,
+      fieldState: fieldState,
+      isRequired: true,
+      isValid: false,
+      inputDebounceTime: 0
+    }
+
+    let wrapper
+    beforeEach(() => {
+      td.reset()
+      const requestConfiguration = td.function('pseudonymRegistration.requestConfiguration')
+      const submitPseudonymRegistration = td.function('pseudonymRegistration.submitPseudonymRegistration')
+      td.when(requestConfiguration('PseudonymRegistration')).thenResolve(PseudonymRegistrationResponse)
+      td.when(submitPseudonymRegistration(td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenResolve('newID')
+      td.replace(pseudonymRegistration, 'requestConfiguration', requestConfiguration)
+      td.replace(pseudonymRegistration, 'submitPseudonymRegistration', submitPseudonymRegistration)
+
+      wrapper = mount(PseudonymRegistrationComponent,
+        {
+          propsData: propsData,
+          stubs: { 'formFieldMessages': '<div class="form-control-feedback"><div class="invalid-feedback">This field is required</div></div>' }
+        }
+      )
+    })
+
+    it('should have a creat-id button', (done) => {
+      setTimeout(function () {
+        expect(wrapper.contains('button.create-id')).to.equal(true)
+        done()
+      })
+    })
+
+    it('should have a form after clicking the creat-id button', (done) => {
+      setTimeout(function () {
+        wrapper.find('button.create-id').trigger('click')
+        setTimeout(function () {
+          expect(wrapper.contains('#create-pseudonym-registration-id')).to.equal(true)
+          done()
+        })
+      })
+    })
+
+    it('should have return after clicking the form cancel button', (done) => {
+      setTimeout(function () {
+        wrapper.find('button.create-id').trigger('click')
+        setTimeout(function () {
+          wrapper.find('button#cancel-btn').trigger('click')
+          setTimeout(function () {
+            expect(wrapper.contains('button.create-id')).to.equal(true)
+            done()
+          })
+        })
+      })
+    })
+
+    it('should generate a new ID on save', (done) => {
+      setTimeout(function () {
+        wrapper.find('button.create-id').trigger('click')
+        setTimeout(function () {
+          wrapper.find('button#save-btn').trigger('click')
+          setTimeout(function () {
+            expect(wrapper.vm.localValue).to.equal('newID')
+            done()
+          })
+        })
+      })
+    })
   })
 })

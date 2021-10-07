@@ -92,6 +92,8 @@ export default {
     const form = EntityToFormMapper.generateForm(EntityTypeV2Response.metadata, EntityTypeV2Response.items, mapperOptions)
     this.formFields = form.formFields
     this.formData = form.formData
+    console.log(this.formFields)
+    console.log(this.formData)
   }
 }
 </script>

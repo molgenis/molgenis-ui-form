@@ -38,7 +38,7 @@
                 <div v-else>
                   <div v-if="!showForm">
                       <div v-if="config.GeneratedTokenDescription"><small>{{config.GeneratedTokenDescription}}</small></div>
-                      <button type="button" class="btn btn-primary" @click='showForm = true'>Create a {{config.GeneratedTokenName}}</button>
+                      <button type="button" class="btn btn-primary create-id" @click='showForm = true'>Create a {{config.GeneratedTokenName}}</button>
                   </div>
                   <div v-else>
                       <p v-if="config.GeneratedTokenDescription"><small>{{config.GeneratedTokenDescription}}</small></p>
@@ -193,7 +193,7 @@ export default {
     idToClipboard () {
       navigator.clipboard.writeText(this.localValue).then(() => {
         this.sendToClipboard = true
-      })
+      }, () => {})
     },
     onSubmitPseudonymRegistration () {
       // TODO: trigger validation
