@@ -4,13 +4,29 @@ import td from 'testdouble'
 
 td.reset()
 const get = td.function('api.get')
-td.when(get('/api/v2/PseudonymRegistrationConfig?q=ID=like=ID')).thenResolve('ok')
+const post = td.function('api.post')
 td.replace(api, 'get', get)
+td.replace(api, 'post', post)
+td.when(get('/api/v2/PseudonymRegistrationConfig?q=ID=like=ID')).thenResolve('ok')
 
-/*
-const submitPseudonymRegistration = async (config, options, id) => {
-*/
 describe.only('pseudonymRegistration helper tests', () => {
+  describe('submitPseudonymRegistration', () => {
+    let config = {
+      FieldName: 'FieldName',
+      LinkEntityName: 'LinkEntityName'
+    }
+    it('should save the new ID en generate a Pseudonym registration ID', (done) => {
+      td.when(post('/api/data/LinkEntityName', { body: 'data' })).thenResolve({ status: 201 })
+      td.when(get('/api/data/LinkEntityName?q=FieldName==ID')).thenResolve({ items: [{ data: { ID: 'GENERATED_ID' } }] })
+
+      pseudonymRegistration.submitPseudonymRegistration(config, { body: 'data' }, 'ID').then(ID => {
+        console.log(ID)
+        expect(ID).to.equal('GENERATED_ID')
+        done()
+      })
+    })
+  })
+
   describe('requestConfiguration', (done) => {
     it('should get the PseudonymRegistration configuration', () => {
       pseudonymRegistration.requestConfiguration('ID').then((result) => {
