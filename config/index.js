@@ -12,6 +12,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      /*
       '/api': {
         target: 'https://master.dev.molgenis.org',
         changeOrigin: true,
@@ -22,8 +23,18 @@ module.exports = {
         changeOrigin: true,
         secure: false,
       },
+      '/js': {
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/@molgenis-ui': {
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true,
+        secure: false,
+      },
+      */
     },
-
     // Various Dev Server settings
     host: process.env.JENKINS_AGENT_NAME || 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -58,7 +69,47 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
-    before(app) {
+    before (app) {
+      app.get('/api/v2/PseudonymRegistrationConfig', function (req, res) {
+        res.json(
+          {
+            'items': [
+              {
+                'ID': 'PseudonymRegistration',
+                'GeneratedTokenDescription': 'MyPseudonymID is cool for lost of reasons',
+                'GeneratedTokenName': 'MyPseudonymID',
+                'LinkEntityName': 'PseudonymConnector',
+                'FieldName': 'umcgnr'
+              }
+            ]
+          }
+        )
+      })
+
+      app.post('/api/v2/PseudonymRegistrationConfig', function (req, res) {
+        if (req.body.umcgnr === 'error') {
+          res.sendStatus(400)
+          res.status(400).send('Error')
+        } else {
+          res.sendStatus(201)
+        }
+      })
+
+      // GET PseudonymConnector?q=umcgnr==wetryuilykue567tuf56
+      app.get('/api/data/PseudonymConnector', function (req, res) {
+        res.json(
+          {
+            items: [
+              {
+                data: {
+                  ID: 'aaaac7du4mlh63s6lcbe42qaae', umcgnr: 'wetryuilykue567tuf56'
+                }
+              }
+            ]
+          }
+        )
+      })
+
       app.get('/api/v1/it_emx_datatypes_TypeTestRef', function (req, res) {
         res.json(mockResponse)
       })
@@ -68,9 +119,9 @@ module.exports = {
         const likeQuery = /value=like=*([^,]+),label=like=\1/.exec(req.query.q)
         const inQuery = /value=in=*([^,]+),label=in=\1/.exec(req.query.q)
         if (inQuery !== null) {
-          res.json({...mockResponse, items: mockResponse.items.filter(item => item.value === inQuery[1] || item.label === inQuery[1])})
+          res.json({ ...mockResponse, items: mockResponse.items.filter(item => item.value === inQuery[1] || item.label === inQuery[1]) })
         } else if (likeQuery !== null) {
-          res.json({...mockResponse, items: mockResponse.items.filter(item => item.value.includes(likeQuery[1]) || item.label.includes(likeQuery[1]))})
+          res.json({ ...mockResponse, items: mockResponse.items.filter(item => item.value.includes(likeQuery[1]) || item.label.includes(likeQuery[1])) })
         } else {
           res.json(mockResponse)
         }
@@ -107,10 +158,9 @@ module.exports = {
       // mock unique test response
       app.get('/api/v2/it_emx_datatypes_TypeTest', function (req, res) {
         const meta = { permissions: ['ADD_DATA'] }
-        const result = req.query.q === 'string==\'string value\';id!=123-abc' ? {items: [], meta} : {items: [{foo: 'bar'}], meta}
+        const result = req.query.q === 'string==\'string value\';id!=123-abc' ? { items: [], meta } : { items: [{ foo: 'bar' }], meta }
         res.json(result)
       })
-
     }
   },
 

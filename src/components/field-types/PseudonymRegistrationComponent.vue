@@ -38,7 +38,7 @@
                 <div v-else>
                   <div v-if="!showForm">
                       <div v-if="config.GeneratedTokenDescription"><small>{{config.GeneratedTokenDescription}}</small></div>
-                      <button id="pseudonym-create-btn"  ype="button" class="btn btn-primary" @click='showForm = true'>Create a {{config.GeneratedTokenName}}</button>
+                      <button id="pseudonym-create-btn" type="button" class="btn btn-primary" @click='showForm = true'>Create a {{config.GeneratedTokenName}}</button>
                   </div>
                   <div v-else>
                       <p v-if="config.GeneratedTokenDescription"><small>{{config.GeneratedTokenDescription}}</small></p>
@@ -204,9 +204,7 @@ export default {
       pseudonymRegistration.submitPseudonymRegistration(this.config, options, this.formData.umcgnr).then(id => {
         this.localValue = id
         this.idToClipboard()
-        console.log('ok')
       }, error => {
-        console.log('err', error)
         this.error = error
       })
     },

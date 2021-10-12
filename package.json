@@ -24,7 +24,7 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "debug": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --browsers Chrome",
-    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
+    "lint": "eslint --ext .js,.vue ./",
     "build": "node build/build.js",
     "preversion": "yarn install; yarn unit",
     "postversion": "yarn build"
@@ -121,7 +121,6 @@
     "karma-webpack": "^2.0.2",
     "mocha": "^3.2.0",
     "nightwatch": "^0.9.21",
-    "nock": "^13.1.3",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",

@@ -21,7 +21,7 @@ const submitPseudonymRegistration = async (config, options, id) => {
         await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${id}`).then(response => {
           requestID = response.items[0].data.ID
         }, (error) => {
-          throw new Error(`Error: ${error.statusText} Please contact a system administator`)
+          throw new Error(`${error.statusText} Please contact a system administator`)
         })
       }
     }, async error => {
@@ -36,10 +36,10 @@ const submitPseudonymRegistration = async (config, options, id) => {
             throw new Error(`Error: Please contact a system administator`)
           }
         }, (error) => {
-          throw new Error(`Error: ${error.statusText} Please contact a system administator`)
+          throw new Error(`${error.statusText} Please contact a system administator`)
         })
       } else {
-        throw new Error(`Error: ${error.statusText} Please contact a system administator`)
+        throw new Error(`${error.statusText} Please contact a system administator`)
       }
     })
   } catch (error) {
