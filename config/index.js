@@ -3,7 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const mockResponse = require('./mock-response.js')
+const mockResponseHander = require('./mockResponseHander.js')
 
 module.exports = {
   dev: {
@@ -11,30 +11,7 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      /*
-      '/api': {
-        target: 'https://master.dev.molgenis.org',
-        changeOrigin: true,
-        secure: false,
-      },
-      '/login': {
-        target: 'https://master.dev.molgenis.org',
-        changeOrigin: true,
-        secure: false,
-      },
-      '/js': {
-        target: 'https://master.dev.molgenis.org',
-        changeOrigin: true,
-        secure: false,
-      },
-      '/@molgenis-ui': {
-        target: 'https://master.dev.molgenis.org',
-        changeOrigin: true,
-        secure: false,
-      },
-      */
-    },
+    proxyTable: {},
     // Various Dev Server settings
     host: process.env.JENKINS_AGENT_NAME || 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -70,97 +47,13 @@ module.exports = {
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
     before (app) {
-      app.get('/api/v2/PseudonymRegistrationConfig', function (req, res) {
-        res.json(
-          {
-            'items': [
-              {
-                'ID': 'PseudonymRegistration',
-                'GeneratedTokenDescription': 'MyPseudonymID is cool for lost of reasons',
-                'GeneratedTokenName': 'MyPseudonymID',
-                'LinkEntityName': 'PseudonymConnector',
-                'FieldName': 'umcgnr'
-              }
-            ]
-          }
-        )
-      })
-
-      app.post('/api/v2/PseudonymRegistrationConfig', function (req, res) {
-        if (req.body.umcgnr === 'error') {
-          res.sendStatus(400)
-          res.status(400).send('Error')
-        } else {
-          res.sendStatus(201)
-        }
-      })
-
-      // GET PseudonymConnector?q=umcgnr==wetryuilykue567tuf56
-      app.get('/api/data/PseudonymConnector', function (req, res) {
-        res.json(
-          {
-            items: [
-              {
-                data: {
-                  ID: 'aaaac7du4mlh63s6lcbe42qaae', umcgnr: 'wetryuilykue567tuf56'
-                }
-              }
-            ]
-          }
-        )
-      })
-
-      app.get('/api/v1/it_emx_datatypes_TypeTestRef', function (req, res) {
-        res.json(mockResponse)
-      })
-
-      app.get('/api/v2/it_emx_datatypes_TypeTestRef', function (req, res) {
-        // try to mock (some) search behavior
-        const likeQuery = /value=like=*([^,]+),label=like=\1/.exec(req.query.q)
-        const inQuery = /value=in=*([^,]+),label=in=\1/.exec(req.query.q)
-        if (inQuery !== null) {
-          res.json({ ...mockResponse, items: mockResponse.items.filter(item => item.value === inQuery[1] || item.label === inQuery[1]) })
-        } else if (likeQuery !== null) {
-          res.json({ ...mockResponse, items: mockResponse.items.filter(item => item.value.includes(likeQuery[1]) || item.label.includes(likeQuery[1])) })
-        } else {
-          res.json(mockResponse)
-        }
-      })
-
-      app.get('/api/v2/i18n/ui-form/en', function (req, res) {
-        const localizedMessages = {
-          'form_required_field': 'This field is required',
-          'form_validation_failed': 'Validation failed',
-          'form_not_unique': 'Not a unique value',
-          'form_not_a_valid_number': 'Not a valid number',
-          'form_not_a_valid_integer': 'Not a valid integer value',
-          'form_not_a_valid_long': 'Not a valid long value',
-          'form_not_a_valid_hyperlink': 'Not a valid hyperlink',
-          'form_not_a_valid_email': 'Not a valid email',
-          'form_not_within_range': 'Value is outside of range',
-          'form_below_min_value': 'Value is below allowed value',
-          'form_above_max_value': 'Value is above allowed value',
-          'form_maxlength_exceeded': 'Maximum field length is',
-          'form_boolean_true': 'True',
-          'form_boolean_false': 'False',
-          'form_boolean_missing': 'N/A',
-          'form_no_options': 'No options found.',
-          'form_hide_optional_hint': 'Hide optional fields.',
-          'form_show_optional_hint': 'Show all fields.',
-          'form_file_change': 'Change',
-          'form_file_browse': 'Browse',
-          'form_invalid_input': 'This is not a valid input for this field type',
-          'form_show_more': 'Show more'
-        }
-        res.json(localizedMessages)
-      })
-
-      // mock unique test response
-      app.get('/api/v2/it_emx_datatypes_TypeTest', function (req, res) {
-        const meta = { permissions: ['ADD_DATA'] }
-        const result = req.query.q === 'string==\'string value\';id!=123-abc' ? { items: [], meta } : { items: [{ foo: 'bar' }], meta }
-        res.json(result)
-      })
+      app.get('/api/v2/PseudonymRegistrationConfig', mockResponseHander.getPseudonymRegistrationConfig)
+      app.post('/api/data/PseudonymConnector', mockResponseHander.postPseudonymConnector)
+      app.get('/api/data/PseudonymConnector', mockResponseHander.getPseudonymConnector)
+      app.get('/api/v1/it_emx_datatypes_TypeTestRef', mockResponseHander.getV1TypeTestRef)
+      app.get('/api/v2/it_emx_datatypes_TypeTestRef', mockResponseHander.getV2TypeTestRef)
+      app.get('/api/v2/i18n/ui-form/en', mockResponseHander.getLocalization)
+      app.get('/api/v2/it_emx_datatypes_TypeTest', mockResponseHander.getTypeTest)
     }
   },
 
