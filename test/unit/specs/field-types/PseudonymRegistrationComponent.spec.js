@@ -12,7 +12,7 @@ let PseudonymRegistrationResponse = {
       'GeneratedTokenDescription': 'MyPseudonymID is cool for lost of reasons',
       'GeneratedTokenName': 'MyPseudonymID',
       'LinkEntityName': 'PseudonymConnector',
-      'FieldName': 'umcgnr'
+      'FieldName': 'OriginalID'
     }
   ]
 }

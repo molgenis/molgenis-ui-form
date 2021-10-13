@@ -7,7 +7,6 @@ const mockResponseHander = require('./mockResponseHander.js')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

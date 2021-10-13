@@ -16,6 +16,7 @@
                 <button id="pseudonym-again-btn" class="btn btn-danger" type="reset" @click.prevent="reset()">Try again</button>
             </div>
             <div v-else-if="loaded || localValue!=null">
+
                 <div v-if="localValue!=null">
                   <div class="input-group mb-3">
                     <input
@@ -42,18 +43,19 @@
                   </div>
                   <div v-else>
                       <p v-if="config.GeneratedTokenDescription"><small>{{config.GeneratedTokenDescription}}</small></p>
-                      <form-component
-                          id="create-pseudonym-registration-id"
-                          :formFields="formFields"
-                          :initialFormData="formData"
-                          :formState="formState"
-                          :options="options"
-                          @valueChange="onValueChanged">
-                      </form-component>
-                      <button id="pseudonym-cancel-btn" class="btn btn-secondary" type="reset" @click.prevent="showForm = false">Cancel</button>
-                      <button id="pseudonym-save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmitPseudonymRegistration">Generate</button>
+
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="OriginalID" :value="value" @change="(event) => originalID = event.target.value" />
+                        <div class="input-group-append" id="button-addon4">
+                          <button id="pseudonym-save-btn" class="btn btn-outline-primary" type="submit" @click.prevent.stop="onSubmitPseudonymRegistration">Generate</button>
+                          <button id="pseudonym-cancel-btn" class="btn btn-outline-secondary" type="reset" @click.prevent.stop="showForm = false">
+                            <i class="fa fa-times"><span aria-hidden="true" class="sr-only">Cancel</span></i>
+                          </button>
+                        </div>
+                      </div>
                   </div>
                 </div>
+
             </div>
             <div v-else>
                 <div class="spinner-border" role="status">
@@ -113,10 +115,7 @@ export default {
   name: 'PseudonymRegistrationComponent',
   components: {
     FormFieldMessages,
-    Description,
-    // Fix for Circular Reference
-    // see: https://stackoverflow.com/questions/49154490/did-you-register-the-component-correctly-for-recursive-components-make-sure-to
-    FormComponent: () => import('../FormComponent.vue')
+    Description
   },
   props: {
     value: {
@@ -162,48 +161,30 @@ export default {
     return {
       // Store a local value to prevent changing the parent state
       localValue: this.value,
+      originalID: this.value,
       showForm: false,
       config: {},
       loaded: false,
       error: '',
-      sendToClipboard: false,
-
-      // form
-      formFields: [
-        {
-          id: 'umcgnr',
-          label: 'UMCG Number',
-          type: 'string',
-          visible: () => true,
-          required: () => true,
-          validate: () => true
-        }
-      ],
-      formState: {},
-      formData: {},
-      options: {
-        showEyeButton: false
-      }
+      sendToClipboard: false
     }
   },
   methods: {
     onValueChanged (formData) {
       this.formData = formData
     },
-    idToClipboard () {
-      navigator.clipboard.writeText(this.localValue).then(() => {
+    idToClipboard (pseudonymID) {
+      navigator.clipboard.writeText(pseudonymID).then(() => {
         this.sendToClipboard = true
       }, () => {})
     },
     onSubmitPseudonymRegistration () {
       // TODO: trigger validation
       this.showForm = false
-      const options = {
-        body: JSON.stringify(this.formData)
-      }
-      pseudonymRegistration.submitPseudonymRegistration(this.config, options, this.formData.umcgnr).then(id => {
-        this.localValue = id
-        this.idToClipboard()
+      pseudonymRegistration.submitPseudonymRegistration(this.config, this.originalID).then(pseudonymID => {
+        this.idToClipboard(pseudonymID)
+        this.$emit('input', pseudonymID)
+        this.localValue = pseudonymID
       }, error => {
         this.error = error
       })
@@ -228,11 +209,6 @@ export default {
       this.error = ''
       this.sendToClipboard = false
       this.requestConfig()
-    }
-  },
-  watch: {
-    localValue (value) {
-      this.$emit('input', value)
     }
   },
   computed: {

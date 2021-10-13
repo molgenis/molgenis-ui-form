@@ -19,7 +19,7 @@ function getPseudonymRegistrationConfig (_request, response) {
           'GeneratedTokenDescription': 'MyPseudonymID is cool for lost of reasons',
           'GeneratedTokenName': 'MyPseudonymID',
           'LinkEntityName': 'PseudonymConnector',
-          'FieldName': 'umcgnr'
+          'FieldName': 'OriginalID'
         }
       ]
     }
@@ -32,7 +32,7 @@ function postPseudonymConnector (request, response) {
     body.push(chunk)
   }).on('end', () => {
     body = JSON.parse(Buffer.concat(body).toString())
-    if (body.umcgnr === 'error') {
+    if (body.OriginalID === 'DuplicatePseudonym') {
       response.status(400).send('Error')
     } else {
       response.sendStatus(201)
@@ -46,7 +46,7 @@ function getPseudonymConnector (_request, response) {
       items: [
         {
           data: {
-            ID: 'aaaac7du4mlh63s6lcbe42qaae', umcgnr: 'wetryuilykue567tuf56'
+            ID: 'PseudonymID', OriginalID: 'OriginalID'
           }
         }
       ]

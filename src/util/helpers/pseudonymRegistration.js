@@ -12,13 +12,15 @@ const isPseudonymRegistrationComponent = (field) => {
 
 const requestConfiguration = (id) => api.get(`/api/v2/PseudonymRegistrationConfig?q=ID=like=${id}`)
 
-const submitPseudonymRegistration = async (config, options, id) => {
+const submitPseudonymRegistration = async (config, originalID) => {
+  console.log(config)
   let requestID = null
+  const postOptions = { body: JSON.stringify({ OriginalID: originalID }) }
   try {
-    await api.post(`/api/data/${config.LinkEntityName}`, options).then(async response => {
+    await api.post(`/api/data/${config.LinkEntityName}`, postOptions).then(async response => {
       if (response.status === 201) {
         // We generated a new id, lets get it and store it in the create form
-        await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${id}`).then(response => {
+        await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${originalID}`).then(response => {
           requestID = response.items[0].data.ID
         }, (error) => {
           throw new Error(`${error.statusText} Please contact a system administator`)
@@ -28,7 +30,7 @@ const submitPseudonymRegistration = async (config, options, id) => {
       if (error.status === 400) {
         // This id may already exist, lets check for it.
         let preExistingId = ''
-        await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${id}`).then(response => {
+        await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${originalID}`).then(response => {
           preExistingId = response.items[0].data.ID
           if (preExistingId !== '') {
             throw new Error(`This reccord already exist with the id: ${preExistingId}`)
