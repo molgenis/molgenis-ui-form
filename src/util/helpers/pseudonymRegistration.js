@@ -19,27 +19,11 @@ const submitPseudonymRegistration = async (config, originalID) => {
   try {
     await api.post(`/api/data/${config.LinkEntityName}`, postOptions).then(async response => {
       if (response.status === 201) {
-        // We generated a new id, lets get it and store it in the create form
-        await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${originalID}`).then(response => {
-          requestID = response.items[0].data.ID
-        }, (error) => {
-          throw new Error(`${error.statusText} Please contact a system administator`)
-        })
+        requestID = await getNewPseudonym(config, originalID)
       }
     }, async error => {
       if (error.status === 400) {
-        // This id may already exist, lets check for it.
-        let preExistingId = ''
-        await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${originalID}`).then(response => {
-          preExistingId = response.items[0].data.ID
-          if (preExistingId !== '') {
-            throw new Error(`This reccord already exist with the id: ${preExistingId}`)
-          } else {
-            throw new Error(`Error: Please contact a system administator`)
-          }
-        }, (error) => {
-          throw new Error(`${error.statusText} Please contact a system administator`)
-        })
+        checkForDuplicateID(config, originalID)
       } else {
         throw new Error(`${error.statusText} Please contact a system administator`)
       }
@@ -52,4 +36,27 @@ const submitPseudonymRegistration = async (config, originalID) => {
 
 export default {
   isPseudonymRegistrationComponent, requestConfiguration, submitPseudonymRegistration
+}
+
+const getNewPseudonym = async (config, originalID) => {
+  let newPseudonym = null
+  await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${originalID}`).then(response => {
+    newPseudonym = response.items[0].data.ID
+  }, (error) => {
+    throw new Error(`${error.statusText} Please contact a system administator`)
+  })
+  return newPseudonym
+}
+
+const checkForDuplicateID = async (config, originalID) => {
+  await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${originalID}`).then(response => {
+    const preExistingId = response.items[0].data.ID
+    if (preExistingId !== '') {
+      throw new Error(`This record already exist with the id: ${preExistingId}`)
+    } else {
+      throw new Error(`Error: Please contact a system administator`)
+    }
+  }, (error) => {
+    throw new Error(`${error.statusText} Please contact a system administator`)
+  })
 }

@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars, no-unused-expressions */
-const { SingleEntryPlugin } = require('webpack')
 
 module.exports = {
   tags: ['pseudonym'], // run this suite with 'yarn e2e --tag pseudonym'
@@ -10,20 +9,49 @@ module.exports = {
     // Wait for form to be loaded
     browser.url(browser.globals.devServerURL)
     browser.url(browser.globals.devServerURL + '/create-entity') // update-entity
-  },
-  // DuplicatePseudonym
-  'PseudonymRegistration Component should generate a new PseudonymRegistration ID': function (browser) {
-    browser.options.desiredCapabilities.name = ''
-    browser.expect.element('button#pseudonym-create-btn').to.be.present
-    browser.click('button#pseudonym-create-btn')
+    browser.expect.element('#pseudonym-create-btn').to.be.present
+    browser.click('#pseudonym-create-btn')
     browser.expect.element('#OriginalID').to.be.present
     browser.click('#OriginalID')
     browser.clearValue('#OriginalID')
-    browser.setValue('#OriginalID', 'test')
-    browser.waitForElementVisible('#pseudonym-save-btn')
-    browser.click('#pseudonym-save-btn')
-    browser.waitForElementVisible('#clipboard-btn')
-    browser.expect.element('#PseudonymRegistration').to.have.value.that.equals('PseudonymID')
-    browser.end()
-  }
+  },
+  // DuplicatePseudonym
+  'PseudonymRegistration Component should generate a new PseudonymRegistration ID':
+    succesPseudonymRegistration,
+  'PseudonymRegistration Component should throw a duplicate error on new PseudonymRegistration ID id collision':
+    duplicateIDRegistration,
+  'PseudonymRegistration Component should throw away input when cancel is pressed':
+    cancelIDRegistriation
+}
+
+function succesPseudonymRegistration (browser) {
+  browser.setValue('#OriginalID', 'test')
+  browser.waitForElementVisible('#pseudonym-save-btn')
+  browser.click('#pseudonym-save-btn')
+  browser.waitForElementVisible('#clipboard-btn')
+  browser.expect
+    .element('#PseudonymRegistration')
+    .to.have.value.that.equals('PseudonymID') 
+  browser.end()
+}
+
+function duplicateIDRegistration (browser) { 
+  const DUPLICATE_PSEUDONYM_ERROR = 'Error: This reccord already exist with the id: PseudonymID'
+  browser.setValue('#OriginalID', 'DuplicatePseudonym')
+  browser.waitForElementVisible('#pseudonym-save-btn')
+  browser.click('#pseudonym-save-btn')
+  browser.waitForElementVisible('#pseudonym-error')
+  browser.expect.element('#pseudonym-error').text.to.equal(DUPLICATE_PSEUDONYM_ERROR)
+  browser.end()
+}
+
+function cancelIDRegistriation (browser) {
+  browser.setValue('#OriginalID', 'test')
+  browser.waitForElementVisible('#pseudonym-cancel-btn')
+  browser.click('#pseudonym-cancel-btn')
+  browser.click('#pseudonym-create-btn')
+  browser.expect
+    .element('#OriginalID')
+    .to.have.value.that.equals('')
+  browser.end()
 }

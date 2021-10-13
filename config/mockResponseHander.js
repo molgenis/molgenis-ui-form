@@ -32,7 +32,7 @@ function postPseudonymConnector (request, response) {
     body.push(chunk)
   }).on('end', () => {
     body = JSON.parse(Buffer.concat(body).toString())
-    if (body.OriginalID === 'DuplicatePseudonym') {
+    if (body.OriginalID === 'DuplicatePseudonym' || body.OriginalID === '') {
       response.status(400).send('Error')
     } else {
       response.sendStatus(201)

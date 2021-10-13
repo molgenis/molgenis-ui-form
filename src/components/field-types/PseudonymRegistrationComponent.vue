@@ -12,7 +12,7 @@
         <div :class="{'border border-primary bg-light p-2':showForm}">
             <label :for="field.id">{{ field.label }}</label>
             <div v-if="error!=''">
-                <p class='text-danger'>{{error}}</p>
+                <p id="pseudonym-error" class='text-danger'>{{error}}</p>
                 <button id="pseudonym-again-btn" class="btn btn-danger" type="reset" @click.prevent="reset()">Try again</button>
             </div>
             <div v-else-if="loaded || localValue!=null">
