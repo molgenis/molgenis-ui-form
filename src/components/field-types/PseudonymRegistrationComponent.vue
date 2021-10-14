@@ -170,13 +170,10 @@ export default {
     }
   },
   methods: {
-    onValueChanged (formData) {
-      this.formData = formData
-    },
     idToClipboard (pseudonymID) {
       navigator.clipboard.writeText(pseudonymID).then(() => {
         this.sendToClipboard = true
-      }, () => {})
+      })
     },
     onSubmitPseudonymRegistration () {
       // TODO: trigger validation
@@ -191,15 +188,14 @@ export default {
       })
     },
     requestConfig () {
-      this.loadingFailed = false
-      // Get extra configuration information
+      this.loaded = false
       pseudonymRegistration.requestConfiguration(this.field.id).then(response => {
-        if (response.items.count === 0) {
+        if (response.items.length === 0) {
           this.error = 'Error: Please contact a system administator'
-          return
+        } else {
+          this.config = response.items[0]
+          this.loaded = true
         }
-        this.config = response.items[0]
-        this.loaded = true
       }, () => {
         this.error = 'Connection error. Please check you internet connection or contact a system administator'
       })

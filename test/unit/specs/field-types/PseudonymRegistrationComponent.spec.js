@@ -28,23 +28,23 @@ describe('PseudonymRegistrationComponent unit tests', () => {
     return null
   }
 
+  const field = {
+    id: 'PseudonymRegistration',
+    label: 'Pseudonym Registration',
+    description: 'Pseudonym Registration description',
+    type: 'ExistingKey',
+    disabled: false
+  }
+
+  const fieldState = {
+    showOptionalFields: false,
+    $touched: false,
+    $submitted: false,
+    $invalid: false,
+    _addControl: mockParentFunction
+  }
+
   describe('PseudonymRegistrationComponent with existing record', () => {
-    const field = {
-      id: 'PseudonymRegistration',
-      label: 'Pseudonym Registration',
-      description: 'Pseudonym Registration description',
-      type: 'ExistingKey',
-      disabled: false
-    }
-
-    const fieldState = {
-      showOptionalFields: false,
-      $touched: false,
-      $submitted: false,
-      $invalid: false,
-      _addControl: mockParentFunction
-    }
-
     const propsData = {
       value: 'hallo',
       field: field,
@@ -111,22 +111,6 @@ describe('PseudonymRegistrationComponent unit tests', () => {
   })
 
   describe('PseudonymRegistrationComponent creating a new record', () => {
-    const field = {
-      id: 'PseudonymRegistration',
-      label: 'Pseudonym Registration',
-      description: 'Pseudonym Registration description',
-      type: 'ExistingKey',
-      disabled: false
-    }
-
-    const fieldState = {
-      showOptionalFields: false,
-      $touched: false,
-      $submitted: false,
-      $invalid: false,
-      _addControl: mockParentFunction
-    }
-
     const propsData = {
       value: null,
       field: field,
@@ -149,49 +133,108 @@ describe('PseudonymRegistrationComponent unit tests', () => {
       )
     })
 
-    it('should have a button to start creating a pseudonym', (done) => {
-      setTimeout(function () {
-        expect(wrapper.contains('#pseudonym-create-btn')).to.equal(true)
-        done()
-      })
-    })
-
-    it('should have a input field after clicking the creat-id button', (done) => {
-      setTimeout(function () {
-        wrapper.find('#pseudonym-create-btn').trigger('click')
-        setTimeout(function () {
-          expect(wrapper.contains('#OriginalID')).to.equal(true)
-          done()
-        })
-      })
-    })
-
-    it('should have return after clicking the form cancel button', (done) => {
-      setTimeout(function () {
-        wrapper.find('#pseudonym-create-btn').trigger('click')
-        setTimeout(function () {
-          wrapper.find('#pseudonym-cancel-btn').trigger('click')
-          setTimeout(function () {
-            expect(wrapper.contains('#pseudonym-create-btn')).to.equal(true)
+    describe('idToClipboard', () => {
+      it('should write the pseudonym to the clipboard and make the send boolean true', (done) => {
+        const tmp = navigator.clipboard.writeText
+        navigator.clipboard.writeText = td.function('navigator.clipboard.writeText')
+        td.when(navigator.clipboard.writeText(pseudonymID)).thenResolve()
+        Vue.nextTick(() => {
+          wrapper.vm.idToClipboard(pseudonymID)
+          Vue.nextTick(() => {
+            expect(wrapper.vm.sendToClipboard).to.be.true
+            navigator.clipboard.writeText = tmp
             done()
           })
         })
       })
     })
 
-    it.only('should generate a new ID on save', (done) => {
-      td.when(submitPseudonymRegistration(config, 'id')).thenResolve(pseudonymID)
-      td.replace(pseudonymRegistration, 'submitPseudonymRegistration', submitPseudonymRegistration)
-
-      wrapper.vm.originalID = 'id'
-      const idToClipboard = td.function('idToClipboard')
-
-      wrapper.vm.idToClipboard = idToClipboard
-      Vue.nextTick(() => {
-        wrapper.vm.onSubmitPseudonymRegistration()
+    describe('onSubmitPseudonymRegistration', () => {
+      it('should return a new ID on save', (done) => {
+        td.when(submitPseudonymRegistration(config, 'id')).thenResolve(pseudonymID)
+        td.replace(pseudonymRegistration, 'submitPseudonymRegistration', submitPseudonymRegistration)
+        wrapper.vm.originalID = 'id'
+        const idToClipboard = td.function('idToClipboard')
+        wrapper.vm.idToClipboard = idToClipboard
         Vue.nextTick(() => {
-          td.verify(idToClipboard(pseudonymID))
-          done()
+          wrapper.vm.onSubmitPseudonymRegistration()
+          Vue.nextTick(() => {
+            td.verify(idToClipboard(pseudonymID))
+            done()
+          })
+        })
+      })
+
+      it('Should set the error, if one occurs during pseudonimisation', (done) => {
+        const ERROR_MESSAGE = 'ErrorMessage'
+        td.when(submitPseudonymRegistration(config, 'id')).thenReject(ERROR_MESSAGE)
+        td.replace(pseudonymRegistration, 'submitPseudonymRegistration', submitPseudonymRegistration)
+        wrapper.vm.originalID = 'id'
+        Vue.nextTick(() => {
+          wrapper.vm.onSubmitPseudonymRegistration()
+          Vue.nextTick(() => {
+            expect(wrapper.vm.error).to.equal(ERROR_MESSAGE)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('requestConfig', () => {
+      it('should load the config onto the scope and set loaded to true', (done) => {
+        const response = { items: [{ some: 'config' }] }
+        td.when(requestConfiguration(wrapper.vm.field.id)).thenResolve(response)
+        Vue.nextTick(() => {
+          wrapper.vm.requestConfig()
+          Vue.nextTick(() => {
+            expect(wrapper.vm.config).to.deep.equal(response.items[0])
+            expect(wrapper.vm.loaded).to.be.true
+            done()
+          })
+        })
+      })
+
+      it('should set the error if no config is returned', (done) => {
+        const EMPTY_RESPONSE_ERROR_MESSAGE = 'Error: Please contact a system administator'
+        const emptyResponse = { items: [] }
+        td.when(requestConfiguration(wrapper.vm.field.id)).thenResolve(emptyResponse)
+        Vue.nextTick(() => {
+          wrapper.vm.requestConfig()
+          Vue.nextTick(() => {
+            expect(wrapper.vm.error).to.equal(EMPTY_RESPONSE_ERROR_MESSAGE)
+            expect(wrapper.vm.loaded).to.be.false
+            done()
+          })
+        })
+      })
+
+      it('should set the error if getting the config fails', (done) => {
+        const CONNECTION_ERROR_MESSAGE = 'Connection error. Please check you internet connection or contact a system administator'
+        td.when(requestConfiguration(wrapper.vm.field.id)).thenReject()
+        Vue.nextTick(() => {
+          wrapper.vm.requestConfig()
+          Vue.nextTick(() => {
+            expect(wrapper.vm.error).to.equal(CONNECTION_ERROR_MESSAGE)
+            expect(wrapper.vm.loaded).to.be.false
+            done()
+          })
+        })
+      })
+    })
+
+    describe('reset', () => {
+      it('should put back the default values and request a new config', (done) => {
+        wrapper.vm.requestConfig = td.function()
+        Vue.nextTick(() => {
+          wrapper.vm.reset()
+          Vue.nextTick(() => {
+            expect(wrapper.vm.showForm).to.be.false
+            expect(wrapper.vm.loaded).to.be.false
+            expect(wrapper.vm.error).to.equal('')
+            expect(wrapper.vm.sendToClipboard).to.be.false
+            td.verify(wrapper.vm.requestConfig())
+            done()
+          })
         })
       })
     })

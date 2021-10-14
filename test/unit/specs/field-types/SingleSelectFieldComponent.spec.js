@@ -1,6 +1,7 @@
 import SingleSelectFieldComponent from '@/components/field-types/SingleSelectFieldComponent'
 import { mount } from 'vue-test-utils'
 import td from 'testdouble'
+import Vue from 'vue'
 
 describe('SingleSelectFieldComponent unit tests', () => {
   let propsData
@@ -66,31 +67,33 @@ describe('SingleSelectFieldComponent unit tests', () => {
     }
   })
 
-  it('should fetch with empty search parmam when no initial value is present', done => {
+  it('should fetch with empty search param when no initial value is present', done => {
     const wrapper = mount(SingleSelectFieldComponent, {
       propsData: propsData,
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.options).to.deep.equal([
-        {
-          id: 'option-1',
-          label: 'Option 1',
-          value: 'option-1'
-        },
-        {
-          id: 'option-2',
-          label: 'Option 2',
-          value: 'option-2'
-        },
-        {
-          id: 'option-3',
-          label: 'Option 3',
-          value: 'option-3'
-        }
-      ])
-      done()
+    Vue.nextTick(() => {
+      Vue.nextTick(() => {
+        expect(wrapper.vm.options).to.deep.equal([
+          {
+            id: 'option-1',
+            label: 'Option 1',
+            value: 'option-1'
+          },
+          {
+            id: 'option-2',
+            label: 'Option 2',
+            value: 'option-2'
+          },
+          {
+            id: 'option-3',
+            label: 'Option 3',
+            value: 'option-3'
+          }
+        ])
+        done()
+      })
     })
   })
 
@@ -131,9 +134,11 @@ describe('SingleSelectFieldComponent unit tests', () => {
     })
 
     wrapper.vm.fetchOptions('ref1')
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
-      done()
+    Vue.nextTick(() => {
+      Vue.nextTick(() => {
+        expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
+        done()
+      })
     })
   })
 
@@ -144,9 +149,11 @@ describe('SingleSelectFieldComponent unit tests', () => {
     })
 
     wrapper.vm.fetchOptions('non existing option')
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.options).to.deep.equal([])
-      done()
+    Vue.nextTick(() => {
+      Vue.nextTick(() => {
+        expect(wrapper.vm.options).to.deep.equal([])
+        done()
+      })
     })
   })
 

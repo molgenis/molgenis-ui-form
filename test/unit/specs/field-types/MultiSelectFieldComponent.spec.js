@@ -1,6 +1,7 @@
 import MultiSelectFieldComponent from '@/components/field-types/MultiSelectFieldComponent'
 import { mount } from 'vue-test-utils'
 import td from 'testdouble'
+import Vue from 'vue'
 
 describe('MultiSelectFieldComponent unit tests', () => {
   let propsData
@@ -68,25 +69,27 @@ describe('MultiSelectFieldComponent unit tests', () => {
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.options).to.deep.equal([
-        {
-          id: 'ref1',
-          label: 'label1',
-          value: 'ref1'
-        },
-        {
-          id: 'ref2',
-          label: 'label2',
-          value: 'ref2'
-        },
-        {
-          id: 'ref3',
-          label: 'label3',
-          value: 'ref3'
-        }
-      ])
-      done()
+    Vue.nextTick(() => {
+      Vue.nextTick(() => {
+        expect(wrapper.vm.options).to.deep.equal([
+          {
+            id: 'ref1',
+            label: 'label1',
+            value: 'ref1'
+          },
+          {
+            id: 'ref2',
+            label: 'label2',
+            value: 'ref2'
+          },
+          {
+            id: 'ref3',
+            label: 'label3',
+            value: 'ref3'
+          }
+        ])
+        done()
+      })
     })
   })
 
@@ -97,7 +100,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
-    wrapper.vm.$nextTick(() => {
+    Vue.nextTick(() => {
       expect(wrapper.vm.options).to.deep.equal([
         { id: 'ref1', label: 'label1', value: 'ref1' },
         { id: 'ref2', label: 'label2', value: 'ref2' },
@@ -112,15 +115,14 @@ describe('MultiSelectFieldComponent unit tests', () => {
       propsData: propsData,
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
-
     wrapper.vm.fetchOptions('ref1')
-    wrapper.vm.$nextTick(() => {
-      try {
-        expect(wrapper.vm.options).to.deep.equal([{ id: 'ref1', label: 'label1', value: 'ref1' }])
+    Vue.nextTick(() => {
+      Vue.nextTick(() => {
+        expect(wrapper.vm.options).to.deep.equal([{
+          id: 'ref1', label: 'label1', value: 'ref1'
+        }])
         done()
-      } catch (ex) {
-        done(ex)
-      }
+      })
     })
   })
 
@@ -131,13 +133,11 @@ describe('MultiSelectFieldComponent unit tests', () => {
     })
 
     wrapper.vm.fetchOptions('non existing option')
-    wrapper.vm.$nextTick((loading) => {
-      try {
+    Vue.nextTick(() => {
+      Vue.nextTick(() => {
         expect(wrapper.vm.options).to.deep.equal([])
         done()
-      } catch (ex) {
-        done(ex)
-      }
+      })
     })
   })
 
