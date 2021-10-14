@@ -181,6 +181,7 @@ export default {
     onSubmitPseudonymRegistration () {
       // TODO: trigger validation
       this.showForm = false
+
       pseudonymRegistration.submitPseudonymRegistration(this.config, this.originalID).then(pseudonymID => {
         this.idToClipboard(pseudonymID)
         this.$emit('input', pseudonymID)

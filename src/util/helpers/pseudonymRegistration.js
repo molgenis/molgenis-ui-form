@@ -13,7 +13,6 @@ const isPseudonymRegistrationComponent = (field) => {
 const requestConfiguration = (id) => api.get(`/api/v2/PseudonymRegistrationConfig?q=ID=like=${id}`)
 
 const submitPseudonymRegistration = async (config, originalID) => {
-  console.log(config)
   let requestID = null
   const postOptions = { body: JSON.stringify({ OriginalID: originalID }) }
   try {

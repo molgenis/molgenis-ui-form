@@ -45,7 +45,6 @@ let languages = {
   'JavaScript': [
     // undefined keyword
     { pattern: /undefined/g, points: 2 },
-    // console.log('ayy lmao')
     { pattern: /console\.log( )*\(/, points: 2 },
     // Variable declaration
     { pattern: /(var|const|let)( )+\w+( )*=?/, points: 2 },

@@ -8,7 +8,7 @@ describe('pseudonymRegistration helper tests', () => {
     const get = td.function('api.get')
     const post = td.function('api.post')
     td.when(get('/api/v2/PseudonymRegistrationConfig?q=ID=like=ID')).thenResolve('ok')
-    td.when(post('/api/data/LinkEntityName', { body: 'data' })).thenResolve({ status: 201 })
+    td.when(post('/api/data/LinkEntityName', { body: '{"OriginalID":"ID"}' })).thenResolve({ status: 201 })
     td.when(get('/api/data/LinkEntityName?q=FieldName==ID')).thenResolve({ items: [{ data: { ID: 'GENERATED_ID' } }] })
     td.replace(api, 'get', get)
     td.replace(api, 'post', post)
@@ -20,8 +20,7 @@ describe('pseudonymRegistration helper tests', () => {
       LinkEntityName: 'LinkEntityName'
     }
     it('should save the new ID en generate a Pseudonym registration ID', (done) => {
-      pseudonymRegistration.submitPseudonymRegistration(config, { body: 'data' }, 'ID').then(ID => {
-        console.log(ID)
+      pseudonymRegistration.submitPseudonymRegistration(config, 'ID').then(ID => {
         expect(ID).to.equal('GENERATED_ID')
         done()
       })

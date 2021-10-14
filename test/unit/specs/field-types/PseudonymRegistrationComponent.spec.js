@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 import PseudonymRegistrationComponent from '@/components/field-types/PseudonymRegistrationComponent'
 import { mount } from 'vue-test-utils'
@@ -5,17 +6,22 @@ import td from 'testdouble'
 import pseudonymRegistration from '@/util/helpers/pseudonymRegistration'
 import Vue from 'vue'
 
-let PseudonymRegistrationResponse = {
+const config = {
+  'ID': 'PseudonymRegistration',
+  'GeneratedTokenDescription': 'MyPseudonymID is cool for lost of reasons',
+  'GeneratedTokenName': 'MyPseudonymID',
+  'LinkEntityName': 'PseudonymConnector',
+  'FieldName': 'OriginalID'
+}
+
+const PseudonymRegistrationResponse = {
   'items': [
-    {
-      'ID': 'PseudonymRegistration',
-      'GeneratedTokenDescription': 'MyPseudonymID is cool for lost of reasons',
-      'GeneratedTokenName': 'MyPseudonymID',
-      'LinkEntityName': 'PseudonymConnector',
-      'FieldName': 'OriginalID'
-    }
+    config
   ]
 }
+const pseudonymID = 'PseudonymID'
+const requestConfiguration = td.function('pseudonymRegistration.requestConfiguration')
+const submitPseudonymRegistration = td.function('pseudonymRegistration.submitPseudonymRegistration')
 
 describe('PseudonymRegistrationComponent unit tests', () => {
   const mockParentFunction = () => {
@@ -133,13 +139,8 @@ describe('PseudonymRegistrationComponent unit tests', () => {
     let wrapper
     beforeEach(() => {
       td.reset()
-      const requestConfiguration = td.function('pseudonymRegistration.requestConfiguration')
-      const submitPseudonymRegistration = td.function('pseudonymRegistration.submitPseudonymRegistration')
       td.when(requestConfiguration('PseudonymRegistration')).thenResolve(PseudonymRegistrationResponse)
-      td.when(submitPseudonymRegistration(td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenResolve('newID')
       td.replace(pseudonymRegistration, 'requestConfiguration', requestConfiguration)
-      td.replace(pseudonymRegistration, 'submitPseudonymRegistration', submitPseudonymRegistration)
-
       wrapper = mount(PseudonymRegistrationComponent,
         {
           propsData: propsData,
@@ -150,16 +151,16 @@ describe('PseudonymRegistrationComponent unit tests', () => {
 
     it('should have a button to start creating a pseudonym', (done) => {
       setTimeout(function () {
-        expect(wrapper.contains('button#pseudonym-create-btn')).to.equal(true)
+        expect(wrapper.contains('#pseudonym-create-btn')).to.equal(true)
         done()
       })
     })
 
-    it('should have a form after clicking the creat-id button', (done) => {
+    it('should have a input field after clicking the creat-id button', (done) => {
       setTimeout(function () {
-        wrapper.find('button#pseudonym-create-btn').trigger('click')
+        wrapper.find('#pseudonym-create-btn').trigger('click')
         setTimeout(function () {
-          expect(wrapper.contains('#create-pseudonym-registration-id')).to.equal(true)
+          expect(wrapper.contains('#OriginalID')).to.equal(true)
           done()
         })
       })
@@ -167,26 +168,30 @@ describe('PseudonymRegistrationComponent unit tests', () => {
 
     it('should have return after clicking the form cancel button', (done) => {
       setTimeout(function () {
-        wrapper.find('button#pseudonym-create-btn').trigger('click')
+        wrapper.find('#pseudonym-create-btn').trigger('click')
         setTimeout(function () {
-          wrapper.find('button#pseudonym-cancel-btn').trigger('click')
+          wrapper.find('#pseudonym-cancel-btn').trigger('click')
           setTimeout(function () {
-            expect(wrapper.contains('button#pseudonym-create-btn')).to.equal(true)
+            expect(wrapper.contains('#pseudonym-create-btn')).to.equal(true)
             done()
           })
         })
       })
     })
 
-    it('should generate a new ID on save', (done) => {
-      setTimeout(function () {
-        wrapper.find('button#pseudonym-create-btn').trigger('click')
-        setTimeout(function () {
-          wrapper.find('button#pseudonym-save-btn').trigger('click')
-          setTimeout(function () {
-            expect(wrapper.vm.localValue).to.equal('newID')
-            done()
-          })
+    it.only('should generate a new ID on save', (done) => {
+      td.when(submitPseudonymRegistration(config, 'id')).thenResolve(pseudonymID)
+      td.replace(pseudonymRegistration, 'submitPseudonymRegistration', submitPseudonymRegistration)
+
+      wrapper.vm.originalID = 'id'
+      const idToClipboard = td.function('idToClipboard')
+
+      wrapper.vm.idToClipboard = idToClipboard
+      Vue.nextTick(() => {
+        wrapper.vm.onSubmitPseudonymRegistration()
+        Vue.nextTick(() => {
+          td.verify(idToClipboard(pseudonymID))
+          done()
         })
       })
     })
