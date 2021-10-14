@@ -36,7 +36,7 @@ function succesPseudonymRegistration (browser) {
 }
 
 function duplicateIDRegistration (browser) {
-  const DUPLICATE_PSEUDONYM_ERROR = 'Error: This reccord already exist with the id: PseudonymID'
+  const DUPLICATE_PSEUDONYM_ERROR = 'Error: This record already exist with the id: PseudonymID'
   browser.setValue('#OriginalID', 'DuplicatePseudonym')
   browser.waitForElementVisible('#pseudonym-save-btn')
   browser.click('#pseudonym-save-btn')
