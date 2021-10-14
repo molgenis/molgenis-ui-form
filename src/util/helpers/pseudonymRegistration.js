@@ -22,7 +22,7 @@ const submitPseudonymRegistration = async (config, originalID) => {
       }
     }, async error => {
       if (error.status === 400) {
-        checkForDuplicateID(config, originalID)
+        await checkForDuplicateID(config, originalID)
       } else {
         throw new Error(`${error.statusText} Please contact a system administator`)
       }
@@ -48,6 +48,7 @@ const getNewPseudonym = async (config, originalID) => {
 }
 
 const checkForDuplicateID = async (config, originalID) => {
+  console.log(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${originalID}`)
   await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${originalID}`).then(response => {
     const preExistingId = response.items[0].data.ID
     if (preExistingId !== '') {
