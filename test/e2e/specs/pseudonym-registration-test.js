@@ -31,11 +31,11 @@ function succesPseudonymRegistration (browser) {
   browser.waitForElementVisible('#clipboard-btn')
   browser.expect
     .element('#PseudonymRegistration')
-    .to.have.value.that.equals('PseudonymID') 
+    .to.have.value.that.equals('PseudonymID')
   browser.end()
 }
 
-function duplicateIDRegistration (browser) { 
+function duplicateIDRegistration (browser) {
   const DUPLICATE_PSEUDONYM_ERROR = 'Error: This reccord already exist with the id: PseudonymID'
   browser.setValue('#OriginalID', 'DuplicatePseudonym')
   browser.waitForElementVisible('#pseudonym-save-btn')
