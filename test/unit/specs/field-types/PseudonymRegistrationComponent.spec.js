@@ -135,14 +135,15 @@ describe('PseudonymRegistrationComponent unit tests', () => {
 
     describe('idToClipboard', () => {
       it('should write the pseudonym to the clipboard and make the send boolean true', (done) => {
-        const tmp = navigator.clipboard.writeText
-        navigator.clipboard.writeText = td.function('navigator.clipboard.writeText')
+        const writeText = td.function('navigator.clipboard.writeText')
+        const tmp = navigator.clipboard
+        navigator.clipboard = { writeText }
         td.when(navigator.clipboard.writeText(pseudonymID)).thenResolve()
         Vue.nextTick(() => {
           wrapper.vm.idToClipboard(pseudonymID)
           Vue.nextTick(() => {
             expect(wrapper.vm.sendToClipboard).to.be.true
-            navigator.clipboard.writeText = tmp
+            navigator.clipboard = tmp
             done()
           })
         })
