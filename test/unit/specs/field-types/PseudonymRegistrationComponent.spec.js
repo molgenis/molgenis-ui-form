@@ -72,11 +72,13 @@ describe('PseudonymRegistrationComponent unit tests', () => {
     it('should load the component with "PseudonymRegistrationComponent" as a name', () => {
       expect(PseudonymRegistrationComponent.name).to.equal('PseudonymRegistrationComponent')
     })
+
     it('renders correctly with minimal props', () => {
       expect(wrapper.contains('input')).to.equal(true)
       expect(wrapper.contains('label')).to.equal(true)
       expect(wrapper.contains('small')).to.equal(true)
     })
+
     it('should load default data with the help of props', () => {
       expect(wrapper.vm.localValue).to.equal('hallo')
     })
