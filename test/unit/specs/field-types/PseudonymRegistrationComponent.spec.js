@@ -196,7 +196,7 @@ describe('PseudonymRegistrationComponent unit tests', () => {
       })
 
       it('should set the error if no config is returned', (done) => {
-        const EMPTY_RESPONSE_ERROR_MESSAGE = 'Error: Please contact a system administator'
+        const EMPTY_RESPONSE_ERROR_MESSAGE = 'Error: Please contact a system administrator'
         const emptyResponse = { items: [] }
         td.when(requestConfiguration(wrapper.vm.field.id)).thenResolve(emptyResponse)
         Vue.nextTick(() => {
@@ -210,7 +210,7 @@ describe('PseudonymRegistrationComponent unit tests', () => {
       })
 
       it('should set the error if getting the config fails', (done) => {
-        const CONNECTION_ERROR_MESSAGE = 'Connection error. Please check you internet connection or contact a system administator'
+        const CONNECTION_ERROR_MESSAGE = 'Connection error. Please check you internet connection or contact a system administrator'
         td.when(requestConfiguration(wrapper.vm.field.id)).thenReject()
         Vue.nextTick(() => {
           wrapper.vm.requestConfig()

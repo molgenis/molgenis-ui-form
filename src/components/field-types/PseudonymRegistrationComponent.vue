@@ -191,13 +191,13 @@ export default {
       this.loaded = false
       pseudonymRegistration.requestConfiguration(this.field.id).then(response => {
         if (response.items.length === 0) {
-          this.error = 'Error: Please contact a system administator'
+          this.error = 'Error: Please contact a system administrator'
         } else {
           this.config = response.items[0]
           this.loaded = true
         }
       }, () => {
-        this.error = 'Connection error. Please check you internet connection or contact a system administator'
+        this.error = 'Connection error. Please check you internet connection or contact a system administrator'
       })
     },
     reset () {
