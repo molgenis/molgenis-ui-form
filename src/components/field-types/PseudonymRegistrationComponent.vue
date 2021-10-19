@@ -196,7 +196,7 @@ export default {
           this.loaded = true
         }
       }, () => {
-        this.error = 'Connection error. Please check you internet connection or contact a system administator'
+        this.error = 'Connection error. Please check you internet connection or contact a system administrator'
       })
     },
     reset () {

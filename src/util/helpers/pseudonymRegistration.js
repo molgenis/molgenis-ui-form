@@ -35,10 +35,6 @@ const submitPseudonymRegistration = async (config, originalID) => {
   return requestID
 }
 
-export default {
-  isPseudonymRegistrationComponent, requestConfiguration, submitPseudonymRegistration
-}
-
 const getNewPseudonym = async (config, originalID) => {
   let newPseudonym = null
   await api.get(`/api/data/${config.LinkEntityName}?q=${config.FieldName}==${originalID}`).then(response => {
@@ -60,4 +56,8 @@ const checkForDuplicateID = async (config, originalID) => {
   }, (error) => {
     throw new Error(`${error.statusText} Please contact a system administrator`)
   })
+}
+
+export default {
+  isPseudonymRegistrationComponent, requestConfiguration, submitPseudonymRegistration
 }

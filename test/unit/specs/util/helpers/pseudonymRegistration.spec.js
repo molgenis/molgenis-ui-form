@@ -69,6 +69,7 @@ describe('pseudonymRegistration helper tests', () => {
       })
     })
   })
+
   describe('Sad flow 😥', () => {
     describe('submitPseudonymRegistration', () => {
       it('should after creating a new pseudonym throw a error if then new id could not be retrieved', (done) => {
@@ -105,6 +106,7 @@ describe('pseudonymRegistration helper tests', () => {
           td.when(post('/api/data/LinkEntityName', { body: '{"OriginalID":"ID"}' }))
             .thenReject({ status: 400, statusText: 'Internal server error' })
         })
+
         it('should return an error with the preexisting ID', (done) => {
           td.when(get('/api/data/LinkEntityName?q=FieldName==ID'))
             .thenResolve({ items: [{ data: { ID: 'duplicate' } }] })
@@ -113,6 +115,7 @@ describe('pseudonymRegistration helper tests', () => {
             done()
           })
         })
+
         it('should return an error if no duplicate id was found', (done) => {
           td.when(get('/api/data/LinkEntityName?q=FieldName==ID'))
             .thenResolve({ items: [{ data: { ID: '' } }] })
@@ -121,6 +124,7 @@ describe('pseudonymRegistration helper tests', () => {
             done()
           })
         })
+
         it('should return an error if the server returns an error while getting an id', (done) => {
           td.when(get('/api/data/LinkEntityName?q=FieldName==ID'))
             .thenReject({ statusText: 'Some error' })
