@@ -30,7 +30,7 @@
                       :disabled="true"
                     />
                     <div class="input-group-append">
-                      <button id="clipboard-btn" class="btn btn-outline-secondary" :class="{'btn-outline-success':sendToClipboard}" @click.prevent="idToClipboard()">
+                      <button id="clipboard-btn" class="btn btn-outline-secondary" :class="{'btn-outline-success':sendToClipboard}" @click.prevent="idToClipboard(localValue)">
                         {{ sendToClipboard ? "Copied to clipboard" : "Copy to clipboard" }}
                       </button>
                     </div>
@@ -178,7 +178,6 @@ export default {
     onSubmitPseudonymRegistration () {
       // TODO: trigger validation
       this.showForm = false
-
       pseudonymRegistration.submitPseudonymRegistration(this.config, this.originalID).then(pseudonymID => {
         this.idToClipboard(pseudonymID)
         this.$emit('input', pseudonymID)
@@ -197,7 +196,7 @@ export default {
           this.loaded = true
         }
       }, () => {
-        this.error = 'Connection error. Please check you internet connection or contact a system administrator'
+        this.error = 'Connection error. Please check you internet connection or contact a system administator'
       })
     },
     reset () {
