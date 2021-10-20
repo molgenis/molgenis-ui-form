@@ -121,6 +121,19 @@
       </date-field-component>
     </template>
 
+    <!-- Render specialized Pseudonym Registration field-->
+    <template v-else-if="isPseudonymRegistrationComponent(field)">
+      <pseudonym-registration-component
+        v-model="formData[field.id]"
+        :field="field"
+        :fieldState="fieldState"
+        :isValid="isValid"
+        :isRequired="isRequired"
+        :isUnique="isUnique"
+        :inputDebounceTime="formComponentOptions.inputDebounceTime">
+      </pseudonym-registration-component>
+    </template>
+
     <!-- Render email, hyperlink, password, integer, long, decimal, and text fields -->
     <template v-else>
       <typed-field-component
@@ -204,9 +217,11 @@ import RadioFieldComponent from './field-types/RadioFieldComponent'
 import SingleSelectFieldComponent from './field-types/SingleSelectFieldComponent'
 import TextAreaFieldComponent from './field-types/TextAreaFieldComponent'
 import TypedFieldComponent from './field-types/TypedFieldComponent'
+import PseudonymRegistrationComponent from './field-types/PseudonymRegistrationComponent'
 
 import { FormField, FormComponentOptions } from '../flow.types'
 import isCompoundVisible from '../util/helpers/isCompoundVisible'
+import pseudonymRegistration from '../util/helpers/pseudonymRegistration'
 
 const defaultNoOptionsMessage = 'No options found for given search term.'
 const defaultEvaluationErrorMessage = 'A field expression caused an error'
@@ -222,7 +237,8 @@ export default {
     RadioFieldComponent,
     SingleSelectFieldComponent,
     TextAreaFieldComponent,
-    TypedFieldComponent
+    TypedFieldComponent,
+    PseudonymRegistrationComponent
   },
   props: {
     eventBus: {
@@ -266,6 +282,7 @@ export default {
     }
   },
   methods: {
+    isPseudonymRegistrationComponent: pseudonymRegistration.isPseudonymRegistrationComponent,
     isUnique (value) {
       if (this.field.hasOwnProperty('unique')) {
         return this.field.unique(value, this.formData)

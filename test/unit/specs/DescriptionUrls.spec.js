@@ -7,8 +7,7 @@ const wrapper = shallow(DescriptionUrls, {
   }
 })
 describe('DescriptionUrls unit tests', () => {
-  it('it should transfrom urls to be clickable', () => {
-    console.log(wrapper.html())
+  it('should transform urls to be clickable', () => {
     const links = wrapper.findAll('a')
     expect(links.length).to.equal(2)
   })

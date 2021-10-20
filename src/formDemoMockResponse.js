@@ -26,6 +26,29 @@ const metadata = {
     {
       'attributes': [
         {
+          'href': '/api/v2/it_emx_datatypes_TypeTest/meta/Pseudonym Registration ID',
+          'fieldType': 'STRING',
+          'name': 'PseudonymRegistration',
+          'label': 'Pseudonym Registration ID',
+          'attributes': [],
+          'auto': false,
+          'nillable': false,
+          'readOnly': false,
+          'labelAttribute': true,
+          'unique': true,
+          'lookupAttribute': true,
+          'isAggregatable': false,
+          'visible': true,
+          'tags': [
+            {
+              'relationIRI': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
+              'relationLabel': 'type',
+              'objectIRI': 'http://purl.obolibrary.org/obo/NCIT_C142654',
+              'objectLabel': 'Pseudonym Registration'
+            }
+          ]
+        },
+        {
           'attributes': [],
           'auto': true,
           'description': 'Creation date, automatically generated',
@@ -819,6 +842,7 @@ const items = {
   createdBy: 'Bofke',
   autoval: 'Auto-generated value',
   string: 'string value',
+  PseudonymRegistration: 'Some preexisting ID',
   text: 'text value',
   hyperlink: 'www.nu.nl',
   boolean: true,

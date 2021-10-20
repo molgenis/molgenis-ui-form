@@ -122,7 +122,9 @@ export default {
       }
       this.isLoading = true
       this.field.options(search)
-        .then(response => { this.options = response })
+        .then(response => {
+          this.options = response
+        })
         .finally(() => { this.isLoading = false })
     },
     addOptionClicked (event) {

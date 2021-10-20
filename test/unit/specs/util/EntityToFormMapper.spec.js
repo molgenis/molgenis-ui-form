@@ -22,15 +22,21 @@ const responseBySearch = {
   meta
 }
 
-const get = td.function('api.get')
-td.when(get('/api/v2/it_emx_datatypes_TypeTestRef')).thenResolve(response)
-td.when(get('/api/v2/it_emx_datatypes_TypeTestRef?q=value=like=ref1,label=like=ref1')).thenResolve(responseBySearch)
-td.when(get('/api/v2/it_emx_datatypes_TypeTestRef?q=value=in=(ref1,ref2,ref3),label=in=(ref1,ref2,ref3)')).thenResolve(response)
-td.when(get('/api/v2/sys_demo/unique_example?&num=1&q=unique_demo==\'am%20i%20unique%3F\'')).thenResolve({ items: [], meta })
-td.when(get('/api/v2/sys_demo/unique_example?&num=1&q=unique_demo==\'i%20am%20not%20unique%3F\';id!=123')).thenResolve({ items: [], meta })
-td.replace(api, 'get', get)
-
 describe('Entity to state mapper', () => {
+  beforeEach(() => {
+    const get = td.function('api.get')
+    td.when(get('/api/v2/it_emx_datatypes_TypeTestRef')).thenResolve(response)
+    td.when(get('/api/v2/it_emx_datatypes_TypeTestRef?q=value=like=ref1,label=like=ref1')).thenResolve(responseBySearch)
+    td.when(get('/api/v2/it_emx_datatypes_TypeTestRef?q=value=in=(ref1,ref2,ref3),label=in=(ref1,ref2,ref3)')).thenResolve(response)
+    td.when(get('/api/v2/sys_demo/unique_example?&num=1&q=unique_demo==\'am%20i%20unique%3F\'')).thenResolve({ items: [], meta })
+    td.when(get('/api/v2/sys_demo/unique_example?&num=1&q=unique_demo==\'i%20am%20not%20unique%3F\';id!=123')).thenResolve({ items: [], meta })
+    td.replace(api, 'get', get)
+  })
+
+  afterEach(() => {
+    td.reset()
+  })
+
   describe('General functions', () => {
     it('should throw an error for an unknown fieldType', () => {
       const invalidSchema = {
@@ -42,7 +48,6 @@ describe('Entity to state mapper', () => {
       const result = () => {
         EntityToFormMapper.generateForm(invalidSchema)
       }
-
       expect(result).to.throw('unknown fieldType (NON_EXISTING_TYPE)')
     })
   })

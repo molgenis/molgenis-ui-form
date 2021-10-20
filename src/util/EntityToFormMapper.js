@@ -347,7 +347,8 @@ const generateFormSchemaField = (attribute, entityMetadata:any, mapperOptions: M
     visible: isVisible(attribute, mapperOptions),
     validate: isValid(attribute),
     unique: buildIsUniqueFunction(attribute, entityMetadata, mapperOptions),
-    isAddOptionAllowed: buildIsAddAllowedFunction(attribute)
+    isAddOptionAllowed: buildIsAddAllowedFunction(attribute),
+    tags: attribute.tags ? attribute.tags : []
   }
 
   if (attribute.fieldType === 'COMPOUND') {
