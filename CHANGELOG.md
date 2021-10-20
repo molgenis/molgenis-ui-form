@@ -1,3 +1,10 @@
+# [5.7.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.6.2...v5.7.0) (2021-10-20)
+
+
+### Features
+
+* added PseudonymRegistrationComponent ([#383](https://github.com/molgenis/molgenis-ui-form/issues/383)) ([6627d2e](https://github.com/molgenis/molgenis-ui-form/commit/6627d2e))
+
 ## [5.6.2](https://github.com/molgenis/molgenis-ui-form/compare/v5.6.1...v5.6.2) (2021-08-31)
 
 
