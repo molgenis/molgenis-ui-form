@@ -47,7 +47,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "http://registry.npmjs.org"
+    "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
     "@molgenis/molgenis-api-client": "^3.1.4",
