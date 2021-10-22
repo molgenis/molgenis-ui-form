@@ -374,10 +374,11 @@ Erroneous validation expressions in the `visibleExpression` and `nullableExpress
 
 ## Pseudonym registration 
 The form can generate a component that helps with generating Pseudonym id's. 
-You can input a uid in order to generate a pseudonym. The uid is not encoded in the pseudonym, the id's are stored in a link table. See `emx/PseudonymRegistration.xlsx` for more info.
+You can input a  in order to generate a pseudonym. The uid is not encoded in the pseudonym, the id's are stored in a link table. See `emx/PseudonymRegistration.xlsx` for more info.
 
 ### How to set it up:
 Have the correct entities in molgenis. You will need a link table and a configuration table. See `emx/PseudonymRegistration.xlsx` for an example. In the form where you will want to use the Pseudonym registration component you will need to 'tag' the attribute with `objectIRI: 'http://purl.obolibrary.org/obo/NCIT_C142654`.
+In the configuration table you can change the name, additional information and the location of the link table.
 See: [Molgenis Docs](https://molgenis.gitbook.io/molgenis/interoperability/guide-rsql#tagging-attributes)
 
 ## Development
