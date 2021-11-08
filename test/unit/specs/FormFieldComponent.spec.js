@@ -39,11 +39,22 @@ describe('FormFieldComponents unit tests', () => {
       expect(wrapper.vm.isValid).to.equal(true)
     })
 
-    it('should fail in validating a field', () => {
+    it('should not fail in validating a field on load', () => {
       wrapper.setData({
         formData: {
           'string': 'not valid'
         }
+      })
+      expect(wrapper.vm.isValid).to.equal(true)
+    })
+
+    it('should fail in validating a field when formState dirty', () => {
+      wrapper.setProps({ ...propsData, ...{ ...formState, $dirty: true } })
+      wrapper.setData({
+        formData: {
+          'string': 'not valid'
+        },
+        field
       })
       expect(wrapper.vm.isValid).to.equal(false)
     })
