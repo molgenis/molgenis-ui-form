@@ -19,6 +19,7 @@ import MultiSelectExample from './example/multi-select/MultiSelectExample'
 import CompoundExample from './example/compound/CompoundExample'
 import ErrorExample from './example/validation-functions/ErrorExample'
 import MapperErrorExample from './example/validation-functions/MapperErrorExample'
+import ExpressionValidation from './example/validation-functions/ExpressionValidation'
 import i18n from '@molgenis/molgenis-i18n-js'
 
 Vue.config.productionTip = false
@@ -96,6 +97,10 @@ const router = new Router({
     {
       path: '/mapper-error/',
       component: MapperErrorExample
+    },
+    {
+      path: '/expression-validation/',
+      component: ExpressionValidation
     }]
 })
 
