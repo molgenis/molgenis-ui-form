@@ -1,3 +1,10 @@
+## [5.8.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.0...v5.8.1) (2021-11-08)
+
+
+### Bug Fixes
+
+* functionality now should work as expected. With additional tests to prove it ([acd69e2](https://github.com/molgenis/molgenis-ui-form/commit/acd69e2))
+
 # [5.8.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.7.0...v5.8.0) (2021-10-22)
 
 
