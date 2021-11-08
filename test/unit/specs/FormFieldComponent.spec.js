@@ -39,15 +39,6 @@ describe('FormFieldComponents unit tests', () => {
       expect(wrapper.vm.isValid).to.equal(true)
     })
 
-    it('should not fail in validating a field on load', () => {
-      wrapper.setData({
-        formData: {
-          'string': 'not valid'
-        }
-      })
-      expect(wrapper.vm.isValid).to.equal(true)
-    })
-
     it('should fail in validating a field when formState dirty', () => {
       wrapper.setProps({ ...propsData, ...{ ...formState, $dirty: true } })
       wrapper.setData({
@@ -171,6 +162,32 @@ describe('FormFieldComponents unit tests', () => {
     }
 
     let wrapper
+
+    it('should not show validation message on a field on startup', async () => {
+      wrapper = mount(FormFieldComponent, { propsData: propsData })
+
+      await wrapper.setData({ evaluationError: { string: { message: 'Greatest error of mankind' } } })
+      expect(wrapper.element.outerHTML).not.to.include('Greatest error of mankind')
+    })
+
+    it('should show a validation error when the field is dirty and touched', async () => {
+      const dirtyFormState = {
+        'string': {
+          $pending: false,
+          $touched: true,
+          $dirty: true,
+          $submitted: false,
+          $invalid: false,
+          _addControl: () => {}
+        }
+      }
+
+      wrapper = mount(FormFieldComponent, { propsData: { ...propsData, formState: dirtyFormState } })
+
+      await wrapper.setData({ evaluationError: { string: { message: 'Greatest error of mankind' } } })
+
+      expect(wrapper.element.outerHTML).to.include('Greatest error of mankind')
+    })
 
     it('should return the default message is i18n message is not configured', () => {
       wrapper = mount(FormFieldComponent, { propsData: propsData })

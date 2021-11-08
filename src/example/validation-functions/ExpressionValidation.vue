@@ -71,7 +71,7 @@ export default {
           description: 'Type "1-234" to remove the error',
           type: 'string',
           visible: (formData) => {
-            if (formData['expression-validation-error-field'] !== '1-234') {
+            if (formData['expression-validation-error-field-other'] !== '1-234') {
               throw new Error('input not equal 1-234')
             } else {
               return true
