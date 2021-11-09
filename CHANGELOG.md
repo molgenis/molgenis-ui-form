@@ -1,3 +1,10 @@
+## [5.8.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.0...v5.8.1) (2021-11-09)
+
+
+### Bug Fixes
+
+* removed old pseudonym code ([#387](https://github.com/molgenis/molgenis-ui-form/issues/387)) ([eb4807b](https://github.com/molgenis/molgenis-ui-form/commit/eb4807b))
+
 ## [5.8.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.0...v5.8.1) (2021-11-08)
 
 
