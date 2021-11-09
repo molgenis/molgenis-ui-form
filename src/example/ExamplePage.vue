@@ -54,6 +54,9 @@
       <li class="nav-item">
         <router-link to="/mapper-error" class="nav-link">Mapper Error</router-link>
       </li>
+      <li class="nav-item">
+        <router-link to="/expression-validation" class="nav-link">Expression Validation</router-link>
+      </li>
     </ul>
 
     <div>

@@ -1,13 +1,13 @@
 <template>
   <fieldset
-    :id="field.id + '-fs'"
+    :id="id + '-fs'"
     :class="{ 'required-field': isRequired }"
     v-show="isVisible"
   >
     <!-- Render checkbox field -->
     <template v-if="field.type === 'checkbox'">
       <checkbox-field-component
-        v-model="formData[field.id]"
+        v-model="formData[id]"
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
@@ -19,7 +19,7 @@
     <!-- Render code editor field-->
     <template v-else-if="field.type === 'html' || field.type === 'script'">
       <code-editor-field-component
-        v-model="formData[field.id]"
+        v-model="formData[id]"
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
@@ -31,7 +31,7 @@
     <!-- Render file field -->
     <template v-else-if="field.type === 'file'">
       <file-field-component
-        v-model="formData[field.id]"
+        v-model="formData[id]"
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
@@ -68,7 +68,7 @@
     <template v-else-if="field.type === 'multi-select'">
       <multi-select-field-component
         :eventBus="eventBus"
-        v-model="formData[field.id]"
+        v-model="formData[id]"
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
@@ -82,7 +82,7 @@
     <!-- Render radio field -->
     <template v-else-if="field.type === 'radio'">
       <radio-field-component
-        v-model="formData[field.id]"
+        v-model="formData[id]"
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
@@ -96,7 +96,7 @@
     <template v-else-if="field.type === 'single-select'">
       <single-select-field-component
         :eventBus="eventBus"
-        v-model="formData[field.id]"
+        v-model="formData[id]"
         :field="field"
         :fieldState="fieldState"
         :isRequired="isRequired"
@@ -110,7 +110,7 @@
     <!-- Render text area field -->
     <template v-else-if="field.type === 'text-area'">
       <text-area-field-component
-        v-model="formData[field.id]"
+        v-model="formData[id]"
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
@@ -123,7 +123,7 @@
     <!-- Render date field -->
     <template v-else-if="field.type === 'date' || field.type === 'date-time'">
       <date-field-component
-        v-model="formData[field.id]"
+        v-model="formData[id]"
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
@@ -136,7 +136,7 @@
     <!-- Render email, hyperlink, password, integer, long, decimal, and text fields -->
     <template v-else>
       <typed-field-component
-        v-model="formData[field.id]"
+        v-model="formData[id]"
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
@@ -147,73 +147,14 @@
       </typed-field-component>
     </template>
 
-    <div
-      v-if="evalationError"
-      class="form-control-feedback mg-evaluation-error"
-    >
+    <div v-if="showError" class="form-control-feedback mg-evaluation-error">
       <div class="text-warning small">
         {{ evaluationMessage }}
-        <span v-if="evalationError.message">
-          : {{ evalationError.message }}
-        </span>
+        <span v-if="evaluationError[id].message">: {{ evaluationError[id].message }}</span>
       </div>
     </div>
   </fieldset>
 </template>
-
-<style>
-/* Adds asterisk to required fields. The \a0 is a non-breaking space */
-fieldset.required-field > div > div.form-group > label::after {
-  content: '\a0*';
-}
-
-/*  Styling to have v-select look like bootstrap field */
-.mg-ui-form-field .v-select .dropdown-toggle {
-  background-color: white; /* $input-bg */
-  padding-bottom: 0;
-  min-height: calc(2.25rem + 2px);
-}
-
-.mg-ui-form-field .v-select.disabled .dropdown-toggle {
-  background-color: #f8f8f8;
-}
-
-.mg-ui-form-field .mg-select-add-btn {
-  margin-left: 0.5rem;
-}
-
-.mg-ui-form-field .v-select .vs__selected-options {
-  padding-left: 0.75rem;
-}
-
-.mg-ui-form-field .dropdown.v-select.form-control.searchable {
-  padding: 0;
-  border: 0;
-}
-
-.mg-ui-form-field .v-select .selected-tag {
-  margin-top: 0.375rem;
-  margin-bottom: 0.375rem;
-}
-
-.mg-ui-form-field .v-select.single .vs__selected-options .selected-tag {
-  padding-left: 0;
-  margin-left: 0;
-}
-
-.mg-ui-form-field .v-select .vs__selected-options :first-child {
-  margin-left: 0;
-}
-
-.mg-multi-select {
-  height: auto;
-}
-
-/* fix to hide input[type=search] as webkit forces browser style */
-.v-select .dropdown-toggle input[type='search'] {
-  -webkit-appearance: textfield;
-}
-</style>
 
 <script>
 import CheckboxFieldComponent from './field-types/CheckboxFieldComponent'
@@ -282,7 +223,7 @@ export default {
   },
   data () {
     return {
-      evalationError: null
+      evaluationError: {}
     }
   },
   methods: {
@@ -301,15 +242,15 @@ export default {
         // Pass callback function to use entityMapper evaluation error handling response
         return scriptFunction(scriptData, (error) => {
           // Handle error comming back from eval function generated by the entityMapper
-          this.evalationError = error
+          this.evaluationError[this.id] = error
         })
       } catch (error) {
-        this.evalationError = error
+        this.evaluationError[this.id] = error
         return onErrorResult
       }
     },
     clearEvaluationErrors () {
-      this.evalationError = null
+      delete this.evaluationError[this.id]
     },
     i18nFieldMessage (msgKey, defaultMessage) {
       if (this.$t) {
@@ -321,8 +262,16 @@ export default {
     }
   },
   computed: {
+    id () {
+      return this.field.id
+    },
+    showError () {
+      return this.fieldState && !this.pending &&
+        this.fieldState.$dirty && this.fieldState.$touched &&
+        this.evaluationError[this.id]
+    },
     fieldState () {
-      return this.formState[this.field.id]
+      return this.formState[this.id]
     },
     pending () {
       return this.fieldState && this.fieldState.$pending
@@ -334,7 +283,6 @@ export default {
       return this.evaluateScript(this.field.required, this.formData, false)
     },
     isVisible () {
-      this.clearEvaluationErrors()
       if (this.field.type === 'field-group') {
         return isCompoundVisible(this.field, this.formData)
       } else if (this.showOptionalFields || this.isRequired) {
@@ -355,6 +303,7 @@ export default {
   },
   watch: {
     pending (isPending) {
+      this.clearEvaluationErrors()
       if (!isPending) {
         // validation finished
         this.onDataChange()
@@ -363,3 +312,57 @@ export default {
   }
 }
 </script>
+
+<style>
+  /* Adds asterisk to required fields. The \a0 is a non-breaking space */
+  fieldset.required-field > div > div.form-group > label::after {
+    content: '\a0*';
+  }
+
+  /*  Styling to have v-select look like bootstrap field */
+  .mg-ui-form-field .v-select .dropdown-toggle {
+    background-color: white; /* $input-bg */
+    padding-bottom: 0;
+    min-height: calc(2.25rem + 2px);
+  }
+
+  .mg-ui-form-field .v-select.disabled .dropdown-toggle {
+    background-color: #f8f8f8;
+  }
+
+  .mg-ui-form-field .mg-select-add-btn {
+    margin-left: 0.5rem;
+  }
+
+  .mg-ui-form-field .v-select .vs__selected-options {
+    padding-left: 0.75rem;
+  }
+
+  .mg-ui-form-field .dropdown.v-select.form-control.searchable {
+    padding: 0;
+    border: 0;
+  }
+
+  .mg-ui-form-field .v-select .selected-tag {
+    margin-top: 0.375rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .mg-ui-form-field .v-select.single .vs__selected-options .selected-tag {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .mg-ui-form-field .v-select .vs__selected-options :first-child {
+    margin-left: 0;
+  }
+
+  .mg-multi-select {
+    height: auto;
+  }
+
+  /* fix to hide input[type=search] as webkit forces browser style */
+  .v-select .dropdown-toggle input[type=search] {
+    -webkit-appearance: textfield;
+  }
+</style>
