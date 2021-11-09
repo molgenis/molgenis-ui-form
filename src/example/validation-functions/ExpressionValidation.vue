@@ -37,6 +37,7 @@
 <script>
 import { FormComponent } from '../../molgenisUiForm'
 import ModelSettings from '../components/ModelSettings'
+import { expressionValidationFormFields } from '../../util/ExpressionValidationFormFields'
 
 export default {
   name: 'expression-validation-error',
@@ -49,38 +50,7 @@ export default {
       formOptions: {
         showEyeButton: false
       },
-      formFields: [
-        {
-          id: 'expression-validation-error-field',
-          label: 'Some Field',
-          description: 'Type "1-234" to remove the error',
-          type: 'string',
-          visible: (formData) => {
-            if (formData['expression-validation-error-field'] !== '1-234') {
-              throw new Error('input not equal 1-234')
-            } else {
-              return true
-            }
-          },
-          required: () => false,
-          validate: () => true
-        },
-        {
-          id: 'expression-validation-error-field-other',
-          label: 'Some other Field',
-          description: 'Type "1-234" to remove the error',
-          type: 'string',
-          visible: (formData) => {
-            if (formData['expression-validation-error-field-other'] !== '1-234') {
-              throw new Error('input not equal 1-234')
-            } else {
-              return true
-            }
-          },
-          required: () => false,
-          validate: () => true
-        }
-      ],
+      formFields: expressionValidationFormFields,
       formState: {},
       formData: {
         'expression-validation-error-field': ''
