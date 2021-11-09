@@ -7,11 +7,11 @@ module.exports = {
   getTypeTest
 }
 
-function getV1TypeTestRef(_request, response) {
+function getV1TypeTestRef (_request, response) {
   response.json(mockResponse)
 }
 
-function getV2TypeTestRef(request, response) {
+function getV2TypeTestRef (request, response) {
   // try to mock (some) search behavior
   const likeQuery = /value=like=*([^,]+),label=like=\1/.exec(request.query.q)
   const inQuery = /value=in=*([^,]+),label=in=\1/.exec(request.query.q)
@@ -35,7 +35,7 @@ function getV2TypeTestRef(request, response) {
   }
 }
 
-function getLocalization(_request, response) {
+function getLocalization (_request, response) {
   const localizedMessages = {
     form_required_field: 'This field is required',
     form_validation_failed: 'Validation failed',
@@ -63,7 +63,7 @@ function getLocalization(_request, response) {
   response.json(localizedMessages)
 }
 
-function getTypeTest(request, response) {
+function getTypeTest (request, response) {
   const meta = { permissions: ['ADD_DATA'] }
   const result =
     request.query.q === "string=='string value';id!=123-abc"

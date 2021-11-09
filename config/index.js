@@ -45,7 +45,7 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
-    before(app) {
+    before (app) {
       app.get(
         '/api/v1/it_emx_datatypes_TypeTestRef',
         mockResponseHander.getV1TypeTestRef

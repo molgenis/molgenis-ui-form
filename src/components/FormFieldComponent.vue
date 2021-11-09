@@ -226,6 +226,7 @@ import SingleSelectFieldComponent from './field-types/SingleSelectFieldComponent
 import TextAreaFieldComponent from './field-types/TextAreaFieldComponent'
 import TypedFieldComponent from './field-types/TypedFieldComponent'
 import isCompoundVisible from '../util/helpers/isCompoundVisible'
+import { FormField, FormComponentOptions } from '../flow.types'
 
 const defaultNoOptionsMessage = 'No options found for given search term.'
 const defaultEvaluationErrorMessage = 'A field expression caused an error'
@@ -279,23 +280,23 @@ export default {
       }
     }
   },
-  data() {
+  data () {
     return {
       evalationError: null
     }
   },
   methods: {
-    isUnique(value) {
+    isUnique (value) {
       if (this.field.hasOwnProperty('unique')) {
         return this.field.unique(value, this.formData)
       }
 
       return true
     },
-    onDataChange() {
+    onDataChange () {
       this.$emit('dataChange')
     },
-    evaluateScript(scriptFunction, scriptData, onErrorResult) {
+    evaluateScript (scriptFunction, scriptData, onErrorResult) {
       try {
         // Pass callback function to use entityMapper evaluation error handling response
         return scriptFunction(scriptData, (error) => {
@@ -307,10 +308,10 @@ export default {
         return onErrorResult
       }
     },
-    clearEvaluationErrors() {
+    clearEvaluationErrors () {
       this.evalationError = null
     },
-    i18nFieldMessage(msgKey, defaultMessage) {
+    i18nFieldMessage (msgKey, defaultMessage) {
       if (this.$t) {
         const i18nMessage = this.$t(`ui-form:${msgKey}`)
         return i18nMessage !== msgKey ? i18nMessage : defaultMessage
@@ -320,19 +321,19 @@ export default {
     }
   },
   computed: {
-    fieldState() {
+    fieldState () {
       return this.formState[this.field.id]
     },
-    pending() {
+    pending () {
       return this.fieldState && this.fieldState.$pending
     },
-    isValid() {
+    isValid () {
       return this.evaluateScript(this.field.validate, this.formData, true)
     },
-    isRequired() {
+    isRequired () {
       return this.evaluateScript(this.field.required, this.formData, false)
     },
-    isVisible() {
+    isVisible () {
       this.clearEvaluationErrors()
       if (this.field.type === 'field-group') {
         return isCompoundVisible(this.field, this.formData)
@@ -342,10 +343,10 @@ export default {
         return false
       }
     },
-    noOptionsMessage() {
+    noOptionsMessage () {
       return this.i18nFieldMessage('form_no_options', defaultNoOptionsMessage)
     },
-    evaluationMessage() {
+    evaluationMessage () {
       return this.i18nFieldMessage(
         'form_evaluation_error',
         defaultEvaluationErrorMessage
@@ -353,7 +354,7 @@ export default {
     }
   },
   watch: {
-    pending(isPending) {
+    pending (isPending) {
       if (!isPending) {
         // validation finished
         this.onDataChange()
