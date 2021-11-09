@@ -1,6 +1,9 @@
 <template>
-  <fieldset :id="field.id + '-fs'" :class="{ 'required-field': isRequired }" v-show="isVisible">
-
+  <fieldset
+    :id="field.id + '-fs'"
+    :class="{ 'required-field': isRequired }"
+    v-show="isVisible"
+  >
     <!-- Render checkbox field -->
     <template v-if="field.type === 'checkbox'">
       <checkbox-field-component
@@ -8,7 +11,8 @@
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
-        :isRequired="isRequired">
+        :isRequired="isRequired"
+      >
       </checkbox-field-component>
     </template>
 
@@ -19,7 +23,8 @@
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
-        :isRequired="isRequired">
+        :isRequired="isRequired"
+      >
       </code-editor-field-component>
     </template>
 
@@ -30,18 +35,19 @@
         :field="field"
         :fieldState="fieldState"
         :isValid="isValid"
-        :isRequired="isRequired">
+        :isRequired="isRequired"
+      >
       </file-field-component>
     </template>
 
     <!-- Render field groups + child fields, nesting subsequent groups with padding -->
     <template v-else-if="field.type === 'field-group'">
       <legend>{{ field.label }}</legend>
-      <small>{{field.description}}</small>
+      <small>{{ field.description }}</small>
 
-      <hr>
+      <hr />
 
-      <div :class="'pl-' + ((level + 1) * 2)">
+      <div :class="'pl-' + (level + 1) * 2">
         <form-field-component
           v-for="child in field.children"
           :eventBus="eventBus"
@@ -52,7 +58,8 @@
           :showOptionalFields="showOptionalFields"
           :key="child.id"
           :formComponentOptions="formComponentOptions"
-          @dataChange="onDataChange">
+          @dataChange="onDataChange"
+        >
         </form-field-component>
       </div>
     </template>
@@ -67,7 +74,8 @@
         :isValid="isValid"
         :isRequired="isRequired"
         :allowAddingOptions="formComponentOptions.allowAddingOptions"
-        :noOptionsMessage="noOptionsMessage">
+        :noOptionsMessage="noOptionsMessage"
+      >
       </multi-select-field-component>
     </template>
 
@@ -79,7 +87,8 @@
         :fieldState="fieldState"
         :isValid="isValid"
         :isRequired="isRequired"
-        :isUnique="isUnique">
+        :isUnique="isUnique"
+      >
       </radio-field-component>
     </template>
 
@@ -93,7 +102,8 @@
         :isRequired="isRequired"
         :isValid="isValid"
         :allowAddingOptions="formComponentOptions.allowAddingOptions"
-        :noOptionsMessage="noOptionsMessage">
+        :noOptionsMessage="noOptionsMessage"
+      >
       </single-select-field-component>
     </template>
 
@@ -105,7 +115,8 @@
         :fieldState="fieldState"
         :isValid="isValid"
         :isRequired="isRequired"
-        :inputDebounceTime="formComponentOptions.inputDebounceTime">
+        :inputDebounceTime="formComponentOptions.inputDebounceTime"
+      >
       </text-area-field-component>
     </template>
 
@@ -117,21 +128,9 @@
         :fieldState="fieldState"
         :isValid="isValid"
         :isRequired="isRequired"
-        :isTimeIncluded="field.type === 'date-time'">
+        :isTimeIncluded="field.type === 'date-time'"
+      >
       </date-field-component>
-    </template>
-
-    <!-- Render specialized Pseudonym Registration field-->
-    <template v-else-if="isPseudonymRegistrationComponent(field)">
-      <pseudonym-registration-component
-        v-model="formData[field.id]"
-        :field="field"
-        :fieldState="fieldState"
-        :isValid="isValid"
-        :isRequired="isRequired"
-        :isUnique="isUnique"
-        :inputDebounceTime="formComponentOptions.inputDebounceTime">
-      </pseudonym-registration-component>
     </template>
 
     <!-- Render email, hyperlink, password, integer, long, decimal, and text fields -->
@@ -143,68 +142,77 @@
         :isValid="isValid"
         :isRequired="isRequired"
         :isUnique="isUnique"
-        :inputDebounceTime="formComponentOptions.inputDebounceTime">
+        :inputDebounceTime="formComponentOptions.inputDebounceTime"
+      >
       </typed-field-component>
     </template>
 
-    <div v-if="evalationError" class="form-control-feedback mg-evaluation-error">
-      <div class="text-warning small">{{evaluationMessage}}<span v-if="evalationError.message">: {{ evalationError.message }}</span></div>
+    <div
+      v-if="evalationError"
+      class="form-control-feedback mg-evaluation-error"
+    >
+      <div class="text-warning small">
+        {{ evaluationMessage
+        }}<span v-if="evalationError.message"
+          >: {{ evalationError.message }}</span
+        >
+      </div>
     </div>
   </fieldset>
 </template>
 
 <style>
-  /* Adds asterisk to required fields. The \a0 is a non-breaking space */
-  fieldset.required-field > div > div.form-group > label::after {
-    content: '\a0*';
-  }
+/* Adds asterisk to required fields. The \a0 is a non-breaking space */
+fieldset.required-field > div > div.form-group > label::after {
+  content: '\a0*';
+}
 
-  /*  Styling to have v-select look like bootstrap field */
-  .mg-ui-form-field .v-select .dropdown-toggle {
-    background-color: white; /* $input-bg */
-    padding-bottom: 0;
-    min-height: calc(2.25rem + 2px);
-  }
+/*  Styling to have v-select look like bootstrap field */
+.mg-ui-form-field .v-select .dropdown-toggle {
+  background-color: white; /* $input-bg */
+  padding-bottom: 0;
+  min-height: calc(2.25rem + 2px);
+}
 
-  .mg-ui-form-field .v-select.disabled .dropdown-toggle {
-    background-color: #f8f8f8;
-  }
+.mg-ui-form-field .v-select.disabled .dropdown-toggle {
+  background-color: #f8f8f8;
+}
 
-  .mg-ui-form-field .mg-select-add-btn {
-    margin-left: 0.5rem;
-  }
+.mg-ui-form-field .mg-select-add-btn {
+  margin-left: 0.5rem;
+}
 
-  .mg-ui-form-field .v-select .vs__selected-options {
-    padding-left: 0.75rem;
-  }
+.mg-ui-form-field .v-select .vs__selected-options {
+  padding-left: 0.75rem;
+}
 
-  .mg-ui-form-field .dropdown.v-select.form-control.searchable {
-    padding: 0;
-    border: 0;
-  }
+.mg-ui-form-field .dropdown.v-select.form-control.searchable {
+  padding: 0;
+  border: 0;
+}
 
-  .mg-ui-form-field .v-select .selected-tag {
-    margin-top: 0.375rem;
-    margin-bottom: 0.375rem;
-  }
+.mg-ui-form-field .v-select .selected-tag {
+  margin-top: 0.375rem;
+  margin-bottom: 0.375rem;
+}
 
-  .mg-ui-form-field .v-select.single .vs__selected-options .selected-tag {
-    padding-left: 0;
-    margin-left: 0;
-  }
+.mg-ui-form-field .v-select.single .vs__selected-options .selected-tag {
+  padding-left: 0;
+  margin-left: 0;
+}
 
-  .mg-ui-form-field .v-select .vs__selected-options :first-child {
-    margin-left: 0;
-  }
+.mg-ui-form-field .v-select .vs__selected-options :first-child {
+  margin-left: 0;
+}
 
-  .mg-multi-select {
-    height: auto;
-  }
+.mg-multi-select {
+  height: auto;
+}
 
-  /* fix to hide input[type=search] as webkit forces browser style */
-  .v-select .dropdown-toggle input[type=search] {
-    -webkit-appearance: textfield;
-  }
+/* fix to hide input[type=search] as webkit forces browser style */
+.v-select .dropdown-toggle input[type='search'] {
+  -webkit-appearance: textfield;
+}
 </style>
 
 <script>
@@ -217,11 +225,7 @@ import RadioFieldComponent from './field-types/RadioFieldComponent'
 import SingleSelectFieldComponent from './field-types/SingleSelectFieldComponent'
 import TextAreaFieldComponent from './field-types/TextAreaFieldComponent'
 import TypedFieldComponent from './field-types/TypedFieldComponent'
-import PseudonymRegistrationComponent from './field-types/PseudonymRegistrationComponent'
-
-import { FormField, FormComponentOptions } from '../flow.types'
 import isCompoundVisible from '../util/helpers/isCompoundVisible'
-import pseudonymRegistration from '../util/helpers/pseudonymRegistration'
 
 const defaultNoOptionsMessage = 'No options found for given search term.'
 const defaultEvaluationErrorMessage = 'A field expression caused an error'
@@ -237,8 +241,7 @@ export default {
     RadioFieldComponent,
     SingleSelectFieldComponent,
     TextAreaFieldComponent,
-    TypedFieldComponent,
-    PseudonymRegistrationComponent
+    TypedFieldComponent
   },
   props: {
     eventBus: {
@@ -276,24 +279,23 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       evalationError: null
     }
   },
   methods: {
-    isPseudonymRegistrationComponent: pseudonymRegistration.isPseudonymRegistrationComponent,
-    isUnique (value) {
+    isUnique(value) {
       if (this.field.hasOwnProperty('unique')) {
         return this.field.unique(value, this.formData)
       }
 
       return true
     },
-    onDataChange () {
+    onDataChange() {
       this.$emit('dataChange')
     },
-    evaluateScript (scriptFunction, scriptData, onErrorResult) {
+    evaluateScript(scriptFunction, scriptData, onErrorResult) {
       try {
         // Pass callback function to use entityMapper evaluation error handling response
         return scriptFunction(scriptData, (error) => {
@@ -305,10 +307,10 @@ export default {
         return onErrorResult
       }
     },
-    clearEvaluationErrors () {
+    clearEvaluationErrors() {
       this.evalationError = null
     },
-    i18nFieldMessage (msgKey, defaultMessage) {
+    i18nFieldMessage(msgKey, defaultMessage) {
       if (this.$t) {
         const i18nMessage = this.$t(`ui-form:${msgKey}`)
         return i18nMessage !== msgKey ? i18nMessage : defaultMessage
@@ -318,19 +320,19 @@ export default {
     }
   },
   computed: {
-    fieldState () {
+    fieldState() {
       return this.formState[this.field.id]
     },
-    pending () {
+    pending() {
       return this.fieldState && this.fieldState.$pending
     },
-    isValid () {
+    isValid() {
       return this.evaluateScript(this.field.validate, this.formData, true)
     },
-    isRequired () {
+    isRequired() {
       return this.evaluateScript(this.field.required, this.formData, false)
     },
-    isVisible () {
+    isVisible() {
       this.clearEvaluationErrors()
       if (this.field.type === 'field-group') {
         return isCompoundVisible(this.field, this.formData)
@@ -340,15 +342,18 @@ export default {
         return false
       }
     },
-    noOptionsMessage () {
+    noOptionsMessage() {
       return this.i18nFieldMessage('form_no_options', defaultNoOptionsMessage)
     },
-    evaluationMessage () {
-      return this.i18nFieldMessage('form_evaluation_error', defaultEvaluationErrorMessage)
+    evaluationMessage() {
+      return this.i18nFieldMessage(
+        'form_evaluation_error',
+        defaultEvaluationErrorMessage
+      )
     }
   },
   watch: {
-    pending (isPending) {
+    pending(isPending) {
       if (!isPending) {
         // validation finished
         this.onDataChange()

@@ -1,4 +1,5 @@
 # molgenis-ui-form
+
 [![codecov](https://codecov.io/gh/molgenis/molgenis-ui-form/branch/master/graph/badge.svg)](https://codecov.io/gh/molgenis/molgenis-ui-form)
 [![Known Vulnerabilities](https://snyk.io/test/github/molgenis/molgenis-ui-form/badge.svg?targetFile=package.json)](https://snyk.io/test/github/molgenis/molgenis-ui-form?targetFile=package.json)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
@@ -6,6 +7,7 @@
 > Library for generating HTML web forms
 
 ## Changelog
+
 Details changes for each release generated in the [CHANGELOG.md](https://github.com/molgenis/molgenis-ui-form/blob/master/CHANGELOG.md). You can view the changes on GitHub as well (https://github.com/molgenis/molgenis-ui-form/releases)
 
 ## Usage
@@ -21,81 +23,83 @@ yarn add @molgenis/molgenis-ui-form
 
 ```vue
 <template>
-    <form-component
-      id="example-form"
-      :formFields="formFields"
-      :initialFormData="formData"
-      :formState="formState"
-      :options="options"
-      @valueChange="onValueChanged"
-      @addOptionRequest="handleAddOptionRequest">
-    </form-component>
+  <form-component
+    id="example-form"
+    :formFields="formFields"
+    :initialFormData="formData"
+    :formState="formState"
+    :options="options"
+    @valueChange="onValueChanged"
+    @addOptionRequest="handleAddOptionRequest"
+  >
+  </form-component>
 </template>
 
 <script>
-  // Import form component
-  import { FormComponent } from '@molgenis/molgenis-ui-form'
+// Import form component
+import { FormComponent } from '@molgenis/molgenis-ui-form'
 
-  // Import EntityToFormMapper
-  import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
-  
-  // Import all form component styles
-  import '../node_modules/@molgenis/molgenis-ui-form/dist/static/css/molgenis-ui-form.css'
-  
-  export default {
-    name: 'ExampleComponent',
-    data () {
-      return {
-        formFields: [],
-        formData: {},
-        formState: {},
-        options: {
-          showEyeButton: true
-        }
+// Import EntityToFormMapper
+import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
+
+// Import all form component styles
+import '../node_modules/@molgenis/molgenis-ui-form/dist/static/css/molgenis-ui-form.css'
+
+export default {
+  name: 'ExampleComponent',
+  data() {
+    return {
+      formFields: [],
+      formData: {},
+      formState: {},
+      options: {
+        showEyeButton: true
       }
-    },
-    methods: {
-      handleAddOptionRequest (addNewItemFunction) {
-        // Handle the request to add a new item here
-        const item = {
-          id: 'new_item',
-          label: 'New Item',
-          value: 'new_item'
-        }
-
-        addNewItemFunction(item)
-      },
-
-      onValueChanged (formData) {
-        // Do something with the updated formData
-        console.log(formData)
-      }
-    },
-    created () {
-      // Generate a form from a MOLGENIS v2 API response
-      // Or create fields based on the specs (Form specifications)
-      const form = EntityToFormMapper.generateForm(metadata, items[0])
-      this.formFields = form.formFields
-      this.formData = form.formData
-    },
-    components: {
-      FormComponent
     }
+  },
+  methods: {
+    handleAddOptionRequest(addNewItemFunction) {
+      // Handle the request to add a new item here
+      const item = {
+        id: 'new_item',
+        label: 'New Item',
+        value: 'new_item'
+      }
+
+      addNewItemFunction(item)
+    },
+
+    onValueChanged(formData) {
+      // Do something with the updated formData
+      console.log(formData)
+    }
+  },
+  created() {
+    // Generate a form from a MOLGENIS v2 API response
+    // Or create fields based on the specs (Form specifications)
+    const form = EntityToFormMapper.generateForm(metadata, items[0])
+    this.formFields = form.formFields
+    this.formData = form.formData
+  },
+  components: {
+    FormComponent
   }
+}
 </script>
 ```
 
-__Note__: Whatever you pass to the FormComponent as formData object,
+**Note**: Whatever you pass to the FormComponent as formData object,
 the FormComponent makes a local copy with `Object.assign({}, formData)`.
 
 If you want to react to data input, use the [@valueChanged](#valuechanged-event) event.
 
 ### valueChanged event
+
 When data in the form is changed, the form fires a `valueChanged` event.
 This event exposes two arguments, `formData` and `isFormValid`.
 
 `formData` is a key value object, where the field ID is the key, and the data filled in by the user is the value.
-`isFormValid` is a boolean telling you if there are __any__ invalid fields in the form.
+`isFormValid` is a boolean telling you if there are **any** invalid fields in the form.
 
 An example handler is shown below
 
@@ -108,28 +112,32 @@ methods: {
 ```
 
 ##### addOptionRequest event
-To allow the user to add new options to a select list the `handleAddOptionRequest` should be a function with the following properties:
- * `completedFunction` a callback function that should be called passing the `option` to be added.
- * `event` the original event triggering the request.
- * `data` object with form field state data.
 
- The `option` object passed to the `completedFunction` should at least have the following fields
- * `id` unique identifier
- * `label` the label shown to the user
- * `value` the form value
+To allow the user to add new options to a select list the `handleAddOptionRequest` should be a function with the following properties:
+
+- `completedFunction` a callback function that should be called passing the `option` to be added.
+- `event` the original event triggering the request.
+- `data` object with form field state data.
+
+The `option` object passed to the `completedFunction` should at least have the following fields
+
+- `id` unique identifier
+- `label` the label shown to the user
+- `value` the form value
 
 ### Options
+
 The FormComponent object can be configured via an options property.
 If no options object is supplied the defaults are used.
 
-| Option name          | Default | Description                             |
-|----------------------|---------|-----------------------------------------|
-| showEyeButton        | True    | Toggle the visibility of the Eye button. |
-| allowAddingOptions   | False   | When set to true users are show a interface item to add options to a (multi)select.  
-| inputDebounceTime    | 500     | Time (in milliseconds) between input updates needs to pass before update event is fired.
-
+| Option name        | Default | Description                                                                              |
+| ------------------ | ------- | ---------------------------------------------------------------------------------------- |
+| showEyeButton      | True    | Toggle the visibility of the Eye button.                                                 |
+| allowAddingOptions | False   | When set to true users are show a interface item to add options to a (multi)select.      |
+| inputDebounceTime  | 500     | Time (in milliseconds) between input updates needs to pass before update event is fired. |
 
 ## Form specifications
+
 Example on how to create fields and data objects for using the forms.
 
 ```js
@@ -153,29 +161,28 @@ const data = {
 ```
 
 ### Type support
+
 We support most HTML input types like number, text, and email. Below is a list of supported types.
 
-| type | renders |
-|------|-------------|
-| radios | A list of radio buttons |
-| single-select | A Vue select dropdown which supports asynchronous and synchronous option lists |
-| multi-select | A Vue Multiselect dropdown which supports asynchronous and synchronous option lists |
-| number | A HTML5 number input |
-| integer | A HTML5 number input, with step size set to 1 and may not include a fraction and must lie between --2147483648 and 2147483647
-| long |  A HTML5 number input, Long may not include a fraction and should fit into javascript number type.
-| decimal | A HTML5 number input, may include a fraction
-| text-area | A textarea HTML element |
-| date | A Vue Flatpickr Date component |
-| date-time | A Vue Flatpickr Date component with 'enableTime = true' |
-| checkboxes | A list of checkboxes |
-| text | A HTML5 text input |
-| hyperlink | A HTML5 text, only valid uri is allowed |
-| email | A HTML5 text email |
-| password | A HTML5 password input |
-| file | A HTML5 file input |
-| field-group | A type that is used to nest other inputs |
-
-
+| type          | renders                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| radios        | A list of radio buttons                                                                                                       |
+| single-select | A Vue select dropdown which supports asynchronous and synchronous option lists                                                |
+| multi-select  | A Vue Multiselect dropdown which supports asynchronous and synchronous option lists                                           |
+| number        | A HTML5 number input                                                                                                          |
+| integer       | A HTML5 number input, with step size set to 1 and may not include a fraction and must lie between --2147483648 and 2147483647 |
+| long          | A HTML5 number input, Long may not include a fraction and should fit into javascript number type.                             |
+| decimal       | A HTML5 number input, may include a fraction                                                                                  |
+| text-area     | A textarea HTML element                                                                                                       |
+| date          | A Vue Flatpickr Date component                                                                                                |
+| date-time     | A Vue Flatpickr Date component with 'enableTime = true'                                                                       |
+| checkboxes    | A list of checkboxes                                                                                                          |
+| text          | A HTML5 text input                                                                                                            |
+| hyperlink     | A HTML5 text, only valid uri is allowed                                                                                       |
+| email         | A HTML5 text email                                                                                                            |
+| password      | A HTML5 password input                                                                                                        |
+| file          | A HTML5 file input                                                                                                            |
+| field-group   | A type that is used to nest other inputs                                                                                      |
 
 ### Option field example
 
@@ -217,9 +224,10 @@ const fields = [
 ]
 ```
 
-The ```isAddOptionAllowed``` function indicated if the user should be allowed to add options 
+The `isAddOptionAllowed` function indicated if the user should be allowed to add options
 
 ### field group example
+
 A field group can be used to group a set of fields.
 You can specify a list of fields under a field-group via the `children` parameter.
 
@@ -258,9 +266,10 @@ const data = {
 ```
 
 ### Range
+
 A number fields valid input range can be restricted by supplying a range object
 The range object can have a `min` property, a `max` property or both.
-for example 
+for example
 
 ```js
 {
@@ -273,8 +282,8 @@ for example
 }
 ```
 
-
 ### Required, visible, and validate
+
 As you might have noticed in the above examples, required, visible, and validate are functions returning a boolean.
 The reason for this is that you might want to validate a field based on the input of another field.
 
@@ -297,7 +306,8 @@ const fields = [
     type: 'integer',
     id: 'example-integer-field',
     label: 'Example integer field',
-    description: 'This field is shown if "example-text-field" contains the text "show"',
+    description:
+      'This field is shown if "example-text-field" contains the text "show"',
     required: (formData) => true,
     disabled: false,
     readOnly: false,
@@ -310,25 +320,28 @@ const fields = [
 ```
 
 ### Unique field value validation
+
 Fields of type string, number, integer, long, decimal or radio may include a function that validated value uniqueness.
 The function should return a promise that resolves to a boolean indicating if the value is unique in some context.
 
-Example: 
+Example:
 
 ```js
 unique: (proposedValue, [context]) => {
   return new Promise((resolve, reject) => {
-      api.get('some-api-call-that-checks-proposed-value').then((result) => {
-        resolve(result)
-      })
+    api.get('some-api-call-that-checks-proposed-value').then((result) => {
+      resolve(result)
     })
-  }
+  })
+}
 ```
 
 ### Validation message localization
+
 Validation messages may be localized via the use of the `@molgenis/molgenis-i18n-js` plugin.
 
 Usage:
+
 ```
 Vue.use(i18n, {
   lng: 'en',
@@ -348,40 +361,34 @@ Vue.use(i18n, {
 If no 'ui-form' namespace is set on the supplied Vue instance the default (English) messages are used.
 
 ##### message keys and defaults
-| Key                             | Default message                 | Additional Info                         |
-| ------------------------------- |---------------------------------| ----------------------------------------|
-| ui-form:form_required_field     | 'This field is required'        |                                         |
-| ui-form:form_validation_failed  | 'Validation failed'             |                                         |
-| ui-form:form_not_a_valid_number | 'Not a valid number'            |                                         |
-| ui-form:form_not_a_valid_hyperlink    | 'Not a valid Hyperlink'               |                                         |
-| ui-form:form_not_a_valid_email  | 'Not a valid email'             |                                         |
-| ui-form:form_not_within_range   | 'Value is outside of range'     |  min, max is added as: ' ($min - $max)' | 
-| ui-form:form_below_min_value    | 'Value is below allowed value'  | min value is added as: ' $min'          |
-| ui-form:form_above_max_value    | 'Value is above allowed value   | max value is added as: ' $max'          |
+
+| Key                                | Default message                | Additional Info                        |
+| ---------------------------------- | ------------------------------ | -------------------------------------- |
+| ui-form:form_required_field        | 'This field is required'       |                                        |
+| ui-form:form_validation_failed     | 'Validation failed'            |                                        |
+| ui-form:form_not_a_valid_number    | 'Not a valid number'           |                                        |
+| ui-form:form_not_a_valid_hyperlink | 'Not a valid Hyperlink'        |                                        |
+| ui-form:form_not_a_valid_email     | 'Not a valid email'            |                                        |
+| ui-form:form_not_within_range      | 'Value is outside of range'    | min, max is added as: ' ($min - $max)' |
+| ui-form:form_below_min_value       | 'Value is below allowed value' | min value is added as: ' $min'         |
+| ui-form:form_above_max_value       | 'Value is above allowed value  | max value is added as: ' $max'         |
 
 ### Entity mapper options
 
-The `EntityToFormMapper.generateForm` function takes a *optional* `options` param.
+The `EntityToFormMapper.generateForm` function takes a _optional_ `options` param.
 The options param is a object that can contain the following properties:
+
 - `booleanLabels` Optional Object used to set labels for boolean type fields, can be use in combination with i18n plugin to translate boolean labels.
 - `showNonVisibleAttributes` Optional boolean if set to true maps non visible attributes to visible field, defaults to false
 - `mapperMode` Optional string (valid modes are `UPDATE` and `CREATE`) if set to `CREATE` readonly attributes map to writable fields, defaults to `CREATE`
 
 #### Invalid validation expression handling
 
-Erroneous validation expressions in the `visibleExpression` and `nullableExpression` metadata fields will fallback to the respective 
+Erroneous validation expressions in the `visibleExpression` and `nullableExpression` metadata fields will fallback to the respective
 `visible` and `nillable` values. A broken `validationExpression` will fall back to being `true`.
 
-## Pseudonym registration 
-The form can generate a component that helps with generating Pseudonym id's. 
-You can input a  in order to generate a pseudonym. The uid is not encoded in the pseudonym, the id's are stored in a link table. See `emx/PseudonymRegistration.xlsx` for more info.
-
-### How to set it up:
-Have the correct entities in molgenis. You will need a link table and a configuration table. See `emx/PseudonymRegistration.xlsx` for an example. In the form where you will want to use the Pseudonym registration component you will need to 'tag' the attribute with `objectIRI: 'http://purl.obolibrary.org/obo/NCIT_C142654`.
-In the configuration table you can change the name, additional information and the location of the link table.
-See: [Molgenis Docs](https://molgenis.gitbook.io/molgenis/interoperability/guide-rsql#tagging-attributes)
-
 ## Development
+
 The general guidelines and setup of the development environment are described here.
 
 ### Build setup
@@ -413,19 +420,23 @@ yarn test
 ```
 
 ### How to commit
+
 We use conventional commits to generate changelogs and release notes. Please check: https://www.conventionalcommits.org/
 
 **Example**
+
 ```
 git commit file.ext -m "fix(file.ext): fixes something"
 ```
 
 ### How to publish
-Each time a PR is merged a release will be done to NPM. The CHANGELOG.md and GitHub release will be ammended. 
+
+Each time a PR is merged a release will be done to NPM. The CHANGELOG.md and GitHub release will be ammended.
 
 The version of the package is based upon convential commits. Check: http://commitizen.github.io/cz-cli/.
 
 ### Tests
+
 To develop tests please acknowledge the following guidelines.
 
 #### End-to-End test
@@ -438,17 +449,19 @@ browser.options.desiredCapabilities.name = 'Example testname'
 ```
 
 ### Integration with `vue-form`
+
 We use the [`vue-form`](https://github.com/fergaldoyle/vue-form) library for validation.
 
 The component tree mingles elements from `vue-form` and `molgenis-ui-form` like this:
+
 ```
 <FormComponent :formState :initialFormData>
   <VueForm :state="formState">
     <FormFieldComponent :formState :formData :field>
       <TypedFieldComponent v-model="formData[field.id]">
         <Validate :state :debounce>
-          <input v-model="localValue"> 
-          <FormFieldMessages> 
+          <input v-model="localValue">
+          <FormFieldMessages>
 ```
 
 The `TypedFieldComponent` creates a `localValue` data element and
@@ -458,9 +471,7 @@ These `@Input` events are bound to `formData[field.id]`
 
 ![Event handling](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgaW5wdXQgdmFsaWRhdGlvbiBhbmQgZGVib3VuY2UKClVzZXIgLT4gSW5wdXQ6IHR5cGUgdHlwZS4uLgoADwUgLT4gVHlwZWRGaWVsZENvbXBvbmVudDogOmxvY2FsVmFsdWUKAA4TIC0-IGZvcm1EYXRhOiA6AAMIW2ZpZWxkLmlkXQoAFgggLT4gVnVlRm9ybTogd2F0Y2gKAAgHAD8FaWVsZFN0YXRlOiAkcGVuZGluZz10cnVlCgAQCiAtPiAAgQ8QAEQFACkJCgpsb29wAF8IAIF3CXMAgg0Md2hpbGUgdXNlciBpcyB0eXBpbmcKICAgIACCCBwgICAAgjYGAIIDJSAgIACCORQAggoiICAgAIJFCQCCHRNlbmQKAIIpDACCRgkAg3EHZQphY3RpdmF0ZQCBegkAgkwYc2V0cyAkAIQrBQCCZiFmYWxzZQpkZQBNEAoAgm0vAIQoEkZvcm0AhGELQGRhdGFDaGFuZ2UKCgAPDSAtPiAuLi46IEB2YWx1ZQAeBg&s=napkin)
 
-
-`vue-form` debounces the validation until input ceases. 
+`vue-form` debounces the validation until input ceases.
 The `FormFieldComponent` listens for `formState[field.id].$pending` to become `false` to make
 sure that validation is done and the `fieldState` is up to date.
 Then it emits a `@dataChange` event to the `FormComponent` and the `FormComponent` emits `@valueChange`.
- 
