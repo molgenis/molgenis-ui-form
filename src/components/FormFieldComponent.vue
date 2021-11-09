@@ -152,10 +152,10 @@
       class="form-control-feedback mg-evaluation-error"
     >
       <div class="text-warning small">
-        {{ evaluationMessage
-        }}<span v-if="evalationError.message"
-          >: {{ evalationError.message }}</span
-        >
+        {{ evaluationMessage }}
+        <span v-if="evalationError.message">
+          : {{ evalationError.message }}
+        </span>
       </div>
     </div>
   </fieldset>
