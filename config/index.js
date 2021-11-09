@@ -46,13 +46,19 @@ module.exports = {
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
     before (app) {
-      app.get('/api/v2/PseudonymRegistrationConfig', mockResponseHander.getPseudonymRegistrationConfig)
-      app.post('/api/data/PseudonymConnector', mockResponseHander.postPseudonymConnector)
-      app.get('/api/data/PseudonymConnector', mockResponseHander.getPseudonymConnector)
-      app.get('/api/v1/it_emx_datatypes_TypeTestRef', mockResponseHander.getV1TypeTestRef)
-      app.get('/api/v2/it_emx_datatypes_TypeTestRef', mockResponseHander.getV2TypeTestRef)
+      app.get(
+        '/api/v1/it_emx_datatypes_TypeTestRef',
+        mockResponseHander.getV1TypeTestRef
+      )
+      app.get(
+        '/api/v2/it_emx_datatypes_TypeTestRef',
+        mockResponseHander.getV2TypeTestRef
+      )
       app.get('/api/v2/i18n/ui-form/en', mockResponseHander.getLocalization)
-      app.get('/api/v2/it_emx_datatypes_TypeTest', mockResponseHander.getTypeTest)
+      app.get(
+        '/api/v2/it_emx_datatypes_TypeTest',
+        mockResponseHander.getTypeTest
+      )
     }
   },
 
