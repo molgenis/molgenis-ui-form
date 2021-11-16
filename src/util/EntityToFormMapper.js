@@ -75,7 +75,8 @@ const fetchFieldOptions = (refEntity: RefEntityType, search: ?string | ?Array<st
   const itemToOption = (item) => ({
     id: item[refEntity.idAttribute],
     value: item[refEntity.idAttribute],
-    label: entityMetadata && entityMetadata.name ? `${item[refEntityLabelAttribute(refEntity)]} - ${entityMetadata.name}` : item[refEntityLabelAttribute(refEntity)]
+    label: item[refEntityLabelAttribute(refEntity)],
+    entity: entityMetadata && entityMetadata.name ? entityMetadata.name : ''
   })
 
   if (refOptionsCache[uri]) {
