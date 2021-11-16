@@ -69,13 +69,13 @@ const buildRefOptionsQuery = (refEntity: RefEntityType, search: ?string | ?Array
  * @param search An optional search query used to filter the items of the response
  * @return {Promise} Promise object representing an Array of FieldOption
  */
-const fetchFieldOptions = (refEntity: RefEntityType, search: ?string | ?Array<string>): Promise<Array<FieldOption>> => {
+const fetchFieldOptions = (refEntity: RefEntityType, search: ?string | ?Array<string>, entityMetadata: ?any): Promise<Array<FieldOption>> => {
   const uri = buildRefOptionsQuery(refEntity, search)
 
   const itemToOption = (item) => ({
     id: item[refEntity.idAttribute],
     value: item[refEntity.idAttribute],
-    label: item[refEntityLabelAttribute(refEntity)]
+    label: entityMetadata && entityMetadata.name ? `${item[refEntityLabelAttribute(refEntity)]} - ${entityMetadata.name}` : item[refEntityLabelAttribute(refEntity)]
   })
 
   if (refOptionsCache[uri]) {
@@ -141,9 +141,9 @@ const isUserAllowedAddOption = (refEntity: RefEntityType, search: ?string | ?Arr
  * @param options MapperOptions optional object containing options to configure mapper
  * @returns {Function|null} Function which returns a Promise representing an Array of FieldOptions
  */
-const getFieldOptions = (attribute, options: MapperSettings): ?(() => Promise<Array<FieldOption>>) => {
+const getFieldOptions = (attribute, entityMetadata:any, options: MapperSettings): ?(() => Promise<Array<FieldOption>>) => {
   const fetchOptionsFunction = (search: ?string | Array<string>): Promise<Array<FieldOption>> => {
-    return fetchFieldOptions(attribute.refEntity, search).then(response => {
+    return fetchFieldOptions(attribute.refEntity, search, entityMetadata).then(response => {
       return response
     })
   }
@@ -334,7 +334,7 @@ const isDisabledField = (attribute, entityMetaData, mapperOptions: MapperSetting
  */
 const generateFormSchemaField = (attribute, entityMetadata:any, mapperOptions: MapperSettings): FormField => {
   // options is a function that always returns an array of option objects
-  const options = getFieldOptions(attribute, mapperOptions)
+  const options = getFieldOptions(attribute, entityMetadata, mapperOptions)
   const isDisabled = isDisabledField(attribute, entityMetadata, mapperOptions)
   let fieldProperties = {
     id: attribute.name,
