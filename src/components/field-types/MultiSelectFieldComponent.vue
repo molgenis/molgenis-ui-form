@@ -121,6 +121,7 @@ export default {
         search = undefined
       }
       this.isLoading = true
+
       this.field.options(search)
         .then(response => {
           this.options = response
@@ -148,17 +149,25 @@ export default {
       this.$emit('blur')
     }
   },
-  created () {
-    // Fetch an initial list of options
-    this.field.options().then(response => { // Make sure the initial search value is empty
-      this.options = response
-      // Replace localValue with the entire object so vue-select can use the label property
-      // Filter the list of the options based on the actual selected IDs
-      // a like query can return more then just your IDs
-      if (this.value.length > 0) {
-        this.localValue = this.options.filter(option => this.value.includes(option.id))
+  async created () {
+    // Fetch an initial list of options with empty search
+    this.options = await this.field.options()
+
+    // Replace localValue with the entire object so vue-select can use the label property
+
+    if (this.value.length > 0) {
+      // check if value is among the options so they can be selected.
+      const optionIds = this.options.map(option => option.id)
+      const outOfRangeValues = this.value.filter(valueId => !optionIds.includes(valueId))
+
+      // query and add out of range values, so they are available to be selected
+      if (outOfRangeValues.length > 0) {
+        this.options = this.options.concat(await this.field.options(outOfRangeValues))
       }
-    })
+
+      // Filter the list of the options based on the actual selected IDs
+      this.localValue = this.options.filter(option => this.value.includes(option.id))
+    }
 
     if (this.field.isAddOptionAllowed) {
       this.field.isAddOptionAllowed(this.value).then(response => {
