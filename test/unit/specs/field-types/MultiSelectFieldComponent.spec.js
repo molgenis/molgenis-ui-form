@@ -40,6 +40,14 @@ describe('MultiSelectFieldComponent unit tests', () => {
                 value: 'ref1'
               }
             ])
+          } else if (Array.isArray(search) && search[0] === 'ref10') {
+            return Promise.resolve([
+              {
+                id: 'ref10',
+                label: 'label10',
+                value: 'ref10'
+              }
+            ])
           } else if (search === 'non existing option') {
             return Promise.resolve([])
           }
@@ -108,6 +116,24 @@ describe('MultiSelectFieldComponent unit tests', () => {
       ])
       done()
     })
+  })
+
+  it('should fetch a value that is outside the first range on creation', async () => {
+    propsData.value = ['ref1', 'ref2', 'ref10']
+    const wrapper = mount(MultiSelectFieldComponent, {
+      propsData: propsData,
+      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+    })
+
+    await Vue.nextTick() // await the initial request
+    await Vue.nextTick() // await the additional search
+
+    expect(wrapper.vm.options).to.deep.equal([
+      { id: 'ref1', label: 'label1', value: 'ref1' },
+      { id: 'ref2', label: 'label2', value: 'ref2' },
+      { id: 'ref3', label: 'label3', value: 'ref3' },
+      { id: 'ref10', label: 'label10', value: 'ref10' }
+    ])
   })
 
   it('should set the list of options when searched', done => {
