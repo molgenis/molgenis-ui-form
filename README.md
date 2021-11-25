@@ -474,4 +474,4 @@ These `@Input` events are bound to `formData[field.id]`
 `vue-form` debounces the validation until input ceases.
 The `FormFieldComponent` listens for `formState[field.id].$pending` to become `false` to make
 sure that validation is done and the `fieldState` is up to date.
-Then it emits a `@dataChange` event to the `FormComponent` and the `FormComponent` emits `@valueChange`.
+Then it emits a `@dataChange` event to the `FormComponent` and the `FormComponent` emits `@valueChange`. 
