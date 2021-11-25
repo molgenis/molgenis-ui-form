@@ -5,6 +5,16 @@
 
 * options that are not in the intial 100, are now queried and applied ([#389](https://github.com/molgenis/molgenis-ui-form/issues/389)) ([e002d40](https://github.com/molgenis/molgenis-ui-form/commit/e002d40))
 * removed old pseudonym code ([#387](https://github.com/molgenis/molgenis-ui-form/issues/387)) ([eb4807b](https://github.com/molgenis/molgenis-ui-form/commit/eb4807b))
+* trigger release ([d0330e6](https://github.com/molgenis/molgenis-ui-form/commit/d0330e6))
+* validation messages only appear when input field has been altered / touched ([#385](https://github.com/molgenis/molgenis-ui-form/issues/385)) ([20ed2ee](https://github.com/molgenis/molgenis-ui-form/commit/20ed2ee))
+
+## [5.8.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.0...v5.8.1) (2021-11-25)
+
+
+### Bug Fixes
+
+* options that are not in the intial 100, are now queried and applied ([#389](https://github.com/molgenis/molgenis-ui-form/issues/389)) ([e002d40](https://github.com/molgenis/molgenis-ui-form/commit/e002d40))
+* removed old pseudonym code ([#387](https://github.com/molgenis/molgenis-ui-form/issues/387)) ([eb4807b](https://github.com/molgenis/molgenis-ui-form/commit/eb4807b))
 * validation messages only appear when input field has been altered / touched ([#385](https://github.com/molgenis/molgenis-ui-form/issues/385)) ([20ed2ee](https://github.com/molgenis/molgenis-ui-form/commit/20ed2ee))
 
 ## [5.8.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.0...v5.8.1) (2021-11-09)
