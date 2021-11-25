@@ -1,3 +1,10 @@
+## [5.8.3](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.2...v5.8.3) (2021-11-25)
+
+
+### Bug Fixes
+
+* fixed version and trigger release ([bd788e1](https://github.com/molgenis/molgenis-ui-form/commit/bd788e1))
+
 ## [5.8.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.0...v5.8.1) (2021-11-25)
 
 
