@@ -28,6 +28,9 @@
           label="label"
           trackBy="id"
           @search-change="fetchOptions">
+          <template slot="option" slot-scope="props">
+            <div :title="`from entity: ${props.option.entity}`"><span class="option__title">{{ props.option.label || props.option.value }}</span></div>
+          </template>
           <template slot="clear">
             <button class="multiselect__clear" name="Clear All Values" @click.prevent="clearValue"></button>
           </template>

@@ -668,9 +668,9 @@ describe('Entity to state mapper', () => {
         expect(typeof field.options).to.equal('function')
         expect((await field.isAddOptionAllowed())).to.equal(true)
         expect((await field.options())).to.deep.equal([
-          { id: 'ref1', value: 'ref1', label: 'ref1' },
-          { id: 'ref2', value: 'ref2', label: 'ref2' },
-          { id: 'ref3', value: 'ref3', label: 'ref3' }
+          { id: 'ref1', value: 'ref1', label: 'ref1', entity: '' },
+          { id: 'ref2', value: 'ref2', label: 'ref2', entity: '' },
+          { id: 'ref3', value: 'ref3', label: 'ref3', entity: '' }
         ])
       })
 
@@ -726,9 +726,9 @@ describe('Entity to state mapper', () => {
 
       field.options().then(response => {
         expect(response).to.deep.equal([
-          { id: 'ref1', value: 'ref1', label: 'label1' },
-          { id: 'ref2', value: 'ref2', label: 'label2' },
-          { id: 'ref3', value: 'ref3', label: 'label3' }
+          { id: 'ref1', value: 'ref1', label: 'label1', entity: '' },
+          { id: 'ref2', value: 'ref2', label: 'label2', entity: '' },
+          { id: 'ref3', value: 'ref3', label: 'label3', entity: '' }
         ])
         done()
       })
@@ -763,9 +763,9 @@ describe('Entity to state mapper', () => {
       expect(typeof field.options).to.equal('function')
       field.options().then(response => {
         expect(response).to.deep.equal([
-          { id: 'ref1', value: 'ref1', label: 'label1' },
-          { id: 'ref2', value: 'ref2', label: 'label2' },
-          { id: 'ref3', value: 'ref3', label: 'label3' }
+          { id: 'ref1', value: 'ref1', label: 'label1', entity: '' },
+          { id: 'ref2', value: 'ref2', label: 'label2', entity: '' },
+          { id: 'ref3', value: 'ref3', label: 'label3', entity: '' }
         ])
         done()
       })
@@ -774,9 +774,9 @@ describe('Entity to state mapper', () => {
     it('should filter [MREF] response based on search', done => {
       field.options(['ref1', 'ref2', 'ref3']).then(response => {
         expect(response).to.deep.equal([
-          { id: 'ref1', value: 'ref1', label: 'label1' },
-          { id: 'ref2', value: 'ref2', label: 'label2' },
-          { id: 'ref3', value: 'ref3', label: 'label3' }
+          { id: 'ref1', value: 'ref1', label: 'label1', entity: '' },
+          { id: 'ref2', value: 'ref2', label: 'label2', entity: '' },
+          { id: 'ref3', value: 'ref3', label: 'label3', entity: '' }
         ])
         done()
       })
@@ -812,9 +812,9 @@ describe('Entity to state mapper', () => {
       expect(typeof field.options).to.equal('function')
       const optionsResponse = await field.options()
       expect(optionsResponse).to.deep.equal([
-        { id: 'ref1', value: 'ref1', label: 'label1' },
-        { id: 'ref2', value: 'ref2', label: 'label2' },
-        { id: 'ref3', value: 'ref3', label: 'label3' }
+        { id: 'ref1', value: 'ref1', label: 'label1', entity: '' },
+        { id: 'ref2', value: 'ref2', label: 'label2', entity: '' },
+        { id: 'ref3', value: 'ref3', label: 'label3', entity: '' }
       ])
       expect((await field.isAddOptionAllowed())).to.equal(true)
     })
@@ -822,7 +822,7 @@ describe('Entity to state mapper', () => {
     it('should filter [XREF] response based on search', done => {
       field.options('ref1').then(response => {
         expect(response).to.deep.equal([
-          { id: 'ref1', value: 'ref1', label: 'label1' }
+          { id: 'ref1', value: 'ref1', label: 'label1', entity: '' }
         ])
         done()
       })
@@ -860,9 +860,9 @@ describe('Entity to state mapper', () => {
       expect(typeof field.options).to.equal('function')
       field.options().then(response => {
         expect(response).to.deep.equal([
-          { id: 'ref1', value: 'ref1', label: 'label1' },
-          { id: 'ref2', value: 'ref2', label: 'label2' },
-          { id: 'ref3', value: 'ref3', label: 'label3' }
+          { id: 'ref1', value: 'ref1', label: 'label1', entity: '' },
+          { id: 'ref2', value: 'ref2', label: 'label2', entity: '' },
+          { id: 'ref3', value: 'ref3', label: 'label3', entity: '' }
         ])
         done()
       })
