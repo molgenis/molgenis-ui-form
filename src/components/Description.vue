@@ -1,19 +1,21 @@
 <template>
   <small :id="id + '-description'" class="form-text text-muted" v-if="description.normal.length">
-      <description-urls :description="description.normal"/>
-      <div class=" d-inline" v-if="description.long">
-        <description-urls v-if="showMore" :description="description.long"/>
-        <small><a href="#" @click.prevent="showMore = !showMore">{{ descriptionToggleText }}</a></small>
-      </div>
+    <description-urls :description="description.normal"/>
+    <information-icon v-if="description.info">{{description.info}}</information-icon>
+    <div v-if="description.long">
+      <description-urls v-if="showMore" :description="description.long"/>
+      <small><a href="#" @click.prevent="showMore = !showMore">{{ descriptionToggleText }}</a></small>
+    </div>
   </small>
 </template>
 
 <script>
 import DescriptionUrls from './DescriptionUrls'
+import InformationIcon from './InformationIcon'
 
 export default {
   name: 'Description',
-  components: { DescriptionUrls },
+  components: { DescriptionUrls, InformationIcon },
   props: {
     text: {
       type: String,
@@ -45,12 +47,15 @@ export default {
     }
   },
   computed: {
+
     description () {
       if (this.text !== null && this.text !== undefined) {
-        const items = this.text.split('\n', 2).map(item => this.textURLSplit(item))
-        return { normal: items[0], long: items[1] }
+        const info = getInformation(this.text)
+
+        const items = info.text.split('\n', 2).map(item => this.textURLSplit(item))
+        return { normal: items[0], long: items[1], info: info.information }
       } else {
-        return { normal: [], long: [] }
+        return { normal: [], long: [], info: '' }
       }
     },
     descriptionToggleText () {
@@ -63,4 +68,14 @@ export default {
     }
   }
 }
+function getInformation (text) {
+  // TODO: multiple i's
+  if (text.search('{i}') === -1) {
+    return { text, information: '' }
+  }
+  const firstSplit = text.split('{i}')
+  const secondSplit = firstSplit[1].split('{/i}')
+  return { text: firstSplit[0] + secondSplit[1], information: secondSplit[0] }
+}
+
 </script>
