@@ -2,7 +2,7 @@
     <span>
         <BIconInfoCircleFill variant="primary" id="popover-target-1"/>
         <b-popover target="popover-target-1" triggers="hover" placement="top">
-            <template #title>More information</template>
+            <template #title>{{title}}</template>
             <slot></slot>
         </b-popover>
     </span>
@@ -14,7 +14,7 @@ export default {
   name: 'InformationIcon',
   components: { BIconInfoCircleFill },
   props: {
-    text: {
+    title: {
       type: String,
       required: false
     }
