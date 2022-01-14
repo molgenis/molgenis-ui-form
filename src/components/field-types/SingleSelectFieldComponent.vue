@@ -1,19 +1,23 @@
 <template>
   <!-- Tiny debounce to make sure that validation will always flip the fieldState.$pending flag -->
-  <validate :state="fieldState" :custom="{'validate': isValid}" :debounce="1">
+  <validate :state="fieldState" :custom="{ validate: isValid }" :debounce="1">
     <div class="form-group">
       <label :for="field.id">{{ field.label }}</label>
 
       <div class="input-group">
-
         <multiselect
           :id="field.id"
           :name="field.id"
           :required="isRequired"
           :disabled="field.disabled"
           :class="{
-            'is-invalid': fieldState && (fieldState.$touched || fieldState.$submitted || fieldState.$dirty) && fieldState.$invalid,
-            'multiselect--clearable': isClearable
+            'is-invalid':
+              fieldState &&
+              (fieldState.$touched ||
+                fieldState.$submitted ||
+                fieldState.$dirty) &&
+              fieldState.$invalid,
+            'multiselect--clearable': isClearable,
           }"
           v-model="localValue"
           openDirection="below"
@@ -27,9 +31,14 @@
           :hide-selected="false"
           label="label"
           trackBy="id"
-          @search-change="fetchOptions">
+          @search-change="fetchOptions"
+        >
           <template slot="clear">
-            <button class="multiselect__clear" name="Clear All Values" @click.prevent="clearValue"></button>
+            <button
+              class="multiselect__clear"
+              name="Clear All Values"
+              @click.prevent="clearValue"
+            ></button>
           </template>
           <div slot="noOptions">
             <small>{{ noOptionsMessage }}</small>
@@ -37,7 +46,11 @@
         </multiselect>
 
         <div v-if="allowAddingOptions && isAddOptionAllowed">
-          <button @click="addOptionClicked($event)" class="btn btn-outline-secondary mg-select-add-btn" type="button">
+          <button
+            @click="addOptionClicked($event)"
+            class="btn btn-outline-secondary mg-select-add-btn"
+            type="button"
+          >
             <i class="fa fa-plus" aria-hidden="true"></i>
           </button>
         </div>
@@ -47,7 +60,6 @@
 
       <form-field-messages :field-id="field.id" :field-state="fieldState">
       </form-field-messages>
-
     </div>
   </validate>
 </template>
@@ -146,15 +158,20 @@ export default {
       this.$emit('blur')
     }
   },
-  created () {
+  async created () {
     // Fetch an initial list of options
-    this.field.options().then(response => { // Make sure the initial search value is empty
-      this.options = response
-      if (this.value) {
-        // Replace localValue with the entire object so vue-select can use the label property
-        this.localValue = this.options.find(option => option.id === this.value)
+    this.options = await this.field.options()
+    if (this.value) {
+      // Replace localValue with the entire object so vue-select can use the label property
+      this.localValue = this.options.find(option => option.id === this.value)
+      // option not amongst the first query, fetch and apply.
+      if (!this.localValue) {
+        const missingValue = await this.field.options(this.value)
+        this.options = this.options.concat(missingValue)
+        // options return an array
+        this.localValue = missingValue[0]
       }
-    })
+    }
 
     if (this.field.isAddOptionAllowed) {
       this.field.isAddOptionAllowed(this.value).then(response => {
@@ -170,8 +187,8 @@ export default {
 }
 </script>
 <style scoped>
-  .multiselect {
-    width: 1%;
-    flex: 1 1 auto;
-  }
+.multiselect {
+  width: 1%;
+  flex: 1 1 auto;
+}
 </style>
