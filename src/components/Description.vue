@@ -1,7 +1,7 @@
 <template>
   <small :id="id + '-description'" class="form-text text-muted" v-if="description.normal.length">
     <description-urls :description="description.normal"/>
-    <information-icon v-if="description.info" title="More information">
+    <information-icon :id="id" v-if="description.info" title="More information">
       <description-urls :description="description.info"/>
     </information-icon>
     <div v-if="description.long">
