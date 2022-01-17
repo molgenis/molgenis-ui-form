@@ -1,3 +1,10 @@
+## [5.8.4](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.3...v5.8.4) (2022-01-17)
+
+
+### Bug Fixes
+
+* xref now queries out of range item on start ([5b26eb9](https://github.com/molgenis/molgenis-ui-form/commit/5b26eb9))
+
 ## [5.8.3](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.2...v5.8.3) (2021-11-25)
 
 
