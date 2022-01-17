@@ -26,20 +26,21 @@ export default {
     // Note: it may be [{text}] if no url is found
     textURLSplit (text) {
       const split = text.split(/(?:[^\S]|^)((?:(?:https?:\/\/)|(?:www\.))(?:\S+))/gi)
-      const res = split.reduce((accumulator, current, index, array) => {
+      const result = split.reduce((accumulator, current, index, array) => {
         if (index % 2) {
           return accumulator
         } else {
           return [...accumulator, { text: current, url: array[index + 1] }]
         }
       }, [])
-      return res
+      return result
     },
     ExternalURL (url) {
       if (!url.match(/^[a-zA-Z]+:\/\//)) {
-        url = 'https://' + url
+        return 'https://' + url
+      } else {
+        return url
       }
-      return url
     }
   }
 }
