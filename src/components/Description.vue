@@ -1,5 +1,5 @@
 <template>
-  <small :id="id + '-description'" class="form-text text-muted" v-if="description.normal.length">
+  <small v-if="description.normal.length" :id="id + '-description'" class="form-text text-muted" >
     <description-urls :description="description.normal"/>
     <information-icon :id="id" v-if="description.info" title="More information">
       <description-urls :description="description.info"/>

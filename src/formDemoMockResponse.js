@@ -153,7 +153,7 @@ const metadata = {
       visible: true,
       lookupAttribute: true,
       isAggregatable: false,
-      description: 'Boolean\n description'
+      description: ''
     },
     {
       href: '/api/v2/it_emx_datatypes_TypeTest/meta/integer',
