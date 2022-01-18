@@ -36,13 +36,7 @@ export default {
   computed: {
     description () {
       if (this.text !== null && this.text !== undefined) {
-        const info = getInformation(this.text)
-        const enterLocation = info.text.indexOf('\n')
-        if (enterLocation !== -1) {
-          return { normal: info.text.substring(0, enterLocation), long: info.text.substring(enterLocation + 1), info: info.information }
-        } else {
-          return { normal: info.text, long: '', info: info.information }
-        }
+        return getDescription(this.text)
       } else {
         return { normal: '', long: '', info: '' }
       }
@@ -56,11 +50,27 @@ export default {
     }
   }
 }
+
+function getDescription (text) {
+  const info = getInformation(text)
+  const enterLocation = info.text.indexOf('\n')
+  if (enterLocation !== -1) {
+    return {
+      normal: info.text.substring(0, enterLocation),
+      long: info.text.substring(enterLocation + 1),
+      info: info.information
+    }
+  } else {
+    return { normal: info.text, long: '', info: info.information }
+  }
+}
+
 function useInternationalisation ($t) {
   return $t &&
     $t('ui-form:form_show_more') !== 'form_show_more' &&
     $t('ui-form:form_show_less') !== 'form_show_less'
 }
+
 function getInformation (text) {
   const firstSplit = text.split('{i}')
   if (firstSplit.length === 2 && text.search('{/i}') !== -1) {

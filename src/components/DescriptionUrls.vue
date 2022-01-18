@@ -23,17 +23,16 @@ export default {
   },
   methods: {
     // Returns an array of structure [{text, url}, {text, url}, ...]
-    // Note: it may be [{text}] if no url is found
+    // Note: split may be [{text}] if no url is found
     textURLSplit (text) {
       const split = text.split(/(?:[^\S]|^)((?:(?:https?:\/\/)|(?:www\.))(?:\S+))/gi)
-      const result = split.reduce((accumulator, current, index, array) => {
+      return split.reduce((accumulator, current, index) => {
         if (index % 2) {
           return accumulator
         } else {
-          return [...accumulator, { text: current, url: array[index + 1] }]
+          return [...accumulator, { text: current, url: split[index + 1] }]
         }
       }, [])
-      return result
     },
     ExternalURL (url) {
       if (!url.match(/^[a-zA-Z]+:\/\//)) {
