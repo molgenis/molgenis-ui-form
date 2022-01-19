@@ -5,7 +5,7 @@ import Vue from 'vue'
 
 describe('MultiSelectFieldComponent unit tests', () => {
   let propsData
-  let mockEmit = td.function()
+  const mockEmit = td.function()
 
   beforeEach(() => {
     propsData = {
@@ -74,7 +74,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should fetch with empty search param when no initial value is present', done => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
 
     Vue.nextTick(() => {
@@ -105,7 +105,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
     propsData.value = ['ref1', 'ref2']
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
 
     await Vue.nextTick()
@@ -120,7 +120,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
     propsData.value = ['ref1', 'ref2', 'ref10']
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
 
     await Vue.nextTick() // await the initial request
@@ -137,7 +137,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should set the list of options when searched', done => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
     wrapper.vm.fetchOptions('ref1')
     Vue.nextTick(() => {
@@ -153,7 +153,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should set an empty option list when search returns nothing', done => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
 
     wrapper.vm.fetchOptions('non existing option')
@@ -168,7 +168,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should emit an updated value on change', () => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
 
     expect(wrapper.vm.fieldState.$dirty).to.equal(false)
@@ -192,7 +192,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should emit an "addOption" event when the "addOptionClicked" function is called', () => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
     wrapper.vm.addOptionClicked('myEvent')
     td.verify(mockEmit('addOption', td.matchers.isA(Object), 'myEvent', td.matchers.isA(Object)))
@@ -201,7 +201,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should add the new option to the options list when "afterOptionCreation" is invoked ', () => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
     const myOption = {
       id: 'id',
@@ -215,7 +215,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should set the new option as the selected option when "afterOptionCreation" is invoked ', () => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
     const myOption = {
       id: 'id',
@@ -231,7 +231,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
 
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
     expect(wrapper.findAll('.input-group-append').exists()).to.equal(false)
   })
@@ -241,7 +241,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
 
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
     expect(wrapper.findAll('.input-group-append').exists()).to.equal(false)
   })
@@ -251,7 +251,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
 
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs: { fieldMessages: '<div>This field is required</div>' }
     })
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
