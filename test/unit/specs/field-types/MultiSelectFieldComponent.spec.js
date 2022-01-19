@@ -101,21 +101,19 @@ describe('MultiSelectFieldComponent unit tests', () => {
     })
   })
 
-  it('should show all options on create with a search query when initial value is set', done => {
+  it('should show all options on create with a search query when initial value is set', async () => {
     propsData.value = ['ref1', 'ref2']
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
       stubs: { 'fieldMessages': '<div>This field is required</div>' }
     })
 
-    Vue.nextTick(() => {
-      expect(wrapper.vm.options).to.deep.equal([
-        { id: 'ref1', label: 'label1', value: 'ref1' },
-        { id: 'ref2', label: 'label2', value: 'ref2' },
-        { id: 'ref3', label: 'label3', value: 'ref3' }
-      ])
-      done()
-    })
+    await Vue.nextTick()
+    expect(wrapper.vm.options).to.deep.equal([
+      { id: 'ref1', label: 'label1', value: 'ref1' },
+      { id: 'ref2', label: 'label2', value: 'ref2' },
+      { id: 'ref3', label: 'label3', value: 'ref3' }
+    ])
   })
 
   it('should fetch a value that is outside the first range on creation', async () => {
