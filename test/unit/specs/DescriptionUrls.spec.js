@@ -33,11 +33,17 @@ describe('DescriptionUrls', () => {
     it('should add a protocol to url if it has none', () => {
       expect(wrapper.vm.ExternalURL('www.molgenis.com'))
         .to.equal('https://www.molgenis.com')
+
+      expect(wrapper.vm.ExternalURL('www.molgenis.com/http/'))
+        .to.equal('https://www.molgenis.com/http/')
     })
 
     it('should not change the url if it already has a protocol', () => {
       expect(wrapper.vm.ExternalURL('http://www.molgenis.com'))
         .to.equal('http://www.molgenis.com')
+
+      expect(wrapper.vm.ExternalURL('https://www.molgenis.com'))
+        .to.equal('https://www.molgenis.com')
     })
   })
 })
