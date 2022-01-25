@@ -387,6 +387,15 @@ The options param is a object that can contain the following properties:
 Erroneous validation expressions in the `visibleExpression` and `nullableExpression` metadata fields will fallback to the respective
 `visible` and `nillable` values. A broken `validationExpression` will fall back to being `true`.
 
+### Description fields
+
+The description will automatically make URL's clickable.
+
+You can create a (read more) button by using an enter in the description field, which will display the remaining text after the enter. 
+
+You are able to create a information icon / tooltip by using the following tag inside of the description field
+`{i}My information icon tooltip{/i}`
+
 ## Development
 
 The general guidelines and setup of the development environment are described here.

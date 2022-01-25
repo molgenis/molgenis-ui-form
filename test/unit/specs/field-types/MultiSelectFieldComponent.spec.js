@@ -5,7 +5,8 @@ import Vue from 'vue'
 
 describe('MultiSelectFieldComponent unit tests', () => {
   let propsData
-  let mockEmit = td.function()
+  const mockEmit = td.function()
+  const stubs = { fieldMessages: '<div>This field is required</div>' }
 
   beforeEach(() => {
     propsData = {
@@ -15,42 +16,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
         type: 'multi-select',
         disabled: false,
         options: (search) => {
-          if (!search) {
-            return Promise.resolve([
-              {
-                id: 'ref1',
-                label: 'label1',
-                value: 'ref1'
-              },
-              {
-                id: 'ref2',
-                label: 'label2',
-                value: 'ref2'
-              },
-              {
-                id: 'ref3',
-                label: 'label3',
-                value: 'ref3'
-              }])
-          } else if (search === 'ref1') {
-            return Promise.resolve([
-              {
-                id: 'ref1',
-                label: 'label1',
-                value: 'ref1'
-              }
-            ])
-          } else if (Array.isArray(search) && search[0] === 'ref10') {
-            return Promise.resolve([
-              {
-                id: 'ref10',
-                label: 'label10',
-                value: 'ref10'
-              }
-            ])
-          } else if (search === 'non existing option') {
-            return Promise.resolve([])
-          }
+          return Promise.resolve(getOptions(search))
         },
         isAddOptionAllowed: () => Promise.resolve(true)
       },
@@ -74,7 +40,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should fetch with empty search param when no initial value is present', done => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
 
     Vue.nextTick(() => {
@@ -101,28 +67,26 @@ describe('MultiSelectFieldComponent unit tests', () => {
     })
   })
 
-  it('should show all options on create with a search query when initial value is set', done => {
+  it('should show all options on create with a search query when initial value is set', async () => {
     propsData.value = ['ref1', 'ref2']
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
 
-    Vue.nextTick(() => {
-      expect(wrapper.vm.options).to.deep.equal([
-        { id: 'ref1', label: 'label1', value: 'ref1' },
-        { id: 'ref2', label: 'label2', value: 'ref2' },
-        { id: 'ref3', label: 'label3', value: 'ref3' }
-      ])
-      done()
-    })
+    await Vue.nextTick()
+    expect(wrapper.vm.options).to.deep.equal([
+      { id: 'ref1', label: 'label1', value: 'ref1' },
+      { id: 'ref2', label: 'label2', value: 'ref2' },
+      { id: 'ref3', label: 'label3', value: 'ref3' }
+    ])
   })
 
   it('should fetch a value that is outside the first range on creation', async () => {
     propsData.value = ['ref1', 'ref2', 'ref10']
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
 
     await Vue.nextTick() // await the initial request
@@ -139,7 +103,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should set the list of options when searched', done => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
     wrapper.vm.fetchOptions('ref1')
     Vue.nextTick(() => {
@@ -155,7 +119,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should set an empty option list when search returns nothing', done => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
 
     wrapper.vm.fetchOptions('non existing option')
@@ -170,7 +134,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should emit an updated value on change', () => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
 
     expect(wrapper.vm.fieldState.$dirty).to.equal(false)
@@ -194,7 +158,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should emit an "addOption" event when the "addOptionClicked" function is called', () => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
     wrapper.vm.addOptionClicked('myEvent')
     td.verify(mockEmit('addOption', td.matchers.isA(Object), 'myEvent', td.matchers.isA(Object)))
@@ -203,7 +167,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should add the new option to the options list when "afterOptionCreation" is invoked ', () => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
     const myOption = {
       id: 'id',
@@ -217,7 +181,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
   it('should set the new option as the selected option when "afterOptionCreation" is invoked ', () => {
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
     const myOption = {
       id: 'id',
@@ -233,7 +197,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
 
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
     expect(wrapper.findAll('.input-group-append').exists()).to.equal(false)
   })
@@ -243,7 +207,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
 
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
     expect(wrapper.findAll('.input-group-append').exists()).to.equal(false)
   })
@@ -253,7 +217,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
 
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: { 'fieldMessages': '<div>This field is required</div>' }
+      stubs
     })
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
@@ -265,7 +229,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
 
     const wrapper = mount(MultiSelectFieldComponent, {
       propsData: propsData,
-      stubs: ['fieldMessages']
+      stubs
     })
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.mg-select-add-btn').exists()).to.equal(true)
@@ -277,7 +241,7 @@ describe('MultiSelectFieldComponent unit tests', () => {
         ...propsData,
         value: ['ref2', 'ref3']
       },
-      stubs: ['fieldMessages']
+      stubs
     })
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('.multiselect__tag').length).to.equal(2)
@@ -286,3 +250,35 @@ describe('MultiSelectFieldComponent unit tests', () => {
     expect(wrapper.emitted('input')).to.deep.equal([[['ref2', 'ref3']], [[]]])
   })
 })
+
+function getOptions (search) {
+  if (!search) {
+    return [ {
+      id: 'ref1',
+      label: 'label1',
+      value: 'ref1'
+    }, {
+      id: 'ref2',
+      label: 'label2',
+      value: 'ref2'
+    }, {
+      id: 'ref3',
+      label: 'label3',
+      value: 'ref3'
+    }]
+  } else if (search === 'ref1') {
+    return [ {
+      id: 'ref1',
+      label: 'label1',
+      value: 'ref1'
+    } ]
+  } else if (Array.isArray(search) && search[0] === 'ref10') {
+    return [ {
+      id: 'ref10',
+      label: 'label10',
+      value: 'ref10'
+    } ]
+  } else if (search === 'non existing option') {
+    return []
+  }
+}

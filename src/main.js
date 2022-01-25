@@ -21,10 +21,13 @@ import ErrorExample from './example/validation-functions/ErrorExample'
 import MapperErrorExample from './example/validation-functions/MapperErrorExample'
 import ExpressionValidation from './example/validation-functions/ExpressionValidation'
 import i18n from '@molgenis/molgenis-i18n-js'
+import { BootstrapVue } from 'bootstrap-vue'
+
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
-
 Vue.use(Router)
+Vue.use(BootstrapVue)
 
 const router = new Router({
   mode: 'history',
