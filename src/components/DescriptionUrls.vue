@@ -10,7 +10,7 @@
         :key="`url-${urlIndex}`"
         :href="ExternalURL(item.url)"
         target="_blank">
-          {{ item.second }}
+          {{ item.url }}
       </a>
     </span>
   </span>
