@@ -50,6 +50,10 @@ MappingException.prototype.toString = function () {
 // key:  requestUri as string, value: raw api v2 response
 const refOptionsCache = {}
 
+// Cache buildIsUniqueFunction request responses.
+// key:  requestUri as string, value: true or false
+const uniqueResponseOptionsCache = {}
+
 const refEntityLabelAttribute = (refEntity) => refEntity.labelAttribute ? refEntity.labelAttribute : refEntity.idAttribute
 
 const buildRefOptionsQuery = (refEntity: RefEntityType, search: ?string | ?Array<string>):string => {
@@ -292,8 +296,15 @@ const buildIsUniqueFunction = (attribute, entityMetadata: any, mapperOptions: Ma
       }
 
       const testUniqueUrl = entityMetadata.hrefCollection + '?&num=1&q=' + encodeRsqlValue(transformToRSQL(query))
+
+      if (uniqueResponseOptionsCache[testUniqueUrl]) {
+        return Promise.resolve(uniqueResponseOptionsCache[testUniqueUrl])
+      }
+
       return api.get(testUniqueUrl).then((response) => {
-        resolve(response.items.length <= 0)
+        const result = response.items.length <= 0
+        uniqueResponseOptionsCache[testUniqueUrl] = result
+        resolve(result)
       }, (error) => {
         reject(error)
       })
