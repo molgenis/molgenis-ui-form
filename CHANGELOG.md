@@ -1,3 +1,10 @@
+# [5.9.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.4...v5.9.0) (2022-01-28)
+
+
+### Features
+
+* ability to add brakes in descriptions ([#398](https://github.com/molgenis/molgenis-ui-form/issues/398)) ([f258e33](https://github.com/molgenis/molgenis-ui-form/commit/f258e33))
+
 ## [5.8.4](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.3...v5.8.4) (2022-01-17)
 
 
