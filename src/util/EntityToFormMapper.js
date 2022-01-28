@@ -56,7 +56,7 @@ const uniqueResponseOptionsCache = {}
 
 const refEntityLabelAttribute = (refEntity) => refEntity.labelAttribute ? refEntity.labelAttribute : refEntity.idAttribute
 
-const buildRefOptionsQuery = (refEntity: RefEntityType, search: ?string | ?Array<string>):string => {
+const buildRefOptionsQuery = (refEntity: RefEntityType, search: ?string | ?Array<string>): string => {
   const idAttribute = refEntity.idAttribute
   const labelAttribute = refEntityLabelAttribute(refEntity)
 
@@ -343,7 +343,7 @@ const isDisabledField = (attribute, entityMetaData, mapperOptions: MapperSetting
  * @param mapperOptions MapperOptions optional object containing options to configure mapper
  * @returns {{type: String, id, label, description, required: boolean, disabled, visible, options: ({uri, id, label, multiple}|{uri, id, label})}}
  */
-const generateFormSchemaField = (attribute, entityMetadata:any, mapperOptions: MapperSettings): FormField => {
+const generateFormSchemaField = (attribute, entityMetadata: any, mapperOptions: MapperSettings): FormField => {
   // options is a function that always returns an array of option objects
   const options = getFieldOptions(attribute, mapperOptions)
   const isDisabled = isDisabledField(attribute, entityMetadata, mapperOptions)
