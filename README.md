@@ -396,7 +396,7 @@ You can create a (read more) button by using an enter in the description field, 
 You are able to create a information icon / tooltip by using the following tag inside of the description field
 `{i}My information icon tooltip{/i}`
 
-Break lines with `{br}` for example a description like like this:
+Break lines with `{br}` for example a description like this:
 `{br}• list item 1{br}• list item 2{br}• list item 3{br}`
 
 Will render a list like this:<br>
