@@ -293,7 +293,7 @@ const buildIsUniqueFunction = (attribute, entityMetadata: any, mapperOptions: Ma
   }
 
   return (proposedValue: any, data: any) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       let query = { selector: attribute.name, comparison: '==', arguments: proposedValue }
       if (mapperOptions.mapperMode === 'UPDATE') {
         query = {
@@ -313,13 +313,9 @@ const buildIsUniqueFunction = (attribute, entityMetadata: any, mapperOptions: Ma
 
       getData(testUniqueUrl)
 
-      return new Promise(async (resolve) => {
-        const response = await refOptionsCache.cache[testUniqueUrl]
-        const result = response.items.length <= 0
-        resolve(result)
-      }, (error) => {
-        reject(error)
-      })
+      const response = await refOptionsCache.cache[testUniqueUrl].catch(error => reject(error))
+      const result = response.items.length <= 0
+      resolve(result)
     })
   }
 }
