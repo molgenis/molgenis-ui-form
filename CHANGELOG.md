@@ -1,3 +1,12 @@
+## [5.9.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.9.0...v5.9.1) (2022-02-01)
+
+
+### Bug Fixes
+
+* added caching for uniqueness check, in some scenario's it's triggered a lot ([2acfa03](https://github.com/molgenis/molgenis-ui-form/commit/2acfa03))
+* fixed logic to mimic old behaviour ([3dd35fc](https://github.com/molgenis/molgenis-ui-form/commit/3dd35fc))
+* implemented caching with awaiting promises so that it actually waits for the cache to resolve. ([84bf4b2](https://github.com/molgenis/molgenis-ui-form/commit/84bf4b2))
+
 # [5.9.0](https://github.com/molgenis/molgenis-ui-form/compare/v5.8.4...v5.9.0) (2022-01-28)
 
 
