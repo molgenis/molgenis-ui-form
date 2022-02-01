@@ -48,11 +48,27 @@ MappingException.prototype.toString = function () {
 
 // Cache fetchFieldOptions request responses.
 // key:  requestUri as string, value: raw api v2 response
-const refOptionsCache = {}
+const refOptionsCache = { cache: {}, uri: [] }
+
+/**
+ * It fetches the given uri data if not present
+ * and adds the promise to the cache, which can be awaited
+ * @param {string} uri endpoint of Molgenis
+ */
+function getData (uri) {
+  // we are the first, proceed getting data
+  if (!refOptionsCache.uri.includes(uri)) {
+    // Marking that we are going to fetch data
+    refOptionsCache.uri.push(uri)
+    // Passing the promise directly, so we can await it below
+    // this gives one reference for all calls.
+    refOptionsCache.cache[uri] = api.get(uri)
+  }
+}
 
 const refEntityLabelAttribute = (refEntity) => refEntity.labelAttribute ? refEntity.labelAttribute : refEntity.idAttribute
 
-const buildRefOptionsQuery = (refEntity: RefEntityType, search: ?string | ?Array<string>):string => {
+const buildRefOptionsQuery = (refEntity: RefEntityType, search: ?string | ?Array<string>): string => {
   const idAttribute = refEntity.idAttribute
   const labelAttribute = refEntityLabelAttribute(refEntity)
 
@@ -69,7 +85,7 @@ const buildRefOptionsQuery = (refEntity: RefEntityType, search: ?string | ?Array
  * @param search An optional search query used to filter the items of the response
  * @return {Promise} Promise object representing an Array of FieldOption
  */
-const fetchFieldOptions = (refEntity: RefEntityType, search: ?string | ?Array<string>): Promise<Array<FieldOption>> => {
+const fetchFieldOptions = async (refEntity: RefEntityType, search: ?string | ?Array<string>): Promise<Array<FieldOption>> => {
   const uri = buildRefOptionsQuery(refEntity, search)
 
   const itemToOption = (item) => ({
@@ -78,13 +94,15 @@ const fetchFieldOptions = (refEntity: RefEntityType, search: ?string | ?Array<st
     label: item[refEntityLabelAttribute(refEntity)]
   })
 
-  if (refOptionsCache[uri]) {
-    return Promise.resolve(refOptionsCache[uri].items.map(itemToOption))
-  }
+  // It will fetch from the API if it hasn't already
+  // if it fetches, it adds the corresponding promise into a cache
+  getData(uri)
 
-  return api.get(uri).then(response => {
-    refOptionsCache[uri] = response
-    return response.items.map(itemToOption)
+  return new Promise(async (resolve) => {
+    // await the promise from the cache.
+    // If the promise was already resolved, the await is automatically omitted
+    const response = await refOptionsCache.cache[uri]
+    resolve(response.items.map(itemToOption))
   })
 }
 
@@ -99,13 +117,13 @@ const fetchFieldOptions = (refEntity: RefEntityType, search: ?string | ?Array<st
 const isUserAllowedAddOption = (refEntity: RefEntityType, search: ?string | ?Array<string>): Promise<boolean> => {
   const uri = buildRefOptionsQuery(refEntity, search)
 
-  if (refOptionsCache[uri]) {
-    return Promise.resolve(refOptionsCache[uri].meta.permissions.includes('ADD_DATA'))
-  }
+  getData(uri)
 
-  return api.get(uri).then((response) => {
-    refOptionsCache[uri] = response
-    return refOptionsCache[uri].meta.permissions.includes('ADD_DATA')
+  return new Promise(async (resolve) => {
+    // await the promise from the cache.
+    // If the promise was already resolved, the await is automatically omitted
+    const response = await refOptionsCache.cache[uri]
+    resolve(response.meta.permissions.includes('ADD_DATA'))
   })
 }
 
@@ -275,7 +293,7 @@ const buildIsUniqueFunction = (attribute, entityMetadata: any, mapperOptions: Ma
   }
 
   return (proposedValue: any, data: any) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       let query = { selector: attribute.name, comparison: '==', arguments: proposedValue }
       if (mapperOptions.mapperMode === 'UPDATE') {
         query = {
@@ -292,11 +310,12 @@ const buildIsUniqueFunction = (attribute, entityMetadata: any, mapperOptions: Ma
       }
 
       const testUniqueUrl = entityMetadata.hrefCollection + '?&num=1&q=' + encodeRsqlValue(transformToRSQL(query))
-      return api.get(testUniqueUrl).then((response) => {
-        resolve(response.items.length <= 0)
-      }, (error) => {
-        reject(error)
-      })
+
+      getData(testUniqueUrl)
+
+      const response = await refOptionsCache.cache[testUniqueUrl].catch(error => reject(error))
+      const result = response.items.length <= 0
+      resolve(result)
     })
   }
 }
@@ -332,7 +351,7 @@ const isDisabledField = (attribute, entityMetaData, mapperOptions: MapperSetting
  * @param mapperOptions MapperOptions optional object containing options to configure mapper
  * @returns {{type: String, id, label, description, required: boolean, disabled, visible, options: ({uri, id, label, multiple}|{uri, id, label})}}
  */
-const generateFormSchemaField = (attribute, entityMetadata:any, mapperOptions: MapperSettings): FormField => {
+const generateFormSchemaField = (attribute, entityMetadata: any, mapperOptions: MapperSettings): FormField => {
   // options is a function that always returns an array of option objects
   const options = getFieldOptions(attribute, mapperOptions)
   const isDisabled = isDisabledField(attribute, entityMetadata, mapperOptions)
