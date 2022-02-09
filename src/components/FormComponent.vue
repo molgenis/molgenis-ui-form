@@ -65,7 +65,8 @@ export default {
   data () {
     return {
       eventBus: new Vue(),
-      showOptionalFields: true
+      showOptionalFields: true,
+      formData: Object.assign({}, this.initialFormData)
     }
   },
   methods: {
@@ -92,18 +93,15 @@ export default {
       }
       const localizedMessages = this.$t || defaultMessages
       return this.showOptionalFields ? localizedMessages('ui-form:form_hide_optional_hint') : localizedMessages('ui-form:form_show_optional_hint')
-    },
-
-    /**
-       *  Create local copy to break data reactivity with the
-       *  outside world and "enforce" a one way data-flow
-       */
-    formData () {
-      return Object.assign({}, this.initialFormData)
     }
   },
   created: function () {
     this.eventBus.$on('addOption', this.handleAddOptionEvent)
+  },
+  watch: {
+    initialFormData () {
+
+    }
   }
 }
 </script>
