@@ -78,7 +78,7 @@ export default {
     },
     changeData () {
       this.formData['nested_compound_string'] = 'show'
-      this.formData['comppound_int'] = '1'
+      this.formData['compound_int'] = '1'
     }
   },
   created () {
