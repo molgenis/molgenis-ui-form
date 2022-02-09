@@ -77,8 +77,8 @@ export default {
       completedFunction(newMockOption)
     },
     changeData () {
-      this.formData['nested-compound-string'] = 'show'
-      this.formData['comppound-int'] = '1'
+      this.formData['nested_compound_string'] = 'show'
+      this.formData['compound_int'] = '1'
     }
   },
   created () {
