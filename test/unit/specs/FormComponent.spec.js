@@ -99,21 +99,6 @@ describe('FormComponents shallow tests', () => {
     })
   })
 
-  describe('Update initialFormData property updates local formData value', () => {
-    it('should update the computed formData object when the initialFormData prop is updated', () => {
-      wrapper.setProps({
-        id: 'test',
-        initialFormData: { 'string': 'new data value' },
-        formFields: [field],
-        options: {
-          showEyeButton: false
-        }
-      })
-
-      expect(wrapper.vm.formData).to.deep.equal({ 'string': 'new data value' })
-    })
-  })
-
   describe('Eye messages i18m', () => {
     it('should return the default if i18n is not set', () => {
       const wrapper = shallow(FormComponent, {
