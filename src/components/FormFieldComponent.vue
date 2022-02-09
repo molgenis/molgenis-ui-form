@@ -277,7 +277,6 @@ export default {
       return this.fieldState && this.fieldState.$pending
     },
     isValid () {
-      console.log('isValid: ', Date.now(), JSON.stringify(this.formData, null, 2))
       return this.evaluateScript(this.field.validate, this.formData, true)
     },
     isRequired () {

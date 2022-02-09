@@ -63,7 +63,6 @@ export default {
     }
   },
   data () {
-    console.log(Date.now(), JSON.stringify(this.initialFormData, null, 2))
     return {
       eventBus: new Vue(),
       showOptionalFields: true,
