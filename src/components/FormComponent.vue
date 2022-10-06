@@ -1,9 +1,22 @@
 <template>
   <vue-form :id="id" :state="formState">
-    <div v-if="options.showEyeButton" class="text-right hide-option-fields-btn-container">
-      <button type="button" class="btn btn-sm btn-outline-secondary toggle-btn" :title="eyeMessage"
-              @click="toggleOptionalFields">
-        <i class="fa show-fields-icon" :class="{'fa-eye-slash': showOptionalFields, 'fa-eye': !showOptionalFields}"></i>
+    <div
+      v-if="options.showEyeButton"
+      class="text-right hide-option-fields-btn-container"
+    >
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-secondary toggle-btn"
+        :title="eyeMessage"
+        @click="toggleOptionalFields"
+      >
+        <i
+          class="fa show-fields-icon"
+          :class="{
+            'fa-eye-slash': showOptionalFields,
+            'fa-eye': !showOptionalFields,
+          }"
+        ></i>
       </button>
     </div>
 
@@ -66,7 +79,7 @@ export default {
     return {
       eventBus: new Vue(),
       showOptionalFields: true,
-      formData: Object.assign({}, this.initialFormData)
+      formData: JSON.parse(JSON.stringify(this.initialFormData))
     }
   },
   methods: {
