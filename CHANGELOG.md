@@ -1,3 +1,10 @@
+## [5.9.2](https://github.com/molgenis/molgenis-ui-form/compare/v5.9.1...v5.9.2) (2022-02-09)
+
+
+### Bug Fixes
+
+* dont rebuild formData every change ([#401](https://github.com/molgenis/molgenis-ui-form/issues/401)) ([ed0181e](https://github.com/molgenis/molgenis-ui-form/commit/ed0181e))
+
 ## [5.9.1](https://github.com/molgenis/molgenis-ui-form/compare/v5.9.0...v5.9.1) (2022-02-01)
 
 
