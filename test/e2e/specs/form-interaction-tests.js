@@ -121,13 +121,13 @@ module.exports = {
   },
 
   'Check if expressions work when changing data outside of the form': function (browser) {
-    // browser.options.desiredCapabilities.name = 'Check if expressions work when changing data outside of the form'
-    // browser.expect.element('#compound_string-fs').to.not.be.visible
+    browser.options.desiredCapabilities.name = 'Check if expressions work when changing data outside of the form'
+    browser.expect.element('#compound_string-fs').to.not.be.visible
 
-    // browser.click('#update-data-btn')
-    // browser.expect.element('#compound_string-fs').to.be.visible
-    // browser.expect.element('#compound_string').to.not.have.attribute('required')
+    browser.click('#update-data-btn')
+    browser.expect.element('#compound_string-fs').to.be.visible
+    browser.expect.element('#compound_string').to.not.have.attribute('required')
 
-    // browser.end()
+    browser.end()
   }
 }

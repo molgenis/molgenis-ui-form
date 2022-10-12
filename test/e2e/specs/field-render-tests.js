@@ -20,54 +20,54 @@ module.exports = {
   // Use BDD-style interface for assertions
   // http://nightwatchjs.org/api#expect-api
   'Correctly render a field-group and its child fields': function (browser) {
-    // browser.options.desiredCapabilities.name = 'Correctly render a field-group and its child fields'
+    browser.options.desiredCapabilities.name = 'Correctly render a field-group and its child fields'
 
-    // browser.expect.element('#compound_field-fs').to.be.visible
-    // browser.getTagName('#compound_field-fs', function (result) {
-    //   this.assert.equal(result.value.toLowerCase(), 'fieldset')
-    // })
-    // browser.expect.element('#compound_field-fs legend').text.to.contain('Compound field')
-    // browser.expect.element('#compound_field-fs small').text.to.contain('Compound description')
-    // browser.expect.element('#compound_field-fs hr').to.be.visible
-    // browser.expect.element('#compound_field-fs div').to.have.attribute('class').which.contains('pl-2')
+    browser.expect.element('#compound_field-fs').to.be.visible
+    browser.getTagName('#compound_field-fs', function (result) {
+      this.assert.equal(result.value.toLowerCase(), 'fieldset')
+    })
+    browser.expect.element('#compound_field-fs legend').text.to.contain('Compound field')
+    browser.expect.element('#compound_field-fs small').text.to.contain('Compound description')
+    browser.expect.element('#compound_field-fs hr').to.be.visible
+    browser.expect.element('#compound_field-fs div').to.have.attribute('class').which.contains('pl-2')
 
-    // browser.expect.element('#compound_int-fs').to.be.visible
-    // browser.getTagName('#compound_int-fs', function (result) {
-    //   this.assert.equal(result.value.toLowerCase(), 'fieldset')
-    // })
+    browser.expect.element('#compound_int-fs').to.be.visible
+    browser.getTagName('#compound_int-fs', function (result) {
+      this.assert.equal(result.value.toLowerCase(), 'fieldset')
+    })
 
-    // browser.expect.element('#compound_int-fs input').to.have.attribute('id').which.contains('compound_int')
-    // browser.expect.element('#compound_int-fs input').to.have.attribute('type').which.contains('number')
+    browser.expect.element('#compound_int-fs input').to.have.attribute('id').which.contains('compound_int')
+    browser.expect.element('#compound_int-fs input').to.have.attribute('type').which.contains('number')
 
-    // browser.expect.element('#nested_compound_field-fs').to.be.visible
-    // browser.getTagName('#nested_compound_field-fs', function (result) {
-    //   this.assert.equal(result.value.toLowerCase(), 'fieldset')
-    // })
-    // browser.expect.element('#nested_compound_field-fs legend').text.to.contain('Nested Compound field')
-    // browser.expect.element('#nested_compound_field-fs small').text.to.contain('Nested Compound description')
-    // browser.expect.element('#nested_compound_field-fs hr').to.be.visible
-    // browser.expect.element('#nested_compound_field-fs div').to.have.attribute('class').which.contains('pl-4')
+    browser.expect.element('#nested_compound_field-fs').to.be.visible
+    browser.getTagName('#nested_compound_field-fs', function (result) {
+      this.assert.equal(result.value.toLowerCase(), 'fieldset')
+    })
+    browser.expect.element('#nested_compound_field-fs legend').text.to.contain('Nested Compound field')
+    browser.expect.element('#nested_compound_field-fs small').text.to.contain('Nested Compound description')
+    browser.expect.element('#nested_compound_field-fs hr').to.be.visible
+    browser.expect.element('#nested_compound_field-fs div').to.have.attribute('class').which.contains('pl-4')
 
-    // browser.expect.element('#nested_compound_enum-fs').to.be.visible
-    // browser.getTagName('#nested_compound_enum-fs', function (result) {
-    //   this.assert.equal(result.value.toLowerCase(), 'fieldset')
-    // })
-    // browser.expect.element('#nested_compound_enum-fs input[id=nested_compound_enum-0]').to.be.visible
-    // browser.expect.element('#nested_compound_enum-fs input[id=nested_compound_enum-0]').to.have.attribute('type').which.contains('radio')
+    browser.expect.element('#nested_compound_enum-fs').to.be.visible
+    browser.getTagName('#nested_compound_enum-fs', function (result) {
+      this.assert.equal(result.value.toLowerCase(), 'fieldset')
+    })
+    browser.expect.element('#nested_compound_enum-fs input[id=nested_compound_enum-0]').to.be.visible
+    browser.expect.element('#nested_compound_enum-fs input[id=nested_compound_enum-0]').to.have.attribute('type').which.contains('radio')
 
-    // browser.expect.element('#nested_compound_string-fs').to.be.visible
-    // browser.getTagName('#nested_compound_string-fs', function (result) {
-    //   this.assert.equal(result.value.toLowerCase(), 'fieldset')
-    // })
-    // browser.expect.element('#nested_compound_string-fs input').to.have.attribute('id').which.contains('nested_compound_string')
-    // browser.expect.element('#nested_compound_string-fs input').to.have.attribute('type').which.contains('text')
+    browser.expect.element('#nested_compound_string-fs').to.be.visible
+    browser.getTagName('#nested_compound_string-fs', function (result) {
+      this.assert.equal(result.value.toLowerCase(), 'fieldset')
+    })
+    browser.expect.element('#nested_compound_string-fs input').to.have.attribute('id').which.contains('nested_compound_string')
+    browser.expect.element('#nested_compound_string-fs input').to.have.attribute('type').which.contains('text')
 
-    // browser.expect.element('#compound_string-fs').to.be.not.visible
-    // browser.getTagName('#compound_string-fs', function (result) {
-    //   this.assert.equal(result.value.toLowerCase(), 'fieldset')
-    // })
-    // browser.expect.element('#compound_string-fs input').to.have.attribute('id').which.contains('compound_string')
-    // browser.expect.element('#compound_string-fs input').to.have.attribute('type').which.contains('text')
+    browser.expect.element('#compound_string-fs').to.be.not.visible
+    browser.getTagName('#compound_string-fs', function (result) {
+      this.assert.equal(result.value.toLowerCase(), 'fieldset')
+    })
+    browser.expect.element('#compound_string-fs input').to.have.attribute('id').which.contains('compound_string')
+    browser.expect.element('#compound_string-fs input').to.have.attribute('type').which.contains('text')
   },
 
   'Correctly render a multi select field with a list of options': function (browser) {
@@ -145,23 +145,23 @@ module.exports = {
   },
 
   'Fill out date time field using picker': function (browser) {
-    // browser.options.desiredCapabilities.name = 'Fill out date time field using picker'
+    browser.options.desiredCapabilities.name = 'Fill out date time field using picker'
 
-    // browser.expect.element('fieldset#date_time-fs').to.be.visible
+    browser.expect.element('fieldset#date_time-fs').to.be.visible
 
-    // browser.click('fieldset#date_time-fs')
-    // browser.expect.element('body > div.flatpickr-calendar.hasTime.animate.open').to.be.visible
+    browser.click('fieldset#date_time-fs')
+    browser.expect.element('body > div.flatpickr-calendar.hasTime.animate.open').to.be.visible
 
-    // browser.click('body > div.flatpickr-calendar.hasTime.animate.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span.flatpickr-day.today')
-    // browser.expect.element('.flatpickr-hour').to.be.visible.before(1000) // sometimes visible, sometimes not...
-    // browser.expect.element('.flatpickr-minute').to.be.visible
-    // browser.expect.element('.flatpickr-am-pm').to.be.visible
+    browser.click('body > div.flatpickr-calendar.hasTime.animate.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span.flatpickr-day.today')
+    browser.expect.element('.flatpickr-hour').to.be.visible.before(1000) // sometimes visible, sometimes not...
+    browser.expect.element('.flatpickr-minute').to.be.visible
+    browser.expect.element('.flatpickr-am-pm').to.be.visible
 
-    // browser.click('#form-demo') // click outside calender (work around for IE11 issue: https://github.com/chmln/flatpickr/issues/900)
-    // browser.expect.element('.flatpickr-calendar').to.be.not.visible
+    browser.click('#form-demo') // click outside calender (work around for IE11 issue: https://github.com/chmln/flatpickr/issues/900)
+    browser.expect.element('.flatpickr-calendar').to.be.not.visible
 
-    // const today = moment().toJSON().slice(0, 10)
-    // browser.expect.element('#date_time').to.have.value.which.contains(today)
+    const today = moment().toJSON().slice(0, 10)
+    browser.expect.element('#date_time').to.have.value.which.contains(today)
   },
 
   'Add new option to multi select': function (browser) {
