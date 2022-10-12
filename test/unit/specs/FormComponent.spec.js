@@ -14,6 +14,13 @@ describe('FormComponent unit tests', () => {
     expect(typeof props.formState).to.equal('object')
     expect(typeof props.options).to.equal('object')
   })
+
+  it('should have the correct state of the FormComponent data', () => {
+    expect(typeof FormComponent.data).to.equal('function')
+    const data = FormComponent.data()
+    expect(data.showOptionalFields).to.equal(true)
+    expect(JSON.stringify(data.formData)).to.equal('{}')
+  })
 })
 
 describe('FormComponents shallow tests', () => {

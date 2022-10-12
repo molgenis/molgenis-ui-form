@@ -79,7 +79,7 @@ export default {
     return {
       eventBus: new Vue(),
       showOptionalFields: true,
-      formData: JSON.parse(JSON.stringify(this.initialFormData))
+      formData: JSON.parse(JSON.stringify(this.initialFormData ? this.initialFormData : {}))
     }
   },
   methods: {
