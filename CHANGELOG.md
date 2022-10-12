@@ -1,3 +1,10 @@
+## [5.9.3](https://github.com/molgenis/molgenis-ui-form/compare/v5.9.2...v5.9.3) (2022-10-12)
+
+
+### Bug Fixes
+
+* make sure to break formData reactivity ([#412](https://github.com/molgenis/molgenis-ui-form/issues/412)) ([3d23ea8](https://github.com/molgenis/molgenis-ui-form/commit/3d23ea8))
+
 ## [5.9.2](https://github.com/molgenis/molgenis-ui-form/compare/v5.9.1...v5.9.2) (2022-02-09)
 
 
