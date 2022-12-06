@@ -1,22 +1,9 @@
 <template>
   <vue-form :id="id" :state="formState">
-    <div
-      v-if="options.showEyeButton"
-      class="text-right hide-option-fields-btn-container"
-    >
-      <button
-        type="button"
-        class="btn btn-sm btn-outline-secondary toggle-btn"
-        :title="eyeMessage"
-        @click="toggleOptionalFields"
-      >
-        <i
-          class="fa show-fields-icon"
-          :class="{
-            'fa-eye-slash': showOptionalFields,
-            'fa-eye': !showOptionalFields,
-          }"
-        ></i>
+    <div v-if="options.showEyeButton" class="text-right hide-option-fields-btn-container">
+      <button type="button" class="btn btn-sm btn-outline-secondary toggle-btn" :title="eyeMessage"
+              @click="toggleOptionalFields">
+        <i class="fa show-fields-icon" :class="{'fa-eye-slash': showOptionalFields, 'fa-eye': !showOptionalFields}"></i>
       </button>
     </div>
 
@@ -78,8 +65,7 @@ export default {
   data () {
     return {
       eventBus: new Vue(),
-      showOptionalFields: true,
-      formData: JSON.parse(JSON.stringify(this.initialFormData ? this.initialFormData : {}))
+      showOptionalFields: true
     }
   },
   methods: {
@@ -106,6 +92,14 @@ export default {
       }
       const localizedMessages = this.$t || defaultMessages
       return this.showOptionalFields ? localizedMessages('ui-form:form_hide_optional_hint') : localizedMessages('ui-form:form_show_optional_hint')
+    },
+
+    /**
+       *  Create local copy to break data reactivity with the
+       *  outside world and "enforce" a one way data-flow
+       */
+    formData () {
+      return Object.assign({}, this.initialFormData)
     }
   },
   created: function () {
