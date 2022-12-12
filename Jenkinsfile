@@ -1,7 +1,10 @@
 pipeline {
   agent {
     kubernetes {
-      inheritFrom 'node-erbium'
+      // the shared pod template defined on the Jenkins server config
+      inheritFrom 'shared'
+      // molgenis-frontend pod template defined in molgenis/molgenis-jenkins-pipeline repository
+      yaml libraryResource("pod-templates/molgenis-frontend.yaml")
     }
   }
   stages {
