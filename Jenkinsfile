@@ -42,9 +42,7 @@ pipeline {
           sh "yarn install"
           sh "yarn lint"
           sh "yarn unit"
-          sh "yarn e2e --env ci_firefox"
-          sh "yarn e2e --env ci_safari"
-          sh "yarn e2e --env ci_chrome"
+          sh "yarn e2e --env ci_firefox,ci_safari,ci_chrome"
         }
       }
       post {
