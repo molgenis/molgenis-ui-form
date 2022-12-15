@@ -19,7 +19,6 @@ describe('FormComponent unit tests', () => {
     expect(typeof FormComponent.data).to.equal('function')
     const data = FormComponent.data()
     expect(data.showOptionalFields).to.equal(true)
-    expect(JSON.stringify(data.formData)).to.equal('{}')
   })
 })
 

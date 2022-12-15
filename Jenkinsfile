@@ -1,7 +1,10 @@
 pipeline {
   agent {
     kubernetes {
-      inheritFrom 'node-erbium'
+      // the shared pod template defined on the Jenkins server config
+      inheritFrom 'shared'
+      // molgenis-frontend pod template defined in molgenis/molgenis-jenkins-pipeline repository
+      yaml libraryResource("pod-templates/molgenis-frontend.yaml")
     }
   }
   stages {
@@ -21,7 +24,12 @@ pipeline {
           }
         }
         container('node') {
-          startSauceConnect()
+          // We intermittently get a DNS error: non-recoverable failure in name resolution (-4)
+          // To prevent this, use Google DNS server instead
+          sh "daemon --name=sauceconnect -- /usr/local/bin/sc --dns 8.8.8.8,8.8.4.4:53 --readyfile /tmp/sauce-ready.txt -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
+          timeout (1) {
+            sh "while [ ! -f /tmp/sauce-ready.txt ]; do sleep 1; done"
+          }
         }
       }
     }
@@ -34,7 +42,7 @@ pipeline {
           sh "yarn install"
           sh "yarn lint"
           sh "yarn unit"
-          sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
+          sh "yarn e2e --env ci_firefox,ci_safari,ci_chrome"
         }
       }
       post {
