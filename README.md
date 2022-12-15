@@ -226,7 +226,7 @@ const fields = [
 
 The `isAddOptionAllowed` function indicated if the user should be allowed to add options
 
-### field group example
+### Field group example
 
 A field group can be used to group a set of fields.
 You can specify a list of fields under a field-group via the `children` parameter.
