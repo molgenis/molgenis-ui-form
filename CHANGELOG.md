@@ -1,3 +1,10 @@
+## [5.9.4](https://github.com/molgenis/molgenis-ui-form/compare/v5.9.3...v5.9.4) (2022-12-15)
+
+
+### Bug Fixes
+
+* force new release ([#417](https://github.com/molgenis/molgenis-ui-form/issues/417)) ([e1ab7ba](https://github.com/molgenis/molgenis-ui-form/commit/e1ab7ba))
+
 ## [5.9.3](https://github.com/molgenis/molgenis-ui-form/compare/v5.9.2...v5.9.3) (2022-10-12)
 
 
