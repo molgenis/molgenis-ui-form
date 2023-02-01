@@ -27,10 +27,12 @@ const isVisible = (attribute, mapperOptions: MapperSettings): ((?Object) => bool
   const visibleExpression = attribute.visibleExpression
   const resultWithoutExpression = mapperOptions.showNonVisibleAttributes || attribute.visible
   if (visibleExpression) {
-    return (data, onErrorCallBack) =>
-      tryEvaluate(visibleExpression, data, resultWithoutExpression, attribute, onErrorCallBack)
+    return (data, onErrorCallBack) => {
+      return tryEvaluate(visibleExpression, data, resultWithoutExpression, attribute.name, onErrorCallBack)
+    }
+  } else {
+    return () => resultWithoutExpression
   }
-  return () => resultWithoutExpression
 }
 
 /**
